@@ -40,9 +40,13 @@ function bundle(input, outDir, filenameRe ) {
       subPackage = outDir.slice(outputDir.length+1);
   }
 
+  if(filename!="index") {
+    subPackage = path.join(subPackage, filename);
+  }
+
   const filePath = path.join(outDir, filename);
   const exports  = 'auto';
-  const name     = pascalCase(`${packageName}_${subPackage}_${filename}`.replace(/[^a-z0-9]/ig, "_"));
+  const name     = pascalCase(`${packageName}_${subPackage}`.replace(/[^a-z0-9]/ig, "_"));
   const output   = Object.keys(outputFormats).map(format=>({
     name,
     format,
