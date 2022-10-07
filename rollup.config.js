@@ -28,16 +28,21 @@ export default async function(){
 }
 
 function bundle(input, outDir, filenameRe ) {
-  let ext      = path.extname (input);
-  let filename = path.basename(input, ext);
+  let ext        = path.extname (input);
+  let filename   = path.basename(input, ext);
+  let subPackage = "";
 
   if(filenameRe) {
     filename = input.replace(filenameRe, "$1");
   }
 
+  if(outDir.indexOf(`${outputDir}/`)==0) {
+      subPackage = outDir.slice(outputDir.length+1);
+  }
+
   const filePath = path.join(outDir, filename);
   const exports  = 'auto';
-  const name     = pascalCase(`${packageName}_${filename.replace(/[^a-z0-9]/ig, "_")}`);
+  const name     = pascalCase(`${packageName}_${subPackage}_${filename}`.replace(/[^a-z0-9]/ig, "_"));
   const output   = Object.keys(outputFormats).map(format=>({
     name,
     format,
