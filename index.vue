@@ -1,15 +1,15 @@
 <template>
     <div>
       <h1>Dev Applications</h1>
-      <click-count  />
+      <countdown :end-date="new Date('2022-10-20T14:00:00.000')"  />
     </div>
   </template>
   
   <script>
-    import ClickCount from './src/components/click-count/button.vue'
+    import countdown from './src/components/cop-countdown/index.js'
     export default {
       components: {
-        ClickCount
+        countdown
       }
     }
   </script>

@@ -1,1 +1,1 @@
-export { default as ClickCount } from './components/click-count/index.js';
+export { default as CopCountdown } from './components/cop-countdown/index.js';
