@@ -1,0 +1,1 @@
+export { default as ClickCount } from './components/click-count/index.js';
