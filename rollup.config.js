@@ -6,6 +6,7 @@ import buble from '@rollup/plugin-buble';
 import { camelCase } from 'lodash'
 import {
   name as packageName,
+  type as packageType,
   peerDependencies,
 } from './package.json';
 
@@ -13,40 +14,37 @@ const sourcemap = true;
 const outputDir = 'dist';
 const external  = [ ...Object.keys(peerDependencies||{}) ];
 const outputFormats = {
-  'umd' : '.js',
-  'esm' : '.mjs',
-  'cjs' : '.cjs',
+  'umd' : '.umd.js',
+  'esm' : packageType=='module' ? '.js' : '.mjs',
+  'cjs' : packageType!='module' ? '.js' : '.cjs',
 }
 const plugins = [ vue(), buble() ];
 
 export default async function(){
   return [
-    ...glob.sync('src/index.js'              ).map(c=>bundle(c, outputDir)),
-    ...glob.sync('src/components/**/index.js').map(c=>bundle(c, path.join(outputDir, 'components'), /^src\/components\/(.*)\/index\.js$/i)),
-    ...glob.sync('src/services/**/index.js'  ).map(c=>bundle(c, path.join(outputDir, 'services'),   /^src\/services\/(.*)\/index\.js$/i)),
+    ...glob.sync('src/index.js'                ).map(c=>bundle(c, outputDir, o=>"index")),
+    ...glob.sync('src/components/**/*.{js,vue}').map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.(js|vue)$/i, "$1"))),
+    ...glob.sync('src/services/**/*.js'        ).map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.js$/i,       "$1"))),
   ];
 }
 
-function bundle(input, outDir, filenameRe ) {
+function bundle(input, outDir, getFilename ) {
   let ext        = path.extname (input);
   let filename   = path.basename(input, ext);
-  let subPackage = "";
 
-  if(filenameRe) {
-    filename = input.replace(filenameRe, "$1");
+  if(getFilename) {
+    filename = getFilename(input);
   }
 
-  if(outDir.indexOf(`${outputDir}/`)==0) {
-      subPackage = outDir.slice(outputDir.length+1);
-  }
+  let subPackageName = filename;
 
-  if(filename!="index") {
-    subPackage = path.join(subPackage, filename);
+  if(/\index$/.test(subPackageName)) {
+    subPackageName = subPackageName.replace(/\index$/, "");
   }
 
   const filePath = path.join(outDir, filename);
   const exports  = 'auto';
-  const name     = pascalCase(`${packageName}_${subPackage}`.replace(/[^a-z0-9]/ig, "_"));
+  const name     = pascalCase(`${packageName}_${subPackageName}`.replace(/[^a-z0-9]/ig, "_"));
   const output   = Object.keys(outputFormats).map(format=>({
     name,
     format,

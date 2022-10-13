@@ -8,25 +8,25 @@
   },
   "type": "module",
   "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "unpkg": "dist/index.js",
-  "jsdelivr": "dist/index.js",
-  "browser": "dist/index.js",
+  "module": "dist/index.js",
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
+  "browser": "dist/index.umd.js",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs",
-      "default": "./dist/index.js"
+      "default": "./dist/index.umd.js"
     },
     "./components/*": {
-      "import": "./dist/components/*.mjs",
+      "import": "./dist/components/*.js",
       "require": "./dist/components/*.cjs",
-      "default": "./dist/components/*.js"
+      "default": "./dist/components/*.umd.js"
     },
     "./services/*": {
-      "import": "./dist/services/*.mjs",
+      "import": "./dist/services/*.js",
       "require": "./dist/services/*.cjs",
-      "default": "./dist/services/*.js"
+      "default": "./dist/services/*.umd.js"
     }
   },
   "files": [

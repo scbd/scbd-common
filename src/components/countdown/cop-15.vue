@@ -6,20 +6,21 @@
             </a>
         </div>
         <div>
-            <span v-if="time.days > 1"><a :href="url"> {{ time.days }} days<br />to COP 15.2 </a></span>
-            <span v-else-if="time.days == 1"><a :href="url"> {{ time.days }} day to COP 15.2 </a></span>
-            <span v-else><a :href="url"> COP 15.2 </a></span>
+            <a :href="url">
+                <span v-if="time.days > 1"> {{ time.days }} days<br />to COP 15.2</span>
+                <span v-else-if="time.days == 1">{{ time.days }} day to COP 15.2</span>
+                <span v-else>COP 15.2</span>
+            </a>
         </div>
     </section>
 </template>
   
 <script>
 export default {
-    name: 'CountDown',
+    name: 'CopCountDown',
     props: {
         endDate: Date,
         url: String,
-        logo: String
     },
     data() {
         return {
