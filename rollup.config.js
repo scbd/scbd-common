@@ -2,7 +2,8 @@
 import path  from 'path'
 import vue   from 'rollup-plugin-vue'
 import glob  from "glob";
-import buble from '@rollup/plugin-buble';
+import { getBabelOutputPlugin } from '@rollup/plugin-babel';
+
 import { camelCase } from 'lodash'
 import {
   name as packageName,
@@ -13,12 +14,12 @@ import {
 const sourcemap = true;
 const outputDir = 'dist';
 const external  = [ ...Object.keys(peerDependencies||{}) ];
-const outputFormats = {
+const outputFormatExtensions = {
   'umd' : '.umd.js',
   'esm' : packageType=='module' ? '.js' : '.mjs',
   'cjs' : packageType!='module' ? '.js' : '.cjs',
 }
-const plugins = [ vue(), buble() ];
+const plugins = [ vue() ];
 
 export default async function(){
   return [
@@ -43,15 +44,28 @@ function bundle(input, outDir, getFilename ) {
   }
 
   const filePath = path.join(outDir, filename);
-  const exports  = 'auto';
-  const name     = pascalCase(`${packageName}_${subPackageName}`.replace(/[^a-z0-9]/ig, "_"));
-  const output   = Object.keys(outputFormats).map(format=>({
-    name,
-    format,
-    exports,
+
+  const output = [{ 
     sourcemap,
-    file: `${filePath}${outputFormats[format]}`,
-  }))
+    format : "esm",
+    file: `${filePath}${outputFormatExtensions['esm']}`,
+  }, { 
+    sourcemap,
+    exports: 'auto',
+    format : "cjs",
+    file: `${filePath}${outputFormatExtensions['cjs']}`,
+  }, { 
+    sourcemap,
+    format : "umd",
+    name: pascalCase(`${packageName}_${subPackageName}`.replace(/[^a-z0-9]/ig, "_")),
+    file: `${filePath}${outputFormatExtensions['umd']}`,
+    plugins: [
+      getBabelOutputPlugin({
+        presets: [['@babel/preset-env', { targets: "> 0.25%, not dead"}]],
+        allowAllFormats: true
+      })
+    ]
+  }]
 
   return {
     input,
