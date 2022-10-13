@@ -50,10 +50,14 @@
     "vue": "^2.7.10"
   },
   "devDependencies": {
-    "@rollup/plugin-buble": "^0.21.3",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.4",
+    "@rollup/plugin-babel": "^6.0.0",
     "@vitejs/plugin-vue2": "^2.0.0",
     "glob": "^8.0.3",
+    "install": "^0.13.0",
     "lodash": "^4.17.21",
+    "npm": "^8.19.2",
     "rollup": "^2.79.1",
     "rollup-plugin-vue": "^5.1.9",
     "vite": "^3.1.0",
