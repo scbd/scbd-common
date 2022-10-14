@@ -62,14 +62,13 @@ a {
 
 .countdown {
     background-color: #13a89e;
-    width: 140px;
     text-align: center;
     display: flex;
     font-family: Arial Black, Arial, Helvetica, sans-serif;
     font-style: bold;
     font-size: 12px;
     color: #ffffff;
-    padding: 5px;
+    padding: 5px 15px;
 }
 
 .alignment {
