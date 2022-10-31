@@ -7,9 +7,9 @@
         </div>
         <div>
             <a :href="url">
-                <span v-if="time.days > 1"> {{ time.days }} days<br />to COP 15.2</span>
-                <span v-else-if="time.days == 1">{{ time.days }} day to COP 15.2</span>
-                <span v-else>COP 15.2</span>
+                <span v-if="time.days > 1">{{ time.days }} DAYS<br />TO COP 15</span>
+                <span v-else-if="time.days == 1">{{ time.days }} DAYS<br />&nbsp;TO COP 15</span>
+                <span v-else>COP 15</span>
             </a>
         </div>
     </section>
@@ -68,11 +68,10 @@ a {
     font-style: bold;
     font-size: 12px;
     color: #ffffff;
-    padding: 5px 15px;
+    padding: 7px 12px;
 }
 
 .alignment {
   margin: auto;
 }
 </style>
-  
