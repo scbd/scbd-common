@@ -7,8 +7,12 @@
         </div>
         <div class="alignment">
             <a :href="url">
-                <span v-if="time.days > 1"><span class="countdown-box">{{ time.days.split('')[0] }}</span>&nbsp;<span class="countdown-box">{{ time.days.split('')[1] }}</span> DAYS<br />TO COP 15</span>
-                <span v-else-if="time.days == 1"><span class="countdown-box">{{ time.days.split('')[0] }}</span>&nbsp;<span class="countdown-box">{{ time.days.split('')[1] }}</span> DAY<br />&nbsp;TO COP 15</span>
+                <span v-if="time.days > 1">
+                    <span v-for="char in time.days"><span class="countdown-box">{{ char }}</span>&nbsp;</span>DAYS<br />TO COP 15
+                </span>
+                <span v-else-if="time.days == 1">
+                    <span v-for="char in time.days"><span class="countdown-box">{{ char }}</span>&nbsp;</span>DAY<br />TO COP 15
+                </span>
                 <span v-else>COP 15</span>
             </a>
         </div>
