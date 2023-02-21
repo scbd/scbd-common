@@ -3,6 +3,7 @@ import path  from 'path'
 import vue   from 'rollup-plugin-vue'
 import glob  from "glob";
 import { getBabelOutputPlugin } from '@rollup/plugin-babel';
+import alias                    from '@rollup/plugin-alias';
 
 import { camelCase } from 'lodash'
 import {
@@ -11,6 +12,7 @@ import {
   peerDependencies,
 } from './package.json';
 
+const cdnUrl    = 'https://cdn.jsdelivr.net/';
 const sourcemap = true;
 const outputDir = 'dist';
 const external  = [ ...Object.keys(peerDependencies||{}) ];
@@ -60,6 +62,9 @@ function bundle(input, outDir, getFilename ) {
     name: pascalCase(`${packageName}_${subPackageName}`.replace(/[^a-z0-9]/ig, "_")),
     file: `${filePath}${outputFormatExtensions['umd']}`,
     plugins: [
+      alias({ entries : [
+        { find: /^cdn!(.*)/,  replacement:`${cdnUrl}$1` },
+      ]}),
       getBabelOutputPlugin({
         presets: [['@babel/preset-env', { targets: "> 0.25%, not dead"}]],
         allowAllFormats: true
