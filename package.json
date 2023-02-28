@@ -42,7 +42,6 @@
     "build:watch": "rm -rf ./dist && rollup -c --watch",
     "cleanup": "rm -rf ./dist && rm -rf ./node_modules",
     "cleanup:hard": "rm -rf ./dist && rm -rf ./node_modules && rm -rf ./package-lock.json",
-    "cp":"cp -r ./dist /Users/blaisefonseca/Projects/absch.cbd.int/node_modules/@bower_components/@scbd/common"
   },
   "dependencies": {
     "vue": "^2.7.10"
