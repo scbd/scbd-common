@@ -7,8 +7,11 @@ if(/\.cbd\.int$/i   .test(window.location.hostname)) sitePrefixUrl= 'https://api
 if(/\.cbddev\.xyz$/i.test(window.location.hostname)) sitePrefixUrl= 'https://api.cbddev.xyz';
 if(/\localhost$/i   .test(window.location.hostname)) sitePrefixUrl= '/';
 
-const cache          = new Map()
-const defaultOptions = { prefixUrl: sitePrefixUrl, timeout  : 30 * 1000 }
+const defaultOptions = { 
+   prefixUrl:  sitePrefixUrl, 
+   timeout  : 30 * 1000,
+   token: () => Vue.$auth.strategy.token.get()
+}
 
 export default class ApiBase
 {
