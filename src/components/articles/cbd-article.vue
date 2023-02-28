@@ -2,23 +2,29 @@
 <template>
    <div style="border:none;margin-top:10px">
         <div v-if="!loading">
-
-            <div v-if="!hideCoverImage && article && article.coverImage && article.coverImage.url">
-                <cbd-article-cover-image cover-image="article.coverImage"></cbd-article-cover-image>
-            </div>
         
-            <div v-if="hasEditRights" class="pull-right">    
-                <cbd-add-new-article :tags="tags" :admin-tags="adminTags" :custom-tags="customTags" :id="(article||{})._id" :target="target"
-                    class="btn btn-default"></cbd-add-new-article>
-            </div>
+            <slot name="article-cover-image">
+                <div v-if="!hideCoverImage && article && article.coverImage && article.coverImage.url" >
+                    <cbd-article-cover-image :cover-image="article.coverImage"></cbd-article-cover-image>
+                </div>
+            </slot>
 
-            <div v-if="article" v-html="$options.filters.lstring(article.content, $locale)" class="ck-content"></div>
+            <slot name="article-add-new">
+                <div v-if="hasEditRights" class="pull-right">    
+                    <cbd-add-new-article :tags="tags" :admin-tags="adminTags" :custom-tags="customTags" :id="(article||{})._id" 
+                        :target="showEditTarget" class="btn btn-default"></cbd-add-new-article>
+                </div>
+            </slot>
+            <slot name="article">
+                <div v-if="article" v-html="$options.filters.lstring(article.content, $locale)" class="ck-content"></div>
+            </slot>
 
-            <slot name="empty-article">
+            <slot name="article-empty">
                 <div v-if="!article" class="ck-content">No information is available for this section at the moment.</div>
             </slot>
+
         </div>
-        <slot name="loading-article">
+        <slot name="article-loading">
             <div v-if="loading">Loading content... <i class="fa fa-spinner fa-spin"></i></div>
         </slot>
     </div>
@@ -30,22 +36,26 @@
 import 'css!cdn!npm/@scbd/ckeditor5-build-inline-full@35.0.0/build/content-style.css';
 import axios from 'axios';
 import ArticlesApi from '../../services/api/articles';
-import cbdAddNewArticle from './cbd-add-new-article.vue';
 import {lstring } from '../../services/filters/lstring'
+import cbdAddNewArticle from './cbd-add-new-article.vue';
+import cbdArticleCoverImage from './cbd-article-cover-image.vue';
 
 export default {
     name: 'cbdArticle',
-    components : { cbdAddNewArticle },
+    components : { 
+        cbdAddNewArticle, 
+        cbdArticleCoverImage 
+    },
     props: {
         hideCoverImage  : { type: Boolean, required: false, default:false        },
-        showEdit        : { type: Boolean, required: false, default:undefined    },
+        showEdit        : { type: Boolean, required: false, default:true         },
+        showEditTarget  : { type: String , required: false, default: '_self'     },
+        showEditRoles   : { type: Array  , required: false, default:[]           }, // [] of scope roles
         article         : { type: Object,  required: false, default:undefined    },
         query           : { type: Object,  required: false                       },
         tags 		    : { type: Array  , required: false, default:[]           }, // [] of tag id's
         customTags 	    : { type: Array  , required: false, default:[]           }, // [] of customTag id's
         adminTags 	    : { type: Array  , required: false, default:[]           }, // [] of adminTag text
-        target          : { type: String , required: false, default: '_self'     },
-        editRoles       : { type: Array  , required: false, default:[]           }, // [] of scope roles
     },
     data() {
         return {
@@ -66,21 +76,21 @@ export default {
             try{
                 this.loading = true;
                 const query = this.query;
-                const article = await this.ArticlesApi.queryArticles(query)
+                const articleResult = await this.ArticlesApi.queryArticles(query)
      
-                if(article.length){
-                    this.article = article[0];
+                if(articleResult.length){
+                    let lArticle = articleResult[0];
 
                     this.preProcessOEmbed();
 
-                    if(this.article.coverImage?.url){
+                    if(lArticle.coverImage?.url){
                         //sometime the file name has space/special chars, use new URL's href prop which encodes the special chars
-                        const url = new URL(this.article.coverImage.url)
-                        this.article.coverImage.url = url.href;
+                        const url = new URL(lArticle.coverImage.url)
+                        lArticle.coverImage.url = url.href;
 
-                        this.article.coverImage.url_1200  = this.article.coverImage.url.replace(/attachments\.cbd\.int\//, '$&1200x600/')
+                        lArticle.coverImage.url_1200  = lArticle.coverImage.url.replace(/attachments\.cbd\.int\//, '$&1200x600/')
                     }
-
+                    this.article = lArticle;
                     this.$emit('load', { ...this.article });   
                 }
                 else {
@@ -90,7 +100,7 @@ export default {
                 this.$auth.fetchUser().then(()=>{
                     if(this.showEdit || this.showEdit == 'true' || this.hasOwnProperty(this.showEdit)){
 
-                        let roles = [...this.editRoles, 'oasisArticleEditor', 'Administrator']
+                        let roles = [...this.showEditRoles, 'oasisArticleEditor', 'Administrator']
                         this.hasEditRights = this.$auth.hasScope(roles);
                     }
                 })
@@ -118,7 +128,7 @@ export default {
                     
                 });
 
-            }, 200)
+            }, 500)
         }
     },
     filters:{
