@@ -35,7 +35,6 @@ import ArticlesApi from '../../services/api/articles';
 import cbdAddNewArticle from './cbd-add-new-article.vue';
 import { format as formatDate } from '../../services/filters/datetime';
 import {lstring } from '../../services/filters/lstring'
-import '../../services/filters/vue-filters'
 // import 'printThis'
 
 export default {
@@ -87,7 +86,8 @@ export default {
         }
     },
     filters: {
-        formatDate
+        formatDate,
+        lstring
     }
 }
 </script>

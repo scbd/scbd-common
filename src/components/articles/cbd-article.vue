@@ -2,6 +2,7 @@
 <template>
    <div style="border:none;margin-top:10px">
         <div v-if="!loading">
+
             <div v-if="!hideCoverImage && article && article.coverImage && article.coverImage.url">
                 <cbd-article-cover-image cover-image="article.coverImage"></cbd-article-cover-image>
             </div>
@@ -9,12 +10,17 @@
             <div v-if="hasEditRights" class="pull-right">    
                 <cbd-add-new-article :tags="tags" :admin-tags="adminTags" :custom-tags="customTags" :id="(article||{})._id" :target="target"
                     class="btn btn-default"></cbd-add-new-article>
-                <br/>    
             </div>
+
             <div v-if="article" v-html="$options.filters.lstring(article.content, $locale)" class="ck-content"></div>
-            <div v-if="!article" class="ck-content">No information is available for this section at the moment.</div>
+
+            <slot name="empty-article">
+                <div v-if="!article" class="ck-content">No information is available for this section at the moment.</div>
+            </slot>
         </div>
-        <div v-if="loading">Loading section content<i class="fa fa-spinner fa-spin"></i></div>
+        <slot name="loading-article">
+            <div v-if="loading">Loading content... <i class="fa fa-spinner fa-spin"></i></div>
+        </slot>
     </div>
 
 </template>
@@ -25,7 +31,7 @@ import 'css!cdn!npm/@scbd/ckeditor5-build-inline-full@35.0.0/build/content-style
 import axios from 'axios';
 import ArticlesApi from '../../services/api/articles';
 import cbdAddNewArticle from './cbd-add-new-article.vue';
-import '../../services/filters/vue-filters'
+import {lstring } from '../../services/filters/lstring'
 
 export default {
     name: 'cbdArticle',
@@ -34,7 +40,7 @@ export default {
         hideCoverImage  : { type: Boolean, required: false, default:false        },
         showEdit        : { type: Boolean, required: false, default:undefined    },
         article         : { type: Object,  required: false, default:undefined    },
-        query           : { type: Object,  required: true                        },
+        query           : { type: Object,  required: false                       },
         tags 		    : { type: Array  , required: false, default:[]           }, // [] of tag id's
         customTags 	    : { type: Array  , required: false, default:[]           }, // [] of customTag id's
         adminTags 	    : { type: Array  , required: false, default:[]           }, // [] of adminTag text
@@ -52,7 +58,7 @@ export default {
        this.ArticlesApi = new ArticlesApi({ token: this.$auth.strategy.token.get() });
     },
     mounted() {
-        if(!this.article)
+        if(!this.article && this.query)
             this.loadArticle();
     },
     methods: {
@@ -114,6 +120,9 @@ export default {
 
             }, 200)
         }
+    },
+    filters:{
+        lstring
     }
 }
 </script>
