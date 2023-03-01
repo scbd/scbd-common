@@ -1,7 +1,7 @@
 {
   "name": "@scbd/common",
   "private": false,
-  "version": "0.0.10",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/scbd/scbd-common.git"
