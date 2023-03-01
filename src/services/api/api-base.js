@@ -10,13 +10,12 @@ if(/\localhost$/i   .test(window.location.hostname)) sitePrefixUrl= '/';
 const defaultOptions = { 
    prefixUrl:  sitePrefixUrl, 
    timeout  : 30 * 1000,
-   token: () => Vue.$auth.strategy.token.get()
+   token: Vue?.prototype?.$auth?.strategy?.token?.get()
 }
 
 export default class ApiBase
 {
   constructor(options) {
-
     options = options || {};
 
     if(isFunction(options)) options = { token : options }

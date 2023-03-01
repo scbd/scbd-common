@@ -52,7 +52,7 @@ export default {
         }
     },
     created() {
-        this.ArticlesApi = new ArticlesApi({ token: this.$auth.strategy.token.get() })
+        this.ArticlesApi = new ArticlesApi()
     },
     mounted() {
         this.loadArticles(); 
