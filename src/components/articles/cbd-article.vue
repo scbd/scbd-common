@@ -33,7 +33,6 @@
 
 <script>
 
-import 'css!cdn!npm/@scbd/ckeditor5-build-inline-full@35.0.0/build/content-style.css';
 import axios from 'axios';
 import ArticlesApi from '../../services/api/articles';
 import {lstring } from '../../services/filters/lstring'
@@ -138,5 +137,7 @@ export default {
 </script>
     
 <style>
+
+    @import url('https://cdn.jsdelivr.net/npm/@scbd/ckeditor5-build-inline-full@35.0.0/build/content-style.css');
 
 </style>

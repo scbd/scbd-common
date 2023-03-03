@@ -30,7 +30,6 @@
 <script>
 
 import moment from 'moment'
-import 'css!cdn!npm/@scbd/ckeditor5-build-inline-full@35.0.0/build/content-style.css';
 import ArticlesApi from '../../services/api/articles';
 import cbdAddNewArticle from './cbd-add-new-article.vue';
 import { format as formatDate } from '../../services/filters/datetime';
@@ -93,6 +92,7 @@ export default {
 </script>
     
 <style>
+    @import url('https://cdn.jsdelivr.net/npm/@scbd/ckeditor5-build-inline-full@35.0.0/build/content-style.css');
     .articles-accordion .card.item{
         margin-bottom: 10px;
     }
