@@ -30,11 +30,7 @@ const plugins = [
   alias({ entries : [
     { find: /^cdn!(.*)/,  replacement:`${cdnUrl}$1` },
     { find: /^css!cdn!(.*)/,  replacement:`css!${cdnUrl}$1` },
-  ]}),
-  getBabelOutputPlugin({
-    presets: [['@babel/preset-env', { targets: "> 0.25%, not dead"}]],
-    allowAllFormats: true
-  })
+  ]})
 ];
 
 export default async function(){
@@ -74,7 +70,14 @@ function bundle(input, outDir, getFilename ) {
     sourcemap,
     format : "umd",
     name: pascalCase(`${packageName}_${subPackageName}`.replace(/[^a-z0-9]/ig, "_")),
-    file: `${filePath}${outputFormatExtensions['umd']}`    
+    file: `${filePath}${outputFormatExtensions['umd']}`,
+    plugins : [
+      ...plugins,
+      getBabelOutputPlugin({
+        presets: [['@babel/preset-env', { targets: "> 0.25%, not dead"}]],
+        allowAllFormats: true
+      })
+    ]    
   }]
 
   return {
