@@ -25,12 +25,13 @@ const outputFormatExtensions = {
   'esm' : packageType=='module' ? '.js' : '.mjs',
   'cjs' : packageType!='module' ? '.js' : '.cjs',
 }
+const aliasPlugin = alias({ entries : [
+  { find: /^cdn!(.*)/,  replacement:`${cdnUrl}$1` },
+  { find: /^css!cdn!(.*)/,  replacement:`css!${cdnUrl}$1` },
+]})
 const plugins = [ 
   vue(),
-  alias({ entries : [
-    { find: /^cdn!(.*)/,  replacement:`${cdnUrl}$1` },
-    { find: /^css!cdn!(.*)/,  replacement:`css!${cdnUrl}$1` },
-  ]})
+  aliasPlugin
 ];
 
 export default async function(){
@@ -72,11 +73,11 @@ function bundle(input, outDir, getFilename ) {
     name: pascalCase(`${packageName}_${subPackageName}`.replace(/[^a-z0-9]/ig, "_")),
     file: `${filePath}${outputFormatExtensions['umd']}`,
     plugins : [
-      ...plugins,
       getBabelOutputPlugin({
         presets: [['@babel/preset-env', { targets: "> 0.25%, not dead"}]],
         allowAllFormats: true
-      })
+      }),
+      aliasPlugin
     ]    
   }]
 
