@@ -75,6 +75,17 @@ export function tryCastToApiError(error) {
   throw error
 }
 
+export function toUrlParam(value) {
+  switch(typeof value) {
+    case object:
+      return JSON.stringify(value);    
+    case date:
+      return value.toISOString();
+    default:
+      return value; 
+  }
+}
+
 export function mapObjectId(id){
   return isObjectId(id)? { $oid: id } : id
 }
