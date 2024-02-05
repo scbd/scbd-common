@@ -75,7 +75,7 @@ export function tryCastToApiError(error) {
   throw error
 }
 
-export function toUrlParam(value) {
+export function toUrlParam(value) {  
   switch(typeof value) {
     case object:
       return JSON.stringify(value);    
@@ -84,6 +84,18 @@ export function toUrlParam(value) {
     default:
       return value; 
   }
+}
+
+export function toUrlParams(valueObj) {
+  const returnObj = {};
+
+  for (const [key, value] of Object.entries(valueObj)) {
+    if (value !== undefined){
+      returnObj[key] = toUrlParam(value);
+    }
+  }
+  
+  return returnObj;
 }
 
 export function mapObjectId(id){

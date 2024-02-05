@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError ,toUrlParam} from './api-base';
+import ApiBase, { tryCastToApiError ,toUrlParam, toUrlParams} from './api-base';
 
 export default class ThesaurusAPI extends ApiBase
 {
@@ -8,43 +8,66 @@ export default class ThesaurusAPI extends ApiBase
     super(options);
   }
 
-  async getDomains(domainIdentifier, {q, f, s, sk, l , c, fo, ag })  {
-    const params= {
-      q:  toUrlParam(q),
-      f:  toUrlParam(f),
-      s:  toUrlParam(s),
-      sk: toUrlParam(sk),
-      l:  toUrlParam(l),
-      c:  toUrlParam(c),
-      fo: toUrlParam(fo),
-      ag: toUrlParam(ag)
-    };
 
-    const data  =  await useAPIFetch(`/api/v2013/thesaurus/domains/${encodeURIComponent(domainIdentifier)}`,  { method:'get', params })
-                  
-    return data;
+  // Get all domain
+  async getDomains(domainIdentifier)  {        
+    
+    if(![undefined, null].includes(termIdentifier)) throw Error(`invalid value for termIdentifier`);
+
+    return this.http.get(`/api/v2013/thesaurus/domains/`)
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
   }
 
+  // Get domain by code
+  async getDomain(domainIdentifier)  {
+
+    if(![undefined, null].includes(termIdentifier)) throw Error(`invalid value for termIdentifier`);
+
+    return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(domainIdentifier)}`)
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
+  // Get domain by code and term
+  async getDomainterms(domainIdentifier, { relations } = {})  { 
+
+    const params= { };
+
+    if(![undefined, null].includes(termIdentifier)) throw Error(`invalid value for termIdentifier`);
+    if(![undefined, null, 'all'].includes(relations)) throw Error(`invalid value for relations`);
+
+    if(relations) params.relations = toUrlParam(relations);
+ 
+    return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(domainIdentifier)}`, { params })
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);            
+
+  }
+
+  // Get term by code
   async getDomainTerms(termIdentifier)  {
-    const data  =  await useAPIFetch(`/api/v2013/thesaurus/domains/${encodeURIComponent(termIdentifier)}/terms`,  { method:'get' })
-                  
-    return data;
-  }
 
-  async getTerm(termIdentifier, {q, f, s, sk, l , c, fo, ag })  {
-    const params= {
-      q:  toUrlParam(q),
-      f:  toUrlParam(f),
-      s:  toUrlParam(s),
-      sk: toUrlParam(sk),
-      l:  toUrlParam(l),
-      c:  toUrlParam(c),
-      fo: toUrlParam(fo),
-      ag: toUrlParam(ag)
-    };
+    if(![undefined, null].includes(termIdentifier)) throw Error(`invalid value for termIdentifier`);
 
-    const data  =  await useAPIFetch(`/api/v2013/thesaurus/terms/${encodeURIComponent(termIdentifier)}`,  { method:'get', params })
-                  
-    return data;
+    return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(termIdentifier)}/terms`)
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
   }
-}
+  
+
+  // Get term by code and relation
+  async getTerm(termIdentifier, { relations } = {})  {
+
+    const params= { };
+ 
+    if(![undefined, null].includes(termIdentifier)) throw Error(`invalid value for termIdentifier`);
+    if(![undefined, null, 'all'].includes(relations)) throw Error(`invalid value for relations`);
+
+    if(relations) params.relations = toUrlParam(relations);
+
+    return this.http.get(`/api/v2013/thesaurus/terms/${encodeURIComponent(termIdentifier)}`, { params })
+                    .then(res => res.data)
+                    .catch(tryCastToApiError); 
+  }
+ }
