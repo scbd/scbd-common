@@ -25,7 +25,6 @@ const plugins = [ vue() ];
 
 export default async function(){
   return [
-    ...glob.sync('src/index.js'                ).map(c=>bundle(c, outputDir, o=>"index")),
     ...glob.sync('src/components/**/*.{js,vue}').map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.(js|vue)$/i, "$1"))),
     ...glob.sync('src/services/**/*.js'        ).map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.js$/i,       "$1"))),
   ];
