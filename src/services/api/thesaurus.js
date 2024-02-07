@@ -9,20 +9,21 @@ export default class ThesaurusAPI extends ApiBase
   }
 
 
-  // Get all domain
+  // Get all domains
   async getDomains(domainIdentifier)  {        
     
-    if(![undefined, null].includes(termIdentifier)) throw Error(`invalid value for termIdentifier`);
+    if(![undefined, null].includes(domainIdentifier)) throw Error(`invalid value for domainIdentifier`);
 
     return this.http.get(`/api/v2013/thesaurus/domains/`)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
+  
 
   // Get domain by code
   async getDomain(domainIdentifier)  {
 
-    if(![undefined, null].includes(termIdentifier)) throw Error(`invalid value for termIdentifier`);
+    if(![undefined, null].includes(domainIdentifier)) throw Error(`invalid value for domainIdentifier`);
 
     return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(domainIdentifier)}`)
                     .then(res => res.data)
@@ -45,8 +46,8 @@ export default class ThesaurusAPI extends ApiBase
 
   }
 
-  // Get term by code
-  async getDomainTerms(termIdentifier)  {
+  // Get terms by code
+  async getTerms(termIdentifier)  {
 
     if(![undefined, null].includes(termIdentifier)) throw Error(`invalid value for termIdentifier`);
 
