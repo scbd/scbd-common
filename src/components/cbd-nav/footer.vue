@@ -168,21 +168,11 @@
         </footer>
     </div>
 </template>
-<script>
-export default {
-    name: 'ScbdFooter',
-    data() {
-        return {
-        }
-    }, 
-    computed : {
-    },
-    mounted() {      
-        
-    },
-    methods:{
-    }
-}
-</script>
 
-<style scoped src="./cbd.css"></style>
+<script setup>
+
+</script>
+<style scoped src="../../assets/cbd.css"></style>
+<style lang="scss" scoped>
+
+</style>
