@@ -1,10 +1,6 @@
 <template>
     <div>
 
-        <!-- <link rel="preload"
-            href="https://www.cbd.int/themes/custom/bootstrap_sass/fonts/benchnine-v9-latin-regular.woff2" as="font"
-            type="font/woff2" crossorigin=""> -->
-
         <header id="header" class="header" role="banner" aria-label="Site header">
             <svg  aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -232,8 +228,6 @@
                                 class="settings-tray-editable block block-cbd-utility block-top-search-block"
                                 data-drupal-settingstray="editable">
 
-
-
                                 <form class="views-exposed-form" data-drupal-selector="views-exposed-form-search-search"
                                     action="https://www.cbd.int/search" method="get" id="views-exposed-form-search-search"
                                     accept-charset="UTF-8">
@@ -244,9 +238,6 @@
                                                 id="edit-submit-search" value="Submit"
                                                 class="button js-form-submit form-submit btn btn-primary form-control">
                                         </div>
-
-
-
 
                                         <fieldset
                                             class="js-form-item js-form-type-textfield form-type-textfield js-form-item-query form-item-query form-group">
@@ -265,8 +256,6 @@
                             </div>
                         </div>
                         <div class="nav-main">
-
-
 
                             <ul class="navbar-nav main-nav">
                                 <li class="nav-item  main-menu-item">
@@ -305,9 +294,6 @@
 
                                 </li>
 
-
-
-
                             </ul>
                         </div>
                     </div>
@@ -316,50 +302,46 @@
         </header>
     </div>
 </template>
-<script>
-export default {
-    name: 'ScbdHeader',
-    data() {
-        return {
-            isAuthenticated : false,
-            user            : undefined,
-            returnUrl       : undefined,
-            languages       : []
-        }
-    }, 
-    computed : {
-        userName(){
-            if(this.user?.userID > 1)
-                return this.user.userName;
-        }
-    },
-    mounted() {      
-        this.languages = {
-            ar : 'العربية',
-            es : 'Español',
-            en : 'English',
-            fr : 'Français',
-            ru : 'Русский',
-            zg : '中文'
-        }
-        this.returnUrl = window.location.href;   
-        setTimeout(async() => {
-            const user = await this.$auth.fetchUser()
-            this.user = user;
-            this.isAuthenticated = user.isAuthenticated;
-        }, 1000);
-    },
-    methods:{
-        async logout(){
-            await this.$auth.logout();
-            window.location.reload();
-        }
-    }
-}
+
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+const $accountsBaseUrl = ''; //ToDo assign the accountsBaseUrl
+
+const isAuthenticated = ref(false);
+const user = ref(undefined);
+const returnUrl = ref(undefined);
+const languages = {
+  ar: 'العربية',
+  es: 'Español',
+  en: 'English',
+  fr: 'Français',
+  ru: 'Русский',
+  zg: '中文'
+};
+
+const userName = computed(() => {
+  if (user.value?.userID > 1) {
+    return user.value.userName;
+  }
+});
+
+const logout = async () => {
+  await $auth.logout();
+  window.location.reload();
+};
+
+onMounted(async () => {
+  returnUrl.value = window.location.href;
+  setTimeout(async () => {
+    const fetchedUser = await $auth.fetchUser();
+    user.value = fetchedUser;
+    isAuthenticated.value = fetchedUser.isAuthenticated;
+  }, 1000);
+});
 </script>
 
-<style scoped src="./cbd.css"></style>
-<style scoped>
+<style scoped src="../../assets/cbd.css"></style>
+<style lang="scss" scoped>
 .icon {
     display: inline-block;
     width: 1em;
