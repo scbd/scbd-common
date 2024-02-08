@@ -27,68 +27,42 @@
     </div>
 </template>
 
-<script>
 
-import moment from 'moment'
+<script setup>
+import moment from 'moment'; 
 import ArticlesApi from '../../services/api/articles';
 import cbdAddNewArticle from './cbd-add-new-article.vue';
 import { format as formatDate } from '../../services/filters/datetime';
-import {lstring } from '../../services/filters/lstring'
-// import 'printThis'
+import { lstring } from '../../services/filters/lstring';
 
-export default {
-    name: 'articlesAccordion',
-    components : { cbdAddNewArticle },
-    props: {
+const articlesApi = new ArticlesApi();
+
+let articles = ref([]);
+let showEditButton = ref(false);
+const today = moment().add(-2, 'day');
+const { query, showNew, printHeader } = defineProps({
         query: { type: Object, required: true },
         showNew : { type: Boolean, required: false, default:false },
         printHeader : { type: String, required: false },
-    },
-    data() {
-        return {
-            articles: [],
-            showEditButton : false            
-        }
-    },
-    created() {
-        this.ArticlesApi = new ArticlesApi()
-    },
-    mounted() {
-        this.loadArticles(); 
-        this.showEditButton = this.$auth.hasScope(['oasisArticleEditor', 'Administrator']);
-    },
-    methods: {
-        async loadArticles() {
-            const today = moment().add(-2, 'day')
-            
-            const query = this.query;
-            const articles = await this.ArticlesApi.queryArticles(query);
-            this.articles = articles.map(e=>{
-                e.showNewLabel = moment(e.meta.modifiedOn) > today
-                e.hashTitle = lstring(e.title, this.$locale).replace(/[^a-z0-9]/gi, '-').replace(/-+/g, '-');
-                return e;
-            });
-            this.$emit('onArticlesLoad', this.articles);
-        },
-        print(section, article){
-            // $('#'+section).printThis({
-            //     debug:false,
-            //     printContainer:true,
-            //     importCSS:true,
-            //     importStyle : true,
-            //     pageTitle :  lstring(article.title, this.$locale),
-            //     // loadCSS : '/app/css/print-friendly.css',
-            //     header : this.printHeader||'',
-            //     // footer : footer
-            // });	
+    });
 
-        }
-    },
-    filters: {
-        formatDate,
-        lstring
-    }
-}
+const loadArticles = async () => {
+  
+  const getArticles = await articlesApi.queryArticles(query);
+
+  articles.value = getArticles.map((e) => {
+    e.showNewLabel = moment(e.meta.modifiedOn) > today;
+    e.hashTitle = lstring(e.title, $locale).replace(/[^a-z0-9]/gi, '-').replace(/-+/g, '-');
+    return e;
+  });
+
+  emit('onArticlesLoad', articles.value);
+};
+
+onMounted(() => {
+  loadArticles();
+  showEditButton.value = $auth.hasScope(['oasisArticleEditor', 'Administrator']);
+});
 </script>
     
 <style>
