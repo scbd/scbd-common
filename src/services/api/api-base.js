@@ -6,7 +6,7 @@ let sitePrefixUrl = 'https://api.cbd.int';
 
 if(/\.cbd\.int$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbd.int';
 if(/\.cbddev\.xyz$/i.test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbddev.xyz';
-if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
+// if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
 
 const defaultOptions = { 
    prefixUrl:  sitePrefixUrl, 
