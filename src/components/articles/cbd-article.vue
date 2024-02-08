@@ -30,110 +30,92 @@
     </div>
 
 </template>
-
-<script>
-
+ 
+ <script setup>
 import axios from 'axios';
+import { ref, onMounted } from 'vue';
 import ArticlesApi from '../../services/api/articles';
-import {lstring } from '../../services/filters/lstring'
+import { lstring } from '../../services/filters/lstring';
 import cbdAddNewArticle from './cbd-add-new-article.vue';
 import cbdArticleCoverImage from './cbd-article-cover-image.vue';
-
-export default {
-    name: 'cbdArticle',
-    components : { 
-        cbdAddNewArticle, 
-        cbdArticleCoverImage 
-    },
-    props: {
-        hideCoverImage  : { type: Boolean, required: false, default:false        },
-        showEdit        : { type: Boolean, required: false, default:true         },
-        showEditTarget  : { type: String , required: false, default: '_self'     },
-        showEditRoles   : { type: Array  , required: false, default:[]           }, // [] of scope roles
-        article         : { type: Object,  required: false, default:undefined    },
-        query           : { type: Object,  required: false                       },
-        tags 		    : { type: Array  , required: false, default:[]           }, // [] of tag id's
-        customTags 	    : { type: Array  , required: false, default:[]           }, // [] of customTag id's
-        adminTags 	    : { type: Array  , required: false, default:[]           }, // [] of adminTag text
-    },
-    data() {
-        return {
-            returnUrl       : window.location.href,
-            hasEditRights   : false,
-            loading         : false
-        }
-    },
-    created() {
-       this.ArticlesApi = new ArticlesApi();
-    },
-    mounted() {
-        if(!this.article && this.query)
-            this.loadArticle();
-    },
-    methods: {
-        async loadArticle() {
-            try{
-                this.loading = true;
-                const query = this.query;
-                const articleResult = await this.ArticlesApi.queryArticles(query)
-     
-                if(articleResult.length){
-                    let lArticle = articleResult[0];
-
-                    this.preProcessOEmbed();
-
-                    if(lArticle.coverImage?.url){
-                        //sometime the file name has space/special chars, use new URL's href prop which encodes the special chars
-                        const url = new URL(lArticle.coverImage.url)
-                        lArticle.coverImage.url = url.href;
-
-                        lArticle.coverImage.url_1200  = lArticle.coverImage.url.replace(/attachments\.cbd\.int\//, '$&1200x600/')
-                    }
-                    this.article = lArticle;
-                    this.$emit('load', { ...this.article });   
-                }
-                else {
-                    this.$emit('load');
-                }
-
-                this.$auth.fetchUser().then(()=>{
-                    if(this.showEdit || this.showEdit == 'true' || this.hasOwnProperty(this.showEdit)){
-
-                        let roles = [...this.showEditRoles, 'oasisArticleEditor', 'Administrator']
-                        this.hasEditRights = this.$auth.hasScope(roles);
-                    }
-                })
-            }
-            catch(e){
-                console.error(e)
-            }
-            finally{
-                this.loading = false;
-            }
-        },
-        preProcessOEmbed() {
-
-            setTimeout(function(){
-
-                document.querySelectorAll( 'oembed[url]' ).forEach(async function(element) {
-                    var url = element.attributes.url.value;
-                    var params = {
-                        url : encodeURI(url),
-                    }
-
-                    const response = await axios.get('/api/v2020/oembed', {params:params});                    
-                    var embedHtml = '<div class="ck-media__wrapper" style="width:100%">' + response.data.html +'</div>'
-                    element.insertAdjacentHTML("afterend", embedHtml);
-                    
-                });
-
-            }, 500)
-        }
-    },
-    filters:{
-        lstring
-    }
-}
+ 
+ const articlesApi = new ArticlesApi();
+ const { hideCoverImage, showEdit, showEditTarget, showEditRoles, article, query,tags, customTags, adminTags} = defineProps({
+        hideCoverImage: { type: Boolean, required: false, default: false },
+        showEdit: { type: Boolean, required: false, default: true },
+        showEditTarget: { type: String, required: false, default: '_self' },
+        showEditRoles: { type: Array, required: false, default: () => [] }, // [] of scope roles
+        article: { type: Object, required: false, default: undefined },
+        query: { type: Object, required: false },
+        tags: { type: Array, required: false, default: [] }, // [] of tag id's
+        customTags: { type: Array, required: false, default: [] }, // [] of customTag id's
+        adminTags: { type: Array, required: false, default: [] } // [] of adminTag text
+    });
+ 
+ const data = ref({
+   returnUrl: window.location.href,
+   hasEditRights: false,
+   loading: false,
+ });
+ 
+ const loadArticle = async () => {
+   try {
+     data.value.loading = true;
+     const query = props.query; // ToDo
+     const articleResult = await articlesApi.queryArticles(query);
+ 
+     if (articleResult.length) {
+       let lArticle = articleResult[0];
+ 
+       preProcessOEmbed();
+ 
+       if (lArticle.coverImage?.url) {
+         // Sometimes the file name has space/special chars, use new URL's href prop which encodes the special chars
+         const url = new URL(lArticle.coverImage.url);
+         lArticle.coverImage.url = url.href;
+ 
+         lArticle.coverImage.url_1200 = lArticle.coverImage.url.replace(/attachments\.cbd\.int\//, '$&1200x600/');
+       }
+ 
+       props.article = lArticle; //ToDo
+       emit('load', { ...props.article });
+     } else {
+       emit('load');
+     }
+ 
+     await $auth.fetchUser();
+ 
+     if (props.showEdit || props.showEdit === 'true' || Object.prototype.hasOwnProperty.call(props, props.showEdit)) {
+       let roles = [...props.showEditRoles, 'oasisArticleEditor', 'Administrator'];
+       data.value.hasEditRights = $auth.hasScope(roles);
+     }
+   } catch (e) {
+     console.error(e);
+   } finally {
+     data.value.loading = false;
+   }
+ };
+ 
+ const preProcessOEmbed = () => {
+   setTimeout(function () {
+     document.querySelectorAll('oembed[url]').forEach(async function (element) {
+       var url = element.attributes.url.value;
+       var params = {
+         url: encodeURI(url),
+       };
+ 
+       const response = await axios.get('/api/v2020/oembed', { params: params });
+       var embedHtml = '<div class="ck-media__wrapper" style="width:100%">' + response.data.html + '</div>';
+       element.insertAdjacentHTML('afterend', embedHtml);
+     });
+   }, 500);
+ };
+ 
+ onMounted(() => {
+   if (!props.article && props.query) {
+     loadArticle();
+   }
+ });
 </script>
     
 <style>
