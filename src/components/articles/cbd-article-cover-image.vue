@@ -3,7 +3,7 @@
      <div class="image-credit-wrapper"  v-if="coverImage.url">    
 
         <div :class="'img cover-image cover-image-position-' + (coverImage.position||'center') + ' cover-image-size-' + (coverImage.size||'cover')" 
-            v-if="coverImage.url_1200||coverImage.url" :style="'background-image: url(' + cssEscape(coverImage.url_1200||coverImage.url) + ');'"></div>
+            v-if="coverImage.url_1200||coverImage.url" :style="'background-image: url(' + cssEscapeUrl(coverImage.url_1200||coverImage.url) + ');'"></div>
             
         <span class="image-credit" v-if="coverImage.credits">{{coverImage.credits}}</span>
 
@@ -12,22 +12,19 @@
     </div>
 
 </template>
-
-<script>
-import { cssEscape } from '../../services/util/css.escape'
-    export default {
-        name:'cbdArticleCoverImage',
-        props: {
-            coverImage : { type: Object , required: true  },
-        },
-        methods: {
-            cssEscape : function(url){
-				return cssEscape(url)
-			}
+  
+<script setup>
+  import { cssEscape } from '../../services/util/css.escape';
+  const { coverImage } = defineProps({
+        coverImage: {
+            type: Object,
+            required: true
         }
-    }
+    });
+  
+  const cssEscapeUrl = (url) => cssEscape(url);
+  
 </script>
-
 <style scoped>
 .image-credit-wrapper img {
     width: 100% !important;
