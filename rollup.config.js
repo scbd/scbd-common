@@ -4,6 +4,7 @@ import vue   from 'rollup-plugin-vue'
 import glob  from "glob";
 import { getBabelOutputPlugin } from '@rollup/plugin-babel';
 import alias                    from '@rollup/plugin-alias';
+import scss from 'rollup-plugin-scss';
 
 import { camelCase } from 'lodash'
 import {
@@ -21,12 +22,14 @@ const outputFormatExtensions = {
   'esm' : packageType=='module' ? '.js' : '.mjs',
   'cjs' : packageType!='module' ? '.js' : '.cjs',
 }
-const plugins = [ vue() ];
+const plugins = [ vue(), scss() ];
 
 export default async function(){
   return [
+    ...glob.sync('src/index.js'                ).map(c=>bundle(c, outputDir, o=>"index")),
     ...glob.sync('src/components/**/*.{js,vue}').map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.(js|vue)$/i, "$1"))),
     ...glob.sync('src/services/**/*.js'        ).map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.js$/i,       "$1"))),
+    ...glob.sync('src/assets/**/*.css'        ).map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.css$/i,       "$1"))),
   ];
 }
 
