@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError, toUrlParam, toUrlParams } from './api-base';
+import ApiBase, { tryCastToApiError, toUrlParam, toUrlParams, isValid} from './api-base';
 
 export default class ArticlesApi extends ApiBase
 {
@@ -8,7 +8,7 @@ export default class ArticlesApi extends ApiBase
   }
   
   async queryArticleGroup(groupKey, {q, f, s, sk, l , c, fo, ag })  {    
-    if(![undefined, null].includes(groupKey)) throw Error(`invalid value for groupKey`); 
+    if(!isValid(groupKey)) throw Error(`invalid value for groupKey`); 
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
 
     return this.http.get(`api/v2017/articles/grouping/${encodeURIComponent(groupKey)}`, { params })
@@ -25,7 +25,7 @@ export default class ArticlesApi extends ApiBase
   }
 
   async getArticleById(id)  {
-      if(![undefined, null].includes(id)) throw Error(`invalid value for id`);
+      if(!isValid(id)) throw Error(`invalid value for id`);
       const params= {
         q: toUrlParam( { _id: mapObjectId(id) })
       };
@@ -36,7 +36,8 @@ export default class ArticlesApi extends ApiBase
   }
 
   async getArticlesByTag(tag, options={})  {
-    if(![undefined, null].includes(tag)) throw Error(`invalid value for tag`);
+    if(!isValid(tag)) throw Error(`invalid value for tag`);
+
       
     const params= {
       q: toUrlParam(tag),
