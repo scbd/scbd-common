@@ -1,14 +1,5 @@
-/**
- * @vitest-environment jsdom
- */
-
-test('use jsdom in this test file', () => {
-  const element = document.createElement('div')
-  expect(element).not.toBeNull()
-})
-
 import { expect, test } from 'vitest'
-import { mapObjectId, isObjectId, toUrlParam, toUrlParams } from './api-base'
+import { mapObjectId, isObjectId, toUrlParam, toUrlParams, isValid } from '../../../src/services/api/api-base'
 
 test('isObjectId Test:', () => {
    expect.soft(isObjectId(1)).toBe(false);
@@ -31,6 +22,13 @@ test('Param list -> URL Params',() => {
   expect.soft(toUrlParams({q:1, f:2, s:1, sk:0, l:0 , c:0, fo:1, ag:1})).toEqual({"q":1,"f":2,"s":1,"sk":0,"l":0,"c":0,"fo":1,"ag":1 });
   expect.soft(toUrlParams({q:{firstName:"john",lastName:"smith"}, f:2, s:1, sk:0, l:0 , c:0, fo:1, ag:1})).toEqual({"q":'{"firstName":"john","lastName":"smith"}',"f":2,"s":1,"sk":0,"l":0,"c":0,"fo":1,"ag":1 });
 }) 
+
+
+test('isValid Test:', () => {
+  expect.soft(isValid()).toBe(false);
+  expect.soft(isValid("a string")).toBe(true);
+  expect.soft(isValid(1)).toBe(true); 
+})
 
 
 

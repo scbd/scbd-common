@@ -101,3 +101,7 @@ export function mapObjectId(id){
 export function isObjectId(id){
   return /^[a-f0-9]{24}/i.test(id);
 }
+
+export function isValid(params){
+  return ![undefined, null].includes(params);
+}
