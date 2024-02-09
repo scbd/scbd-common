@@ -1,8 +1,8 @@
 import { expect, test } from 'vitest'
-import ThesaurusAPI from '../../../src/services/api/thesaurus'
+import ThesaurusApi from '../../../src/services/api/thesaurus'
 
 
-const myAPI = new ThesaurusAPI({});
+const myAPI = new ThesaurusApi({});
 
 test('getDomains func: get all domains', () => {  
   return myAPI.getDomains().then(data => {

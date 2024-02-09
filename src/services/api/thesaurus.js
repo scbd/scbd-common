@@ -1,7 +1,7 @@
 
-import ApiBase, { tryCastToApiError ,toUrlParam, toUrlParams, isValid} from './api-base';
+import ApiBase, { tryCastToApiError, toUrlParam, toUrlParams, isValid} from './api-base';
 
-export default class ThesaurusAPI extends ApiBase
+export default class ThesaurusApi extends ApiBase
 {
   
   constructor(options) {
