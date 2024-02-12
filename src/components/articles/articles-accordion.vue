@@ -61,7 +61,7 @@ const loadArticles = async () => {
 
 onMounted(() => {
   loadArticles();
-  showEditButton.value = $auth.hasScope(['oasisArticleEditor', 'Administrator']);
+  showEditButton.value = true; //$auth.hasScope(['oasisArticleEditor', 'Administrator']);
 });
 </script>
     

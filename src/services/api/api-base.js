@@ -1,16 +1,17 @@
 import axios from 'axios'
 import { isFunction } from 'lodash'
+import Vue from 'vue'
 
 let sitePrefixUrl = 'https://api.cbd.int';
 
-if(/\.cbd\.int$/i   .test(window.location.hostname)) sitePrefixUrl= 'https://api.cbd.int';
-if(/\.cbddev\.xyz$/i.test(window.location.hostname)) sitePrefixUrl= 'https://api.cbddev.xyz';
-if(/\localhost$/i   .test(window.location.hostname)) sitePrefixUrl= '/';
+if(/\.cbd\.int$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbd.int';
+if(/\.cbddev\.xyz$/i.test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbddev.xyz';
+// if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
 
 const defaultOptions = { 
    prefixUrl:  sitePrefixUrl, 
    timeout  : 30 * 1000,
-   token: Vue?.prototype?.$auth?.strategy?.token?.get()
+   token: Vue?.prototype?.$auth?.strategy?.token?.get()  
 }
 
 export default class ApiBase
@@ -75,10 +76,32 @@ export function tryCastToApiError(error) {
   throw error
 }
 
+export function toUrlParam(value) {  
+  if (value instanceof(Date))  return value.toISOString();
+  if (value instanceof(Object)) return JSON.stringify(value);  
+  return value; 
+}
+
+export function toUrlParams(valueObj) {
+  const returnObj = {};
+
+  for (const [key, value] of Object.entries(valueObj)) {
+    if (value !== undefined){
+      returnObj[key] = toUrlParam(value);
+    }
+  }
+  
+  return returnObj;
+}
+
 export function mapObjectId(id){
   return isObjectId(id)? { $oid: id } : id
 }
 
 export function isObjectId(id){
   return /^[a-f0-9]{24}/i.test(id);
+}
+
+export function isValid(params){
+  return ![undefined, null].includes(params);
 }

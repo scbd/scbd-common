@@ -41,9 +41,11 @@
     "build": "rm -rf ./dist && rollup -c",
     "build:watch": "rm -rf ./dist && rollup -c --watch",
     "cleanup": "rm -rf ./dist && rm -rf ./node_modules",
-    "cleanup:hard": "rm -rf ./dist && rm -rf ./node_modules && rm -rf ./package-lock.json"
+    "cleanup:hard": "rm -rf ./dist && rm -rf ./node_modules && rm -rf ./package-lock.json",
+    "test": "vitest"
   },
   "dependencies": {
+    "jsdom": "^24.0.0",
     "vue": "^3.4.15"
   },
   "peerDependencies": {
@@ -69,6 +71,7 @@
     "rollup-plugin-vue": "^6.0.0",
     "sass": "^1.70.0",
     "scss": "^0.2.4",
-    "vite": "^5.0.11"
+    "vite": "^5.0.11",
+    "vitest": "^1.2.2"
   }
 }
