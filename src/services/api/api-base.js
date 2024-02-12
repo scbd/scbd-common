@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { isFunction } from 'lodash'
-import Vue from 'vue'
+// import Vue from 'vue'
+
 
 let sitePrefixUrl = 'https://api.cbd.int';
 
@@ -11,7 +12,7 @@ if(/\.cbddev\.xyz$/i.test(window?.location?.hostname || '')) sitePrefixUrl= 'htt
 const defaultOptions = { 
    prefixUrl:  sitePrefixUrl, 
    timeout  : 30 * 1000,
-   token: Vue?.prototype?.$auth?.strategy?.token?.get()  
+   token: '' //Vue?.prototype?.$auth?.strategy?.token?.get()  
 }
 
 export default class ApiBase
