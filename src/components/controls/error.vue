@@ -1,8 +1,9 @@
 <template>
-    <CAlert color="danger" v-if="error">
-        <CAlertHeading>
-            <CIcon icon="cil-check-circle" class="flex-shrink-0 me-2" width="24" height="24" />Error!
-        </CAlertHeading>
+    <div color="danger" v-if="error">
+        <div class="heading">
+            <!-- ToDo: change icon -->
+            <i icon="cil-check-circle" class="flex-shrink-0 me-2" width="24" height="24" />Error!
+        </div>
         <p>
             We are sorry to inform you that an unexpected error has occurred on this page.
             We understand that this is very unfortunate and may have caused inconvenience to you.
@@ -29,7 +30,7 @@
                 Message: {{ error.message }}
             </div>
         </div>
-    </CAlert>
+    </div>
 </template>
 
 <script setup>
@@ -46,5 +47,9 @@ import { ref } from 'vue';
 </script>
 
 <style scoped>
+.heading {
+
+    color: red;
+}
 
 </style>
