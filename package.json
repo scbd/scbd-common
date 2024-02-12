@@ -73,6 +73,7 @@
     "sass": "^1.70.0",
     "scss": "^0.2.4",
     "vite": "^5.0.11",
-    "vitest": "^1.2.2"
+    "vitest": "^1.2.2",
+    "@intlify/unplugin-vue-i18n": "^0.11.0"
   }
 }
