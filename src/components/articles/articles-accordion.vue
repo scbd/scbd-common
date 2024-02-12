@@ -10,7 +10,7 @@
                         <i class="fa fa-chevron-up pull-right"></i>
                         <span class="pull-right" style="font-size: 70%;font-weight: 300;" v-if="article.meta.modifiedOn">Updated: {{article.meta.modifiedOn | formatDate('dd LLL')}}</span>
                         
-                        {{ article.title | lstring($locale)  }}<span class="badge badge-danger label-new" v-if="article.showNewLabel">New</span>
+                        {{ article.title  }}<span class="badge badge-danger label-new" v-if="article.showNewLabel">New</span>
                     </h5>
                     
                 </div>
@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <cbd-add-new-article v-if="showEditButton" :id="article._id" target="_self" class="btn btn-default pull-right"></cbd-add-new-article>
                         <button class="btn btn-info pull-right btn-print" @click="print('cardItem_'+article._id, article)" style="cursor:pointer"><i class="fa fa-print"></i> Print</button>
-                        <div v-html="$options.filters.lstring(article.content, $locale)" class="ck-content"></div>
+                        <!-- <div v-html="$options.filters.lstring(article.content)" class="ck-content"></div> -->
                      </div>
                 </div>
             </div>
@@ -34,11 +34,13 @@ import ArticlesApi from '../../services/api/articles';
 import cbdAddNewArticle from './cbd-add-new-article.vue';
 import { format as formatDate } from '../../services/filters/datetime';
 import { lstring } from '../../services/filters/lstring';
+import { ref, onMounted } from 'vue'
 
 const articlesApi = new ArticlesApi();
 
-let articles = ref([]);
-let showEditButton = ref(false);
+const articles = ref([]);
+const showEditButton = ref(false);
+
 const today = moment().add(-2, 'day');
 const { query, showNew, printHeader } = defineProps({
         query: { type: Object, required: true },
@@ -49,14 +51,19 @@ const { query, showNew, printHeader } = defineProps({
 const loadArticles = async () => {
   
   const getArticles = await articlesApi.queryArticles(query);
+  console.log('getArticles', getArticles)
 
   articles.value = getArticles.map((e) => {
     e.showNewLabel = moment(e.meta.modifiedOn) > today;
-    e.hashTitle = lstring(e.title, $locale).replace(/[^a-z0-9]/gi, '-').replace(/-+/g, '-');
+    e.hashTitle = lstring(e.title).replace(/[^a-z0-9]/gi, '-').replace(/-+/g, '-');
     return e;
   });
 
-  emit('onArticlesLoad', articles.value);
+  console.log('articles', articles)
+  console.log('articles.value', articles.value)
+
+
+//   emit('onArticlesLoad', articles.value);
 };
 
 onMounted(() => {
