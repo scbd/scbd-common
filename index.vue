@@ -13,6 +13,9 @@
     <div style="margin-top:20px;margin-bottom:50px">
       <h1>Dev Applications</h1>
       <cop-count-down cop-title="COP 15" :end-date="endDate" :url="copUrl"></cop-count-down>
+
+      <h1>Test articles Accordion</h1>
+      <articles-accordion :query="{q}" ></articles-accordion>
     </div>
     <ScbdFooter></ScbdFooter>
   </div>
@@ -22,13 +25,22 @@
   // ToDo path will change after rollup fixes
   import ScbdHeader from './src/components/cbd-nav/header.vue'
   import ScbdFooter from './src/components/cbd-nav/footer.vue'
+
+
+
+  //<--------------- Cop-count-down testing entries----------------------> 
   import CopCountDown from './src/components/countdown/cop-count-down.vue'; 
-
-
-  //<--------------- Testing Area ----------------------> 
-  //Cop-count-down testing entries
   const endDate = new Date('2024-04-20');
   const copUrl = 'https://www.unep.org/un-biodiversity-conference-cop-15';
+
+  //<--------------- Cop-count-down testing entries---------------------->
+  // import articlesAccordion from './src/components/articles'; 
+  import articlesAccordion from '@/components/articles/articles-accordion.vue'; 
+  const q = { 
+					$and : [
+						{ adminTags : { $all : ['abs', 'getting-started']}}
+					]
+				};
 
 </script>
 
