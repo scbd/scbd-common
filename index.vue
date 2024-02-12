@@ -16,6 +16,9 @@
 
       <h1>Test articles Accordion</h1>
       <articles-accordion :query="{q}" ></articles-accordion>
+
+      <h1>KM Link</h1>
+      <km-link title="hellllllllll" to="abc.com" icon='fa-address-book'></km-link>
     </div>
     <ScbdFooter></ScbdFooter>
   </div>
@@ -41,7 +44,8 @@
 						{ adminTags : { $all : ['abs', 'getting-started']}}
 					]
 				};
-
+  //<--------------- Test KM Link---------------------->
+  import KmLink from './src/components/controls/km-link.vue'
 </script>
 
 <style scoped>

@@ -14,7 +14,7 @@
     import KmHelp      from './view/km-help.vue';
     
 
-    const { $eventBus } = useNuxtApp();
+    // const { $eventBus } = useNuxtApp();
     const props = defineProps({
         name      : {type:String},
         caption   : {type:String  },

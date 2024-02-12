@@ -7,16 +7,20 @@
   </head>
   <body>
     <div id="app"></div>
-  </body>
-</html>
 
 <script type="module">
   import { createApp } from 'vue'
-  import i18n from "./i18n";
+  // import i18n from "./i18n";
   import App from './index.vue'
   const app = createApp(App);
-  const i18n = createI18n({})
+// ToDo: move to plugins folder,  Attach the event bus to the Vue app instance
+    import mitt from 'mitt'
+    const emitter = mitt()
+    app.config.globalProperties.$eventBus = emitter;
 
-  app.use(i18n)
+  // const i18n = createI18n({})
+  // app.use(i18n)
   app.mount('#app')
 </script>
+</body>
+</html>
