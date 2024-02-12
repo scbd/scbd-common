@@ -12,7 +12,7 @@ import CountriesApi           from './countries'
 import KmDocumentsApi         from './km-storage'
 import KmWorkflowsApi         from './km-workflows'
 import RealmConfigurationApi  from './realm-configuration'
-import SolrIndexApi           from './solr-index'
+// import SolrIndexApi           from './solr-index'
 import ThesaurusApi           from './thesaurus'
 
 const articles           = new ArticlesApi          (context);
@@ -20,7 +20,7 @@ const countries          = new CountriesApi         (context);
 const kmDocuments        = new KmDocumentsApi       (context);
 const kmWorkflows        = new KmWorkflowsApi       (context);
 const realmConfiguration = new RealmConfigurationApi(context);
-const solrIndex          = new SolrIndexApi         (context);
+// const solrIndex          = new SolrIndexApi         (context);
 const thesaurus          = new ThesaurusApi         (context);
 
 export const Api = {
