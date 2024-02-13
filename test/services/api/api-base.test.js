@@ -7,7 +7,7 @@ test('isObjectId Test:', () => {
 })
 
 test('mapObjectId Test:', () => {  
-     expect.soft(mapObjectId("aaaabbbbccccdddd00001111")).toEqual({"o_id": "aaaabbbbccccdddd00001111" });   
+     expect.soft(mapObjectId("aaaabbbbccccdddd00001111")).toEqual({"$oid": "aaaabbbbccccdddd00001111" });   
 })
 
 test('Params -> URL Param',() => {
