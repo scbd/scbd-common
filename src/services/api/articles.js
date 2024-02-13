@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError, toUrlParam, toUrlParams, isValid} from './api-base';
+import ApiBase, { tryCastToApiError, toUrlParam, toUrlParams, isValid, mapObjectId} from './api-base';
 
 export default class ArticlesApi extends ApiBase
 {
@@ -7,53 +7,54 @@ export default class ArticlesApi extends ApiBase
     super(options);
   }
   
-  async queryArticleGroup(groupKey, {q, f, s, sk, l , c, fo, ag })  {    
+  async getArticleGroup(groupKey, {q, f, s, sk, l , c, fo, ag }={})  {    
     if(!isValid(groupKey)) throw Error(`invalid value for groupKey`); 
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
 
-    return this.http.get(`api/v2017/articles/grouping/${encodeURIComponent(groupKey)}`, { params })
+    return this.http.get(`api/v2017/articles/grouping/${encodeURIComponent(groupKey)}`,  { params } )
                      .then(res => res.data)
                      .catch(tryCastToApiError);
    }
 
-  async queryArticles({q, f, s, sk, l , c, fo, ag })  {
+  async getArticles({q, f, s, sk, l , c, fo, ag }={})  {
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
 
-    return this.http.get(`api/v2017/articles`, { params })
+    return this.http.get(`api/v2017/articles`,  { params } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async getArticleById(id)  {
+  async getArticleById(id,{q, f, s, sk, l , c, fo, ag }={} )  { 
+    
       if(!isValid(id)) throw Error(`invalid value for id`);
-      const params= {
-        q: toUrlParam( { _id: mapObjectId(id) })
-      };
 
-      return this.http.get(`api/v2017/articles`, { params })
+      const params=  toUrlParams({q, f, s, sk, l , c, fo, ag });
+      if(id) params.id = toUrlParam({_id: mapObjectId(id)});
+
+
+
+      return this.http.get(`api/v2017/articles`,  { params })
                     .then(res => res.data)
                     .catch(tryCastToApiError);  
   }
 
-  async getArticlesByTag(tag, options={})  {
+  //TODO:need to test  
+  async getArticlesByTag(tag,{q, f, s, sk, l , c, fo, ag }={})  {
     if(!isValid(tag)) throw Error(`invalid value for tag`);
 
-      
-    const params= {
-      q: toUrlParam(tag),
-      fo: 1
-    };
+    const params=  toUrlParams({q, f, s, sk, l , c, fo, ag });
+    if(tag) params.tags = toUrlParam({tags: tag}); 
 
-     return this.queryArticles( { params });
+     return this.getArticles(  { params } ); 
    }
 
-  async getArticleAdminTags({q, f, s, sk, l , c, fo, ag }){    
+  async getArticleAdminTags({q, f, s, sk, l , c, fo, ag }={}){    
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
 
-    const tags = await this.http.get(`api/v2021/article-admin-tags`, { params })
+    const tags = await this.http.get(`api/v2021/article-admin-tags`,  { params } )
                                 .then(res => res.data)
                                 .catch(tryCastToApiError);
 
     return tags
   }
-}
+ }
