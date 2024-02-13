@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError } from './api-base';
+import ApiBase, { tryCastToApiError, toUrlParams} from './api-base';
 
 export default class SolrIndexAPI extends ApiBase
 {
@@ -7,28 +7,11 @@ export default class SolrIndexAPI extends ApiBase
     super(options);
   }
 
-  async query({fieldQueries, query, sort, fields, rowsPerPage})  {
-   
-    const defaults = {
-      searchField : 'text_EN_txt',
-      start : 0, rowsPerPage:25
-    }
-    params = {...defaults, ...{fieldQueries, query, sort, fields, rowsPerPage} };
+  async query({fq, q, sort, fl, df='text_EN_txt', start=0, rows=25, wt='json'}={})  {
 
-    var queryListParameters = {
-      df    : params.searchField,
-      fq    : params.fieldQueries,
-      q     : params.query,
-      sort  : this.localizeFields(params.sort),
-      fl    : this.localizeFields(params.fields),
-      wt    : 'json',
-      start : params.start,
-      rows  : params.rowsPerPage,
-      // 'debug.explain.structured':true,
-      // "debugQuery":"on"
-  };
+  const params = toUrlParams( {fq, q, sort, fl, df, start, rows, wt});
 
-  return this.http.get(`/api/v2013/index/select`, toUrlParams(queryListParameters))
+  return this.http.get(`/api/v2013/index/select`,  { params })
                   .then(res => res.data)
                   .catch(tryCastToApiError);
 

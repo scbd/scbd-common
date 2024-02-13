@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError } from './api-base';
+import ApiBase, { tryCastToApiError, isValid } from './api-base';
 
 const  serviceUrls = { 
   documentQueryUrl      (){ return "/api/v2013/documents/" },
