@@ -35,7 +35,7 @@ class KmDocumentsApi extends ApiBase
 
   async query({q, f, s, sk, l , c, fo, ag }){
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.get(serviceUrls.documentQueryUrl(), { params })
+    return this.http.get(serviceUrls.documentQueryUrl(),  params )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
 
@@ -44,7 +44,7 @@ class KmDocumentsApi extends ApiBase
   async get(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.get(serviceUrls.documentUrl(identifier), { params })
+    return this.http.get(serviceUrls.documentUrl(identifier),  params )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -52,7 +52,7 @@ class KmDocumentsApi extends ApiBase
   async exists(identifier,{q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.head(serviceUrls.documentUrl(identifier), { params })
+    return this.http.head(serviceUrls.documentUrl(identifier), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -61,7 +61,7 @@ class KmDocumentsApi extends ApiBase
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(body)) throw Error(`invalid value for body`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.put(serviceUrls.documentUrl(identifier), body, { params })
+    return this.http.put(serviceUrls.documentUrl(identifier), body, params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -69,7 +69,7 @@ class KmDocumentsApi extends ApiBase
   async delete(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.delete(serviceUrls.documentUrl(identifier), { params })
+    return this.http.delete(serviceUrls.documentUrl(identifier), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -92,7 +92,7 @@ class KmDocumentsApi extends ApiBase
   async canCreate(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.get(serviceUrls.securityUrl(identifier, 'create'), { params })
+    return this.http.get(serviceUrls.securityUrl(identifier, 'create'), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -100,7 +100,7 @@ class KmDocumentsApi extends ApiBase
   async canUpdate(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.get(serviceUrls.securityUrl(identifier, 'update'), { params })
+    return this.http.get(serviceUrls.securityUrl(identifier, 'update'), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -108,7 +108,7 @@ class KmDocumentsApi extends ApiBase
   async canDelete(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.get(serviceUrls.securityUrl(identifier, 'delete'), { params })
+    return this.http.get(serviceUrls.securityUrl(identifier, 'delete'), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -145,7 +145,7 @@ class KmDraftsApi extends ApiBase
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    data =  this.http.get(serviceUrls.draftUrl(identifier), { params })
+    data =  this.http.get(serviceUrls.draftUrl(identifier), params)
                      .then(res => res.data)
                      .catch(tryCastToApiError);
     
@@ -159,7 +159,7 @@ class KmDraftsApi extends ApiBase
   async exists(identifier,{q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });      
-    return this.http.head(serviceUrls.draftUrl(identifier), { params })
+    return this.http.head(serviceUrls.draftUrl(identifier), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -168,7 +168,7 @@ class KmDraftsApi extends ApiBase
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(body)) throw Error(`invalid value for body`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.put(serviceUrls.draftUrl(identifier), { params })
+    return this.http.put(serviceUrls.draftUrl(identifier), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -176,7 +176,7 @@ class KmDraftsApi extends ApiBase
   async delete(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.delete(serviceUrls.draftUrl(identifier), { params })
+    return this.http.delete(serviceUrls.draftUrl(identifier), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -184,7 +184,7 @@ class KmDraftsApi extends ApiBase
   async canCreate(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'create'), { params })
+    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'create'), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -193,14 +193,14 @@ class KmDraftsApi extends ApiBase
   async canUpdate(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'update'), { params })
+    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'update'), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
   async canDelete(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'delete'), { params })
+    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'delete'), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -214,7 +214,7 @@ class KmLocksApi extends ApiBase
   async get(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.get(serviceUrls.draftLockUrl(identifier), { params })
+    return this.http.get(serviceUrls.draftLockUrl(identifier), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -222,7 +222,7 @@ class KmLocksApi extends ApiBase
   async exists(identifier,{q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.head(serviceUrls.draftLockUrl(identifier), { params })
+    return this.http.head(serviceUrls.draftLockUrl(identifier), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -231,7 +231,7 @@ class KmLocksApi extends ApiBase
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(body)) throw Error(`invalid value for body`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.put(serviceUrls.draftLockUrl(identifier), body,{ params })
+    return this.http.put(serviceUrls.draftLockUrl(identifier), body,params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -239,7 +239,7 @@ class KmLocksApi extends ApiBase
   async delete(identifier, {q, f, s, sk, l , c, fo, ag }){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.delete(serviceUrls.draftLockUrl(identifier), { params })
+    return this.http.delete(serviceUrls.draftLockUrl(identifier), params)
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -322,7 +322,7 @@ class KmAttachmentsApi extends ApiBase
 
         ////TEMP////////////////
             //upload to temp url
-            const data = this.http.put(serviceUrls.attachmentUrl(identifier, file.name), body, { params })
+            const data = this.http.put(serviceUrls.attachmentUrl(identifier, file.name), body,  params )
                             .then(res => res.data)
                             .catch(tryCastToApiError);
             

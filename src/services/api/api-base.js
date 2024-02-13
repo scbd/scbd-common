@@ -94,8 +94,8 @@ export function toUrlParams(valueObj) {
   return returnObj;
 }
 
-export function mapObjectId(id){
-  return isObjectId(id)? { $oid: id } : id
+export function mapObjectId(id){  
+  return isObjectId(id)? { "o_id": id } : id
 }
 
 export function isObjectId(id){

@@ -8,10 +8,10 @@ export default class CountriesApi extends ApiBase
   }
 
   async getCountries({q, f, s, sk, l , c, fo, ag }={})  {
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
+    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });    
 
-    return this.http.get(`/api/v2013/countries`, { params })
-                    .then(res => res.data)
+    return this.http.get(`/api/v2013/countries`,  { params } )
+                    .then(res => { return res.data })
                     .catch(tryCastToApiError);
   }
 

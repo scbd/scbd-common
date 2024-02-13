@@ -1,4 +1,3 @@
-
 import ApiBase, { tryCastToApiError } from './api-base';
 
 export default class KmWorkflowsApi extends ApiBase
@@ -8,10 +7,10 @@ export default class KmWorkflowsApi extends ApiBase
     }
     
     
-    async getWorkflowHistory({q, f, s, sk, l , c, fo, ag })  {
+    async getWorkflowHistory({q, f, s, sk, l , c, fo, ag }={})  {
         const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
 
-        return this.http.get(`/api/v2013/workflows`, { params })
+        return this.http.get(`/api/v2013/workflows`,{ params })
                         .then(res => res.data)
                         .catch(tryCastToApiError);
     }
@@ -55,9 +54,9 @@ export default class KmWorkflowsApi extends ApiBase
 
     async cancelWorkflow(id) {        
         if(!isValid(id)) throw Error(`invalid value for id`);
-        const params = { 'action': 'cancel' };
+        const params  = { 'action': 'cancel' };
 
-        return this.http.delete(`/api/v2013/workflows/${id}`, params)
+        return this.http.delete(`/api/v2013/workflows/${id}`,{ params })
                         .then(res => res.data)
                         .catch(tryCastToApiError);
 
@@ -67,7 +66,7 @@ export default class KmWorkflowsApi extends ApiBase
         if(!isValid(batchId)) throw Error(`invalid value for batchId`);
         const params = { 'action': 'cancel' };
 
-        return this.http.delete(`/api/v2013/workflows/batches/${batchId}`, params)
+        return this.http.delete(`/api/v2013/workflows/batches/${batchId}`,{ params })
                         .then(res => res.data)
                         .catch(tryCastToApiError);
 

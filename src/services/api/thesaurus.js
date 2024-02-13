@@ -14,32 +14,35 @@ export default class ThesaurusApi extends ApiBase
       .catch(tryCastToApiError);
   }
   
-  async getDomain(identifier, { relations } = {})  { 
-    const params= { };
+  async getDomain(identifier, { relations } = {})  {     
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);
+
+    const params= { };
     if(relations) params.relations = toUrlParam(relations);
  
-    return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(identifier)}`, { params })
+    return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(identifier)}`,  { params } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);   
   }
 
-  async getDomainTerms(identifier, { relations } = {})  {
-    const params= { };
+  async getDomainTerms(identifier, { relations } = {})  {    
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);
+
+    const params= { };
     if(relations) params.relations = toUrlParam(relations);
 
-    return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(identifier)}/terms`, { params })
+    return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(identifier)}/terms`, { params } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
   
-  async getTerm(identifier, { relations } = {})  {
-    const params= { }; 
+  async getTerm(identifier, { relations } = {})  {    
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
+
+    const params= { }; 
     if(relations) params.relations = toUrlParam(relations);
 
-    return this.http.get(`/api/v2013/thesaurus/terms/${encodeURIComponent(identifier)}`, { params })
+    return this.http.get(`/api/v2013/thesaurus/terms/${encodeURIComponent(identifier)}`,  { params } )
                     .then(res => res.data)
                     .catch(tryCastToApiError); 
   }
