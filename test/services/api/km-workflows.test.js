@@ -1,11 +1,11 @@
 import { expect, test } from 'vitest'
-import KmWorkflowsApi from '../../../src/services/api/KmWorkflowsApi'
+import KmWorkflowsApi from '../../../src/services/api/km-workflows'
 
 const myAPI = new KmWorkflowsApi({});
 
 
 test('getWorkflowHistory',  async  () => {  
-    const data = await myAPI.getWorkflowHistory();
+    const data = await myAPI.getWorkflowHistory({fo:1});
   
     expect.soft(data).toEqual( 
       expect.arrayContaining([ 
