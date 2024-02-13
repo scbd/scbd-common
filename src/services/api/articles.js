@@ -39,8 +39,10 @@ export default class ArticlesApi extends ApiBase
   }
 
   //TODO:need to test  
-  async getArticlesByTag(tag,{q, f, s, sk, l , c, fo, ag }={})  {
+  async getArticlesByTag(tag, {q, f, s, sk, l , c, fo, ag }={})  {
     if(!isValid(tag)) throw Error(`invalid value for tag`);
+
+    const q = { tag : tag };
 
     const params=  toUrlParams({q, f, s, sk, l , c, fo, ag });
     if(tag) params.tags = toUrlParam({tags: tag}); 
