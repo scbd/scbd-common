@@ -4,7 +4,7 @@ import KmWorkflowsApi from '../../../src/services/api/km-workflows'
 const dotenv = require('dotenv');
 dotenv.config();
 
-const myAPI = new  KmStorageApi ({tokentype:"Bearer", token: process.env.MyToken});
+const myAPI = new  KmWorkflowsApi({tokentype:"Bearer", token: process.env.MyToken});
 
 
 

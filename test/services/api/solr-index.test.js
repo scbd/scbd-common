@@ -6,8 +6,8 @@ const myAPI = new  SolrIndexAPI ({});
 
 
 test('SolrIndex query ',  async  () => {  
-  const data = await myAPI.query({q:"schema_s:notification AND realm_ss:CHM", rows:1, start:1});  
-
+  const data = await myAPI.query({query:"schema_s:notification AND realm_ss:CHM",start:1, rowsPerPage:1 });  
+  
   expect.soft(data).toEqual( 
     expect.objectContaining({ 
         "response":           expect.any(Object),

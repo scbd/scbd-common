@@ -34,11 +34,18 @@ class KmDocumentsApi extends ApiBase
     this.self = this;
   }
   //TODO: params doesn't work
-  async query({q, f, s, sk, l , c, fo, ag }={}){
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
+  async query( realm, {q, s, sk, l ,collection }={}){
+    const params = toUrlParams( { 
+      $filter:q, 
+      $orderby:s,
+      $skip:sk, 
+      $top:l,
+      collection // "my"      
+    });
 
-    console.log(process.env.MyToken);
-    return this.http.get(serviceUrls.documentQueryUrl(), { params } )
+    const headers ={ Realm:realm };
+
+    return this.http.get(serviceUrls.documentQueryUrl(), { params, headers} )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
 
