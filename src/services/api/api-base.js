@@ -10,7 +10,7 @@ if(/\.cbddev\.xyz$/i.test(window?.location?.hostname || '')) sitePrefixUrl= 'htt
 
 const defaultOptions = { 
    prefixUrl:  sitePrefixUrl, 
-   timeout  : 30 * 1000,
+   timeout  : 100*100* 1000,
    token: Vue?.prototype?.$auth?.strategy?.token?.get()  
 }
 
@@ -89,7 +89,6 @@ export function stringifyUrlParams(valueObj) {
       returnObj[key] = stringifyUrlParam(value);
     }
   }
-  
   return returnObj;
 }
 

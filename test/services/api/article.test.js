@@ -41,7 +41,7 @@ test('getArticles func: get articles by params', async () => {
 
 
 test('getArticles func: get articles on specific field', async () => {  
-    const data = await myAPI.getArticles({f:{"title":1} , l:3});
+    const data = await myAPI.getArticles({f:{title:1} , l:3});
     
     expect.soft(data).toEqual( 
       expect.arrayContaining([ 
