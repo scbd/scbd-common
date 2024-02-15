@@ -45,6 +45,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "dotenv": "^16.4.4",
     "jsdom": "^24.0.0",
     "vue": "^2.7.10"
   },

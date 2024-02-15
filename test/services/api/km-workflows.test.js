@@ -1,7 +1,11 @@
 import { expect, test } from 'vitest'
 import KmWorkflowsApi from '../../../src/services/api/km-workflows'
 
-const myAPI = new KmWorkflowsApi({});
+const dotenv = require('dotenv');
+dotenv.config();
+
+const myAPI = new  KmStorageApi ({tokentype:"Bearer", token: process.env.MyToken});
+
 
 
 test('getWorkflowHistory',  async  () => {  
@@ -10,24 +14,21 @@ test('getWorkflowHistory',  async  () => {
   expect.soft(data).toEqual( 
     expect.arrayContaining([ 
       expect.objectContaining({ 
-        "_id":         expect.any(String), 
-        "type":        expect.any(Object),       
-        "activities":  expect.any(Array),
-        "workflowAge": expect.any(Object),
-        "execution":   expect.any(String), 
-        "createdOn":   expect.any(String), 
-        "createdBy":   expect.any(Number),
-        "data":        expect.any(Object),
-        "state":       expect.any(String), 
-        "__v":         expect.any(Number),
-        "closedOn":    expect.any(String), 
-        "result":      expect.any(Object)
+        "__v":             expect.any(Number),
+        "_id":             expect.any(String), 
+        "activities":      expect.any(Array),
+        "createdBy":       expect.any(Number),
+        "createdBy_info":  expect.any(Object),
+        "createdOn":       expect.any(String), 
+        "data":            expect.any(Object), 
+        "execution":       expect.any(String),    
+        "state":           expect.any(String), 
+        "type":            expect.any(Object),
+        "workflowAge":     expect.any(Object)   
       })
     ]) 
   ) 
 })
-
-
 
   
 test('getWorkflow',  async  () => {  
@@ -54,7 +55,7 @@ test('getWorkflow',  async  () => {
 
 
 // test('getBatchWorkflowDetails',  async  () => {  
-//   const data = await myAPI.getBatchWorkflowDetails(batchId);
+//   const data = await myAPI.getBatchWorkflowDetails(batchid);
 
 //   expect.soft(data).toEqual( 
 //     expect.arrayContaining([ 

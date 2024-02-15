@@ -9,13 +9,7 @@ export default class KmWorkflowsApi extends ApiBase
     async getWorkflowHistory({q, f, s, sk, l , c, fo, ag }={})  {
         const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
 
-
-        const token = "717F8E336DCE5918A16C44A963E38496A2CB180758C200B6EAA1443398A090AB98051729D95187930F54F2F9ADC044E1BED8C21BDBF3D81BFA7F26129FEE78E7D5D15893F4A4E4019314B62A82DFB49EB4A96D1DDDB81AF31E7BBC48FB57D9C9165F8025D8382B8B5BC0DED7B7067CA529929F727B1A555AC515A75C8AFAE9FA"
-       
-            //var header = {'Authorization',  `Bearer ${AuthService.getToken()}`}
-        const header = { 'Authorization': 'Bearer 717F8E336DCE5918A16C44A963E38496A2CB180758C200B6EAA1443398A090AB98051729D95187930F54F2F9ADC044E1BED8C21BDBF3D81BFA7F26129FEE78E7D5D15893F4A4E4019314B62A82DFB49EB4A96D1DDDB81AF31E7BBC48FB57D9C9165F8025D8382B8B5BC0DED7B7067CA529929F727B1A555AC515A75C8AFAE9FA' }; // auth header with bearer token
-
-        return this.http.get(`/api/v2013/workflows`, { header }, { params })
+        return this.http.get(`/api/v2013/workflows`,  { params })
                         .then(res => res.data)
                         .catch(tryCastToApiError);
     }
