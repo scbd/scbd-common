@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError, toUrlParam, toUrlParams, isValid, mapObjectId} from './api-base';
+import ApiBase, { tryCastToApiError, stringifyUrlParam, stringifyUrlParams, isValid, mapObjectId} from './api-base';
 
 export default class ArticlesApi extends ApiBase
 {
@@ -9,7 +9,7 @@ export default class ArticlesApi extends ApiBase
   
   async getArticleGroup(groupKey, {q, f, s, sk, l , c, fo, ag }={})  {    
     if(!isValid(groupKey)) throw Error(`invalid value for groupKey`); 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
+    const params = stringifyUrlParams( {q, f, s, sk, l , c, fo, ag });
 
     return this.http.get(`api/v2017/articles/grouping/${encodeURIComponent(groupKey)}`,  { params } )
                     .then(res => res.data)
@@ -17,7 +17,7 @@ export default class ArticlesApi extends ApiBase
    }
 
   async getArticles({q, f, s, sk, l , c, fo, ag }={})  {
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
+    const params = stringifyUrlParams( {q, f, s, sk, l , c, fo, ag });
 
     return this.http.get(`api/v2017/articles`,  { params } )
                     .then(res => res.data)
@@ -36,11 +36,11 @@ export default class ArticlesApi extends ApiBase
   async getArticlesByTag(tag, {q, f, s, sk, l , c, fo, ag }={})  {    
     if(!isValid(tag)) throw Error(`invalid value for tag`);
 
-   const params=  toUrlParams({q, f, s, sk, l , c, fo, ag });
+   const params=  stringifyUrlParams({q, f, s, sk, l , c, fo, ag });
    const query = q;   
    
    if (tag){
-    params.q = toUrlParam({...query, ...{tags: mapObjectId(tag)}});    
+    params.q = stringifyUrlParam({...query, ...{tags: mapObjectId(tag)}});    
    } 
 
     return this.http.get(`api/v2017/articles`,  { params })
@@ -51,7 +51,7 @@ export default class ArticlesApi extends ApiBase
    
 
   async getArticleAdminTags({q, f, s, sk, l , c, fo, ag }={}){    
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
+    const params = stringifyUrlParams( {q, f, s, sk, l , c, fo, ag });
 
     return this.http.get(`api/v2021/article-admin-tags`,  { params } )
                     .then(res => res.data)
