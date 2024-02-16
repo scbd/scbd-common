@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError , toUrlParam, toUrlParams, isValid} from './api-base';
+import ApiBase, { tryCastToApiError , stringifyUrlParams, isValid} from './api-base';
 
 export default class CountriesApi extends ApiBase
 {
@@ -8,7 +8,7 @@ export default class CountriesApi extends ApiBase
   }
 
   async getCountries({q, f, s, sk, l , c, fo, ag }={})  {
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });    
+    const params = stringifyUrlParams( {q, f, s, sk, l , c, fo, ag });    
 
     return this.http.get(`/api/v2013/countries`,  { params } )
                     .then(res => { return res.data })

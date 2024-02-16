@@ -76,21 +76,22 @@ export function tryCastToApiError(error) {
   throw error
 }
 
-export function toUrlParam(value) {  
+export function sanitizeUrlParam(value) {  
   if (value instanceof(Date))  return value.toISOString();
   if (value instanceof(Object)) return JSON.stringify(value);  
   return value; 
 }
 
-export function toUrlParams(valueObj) {
+export function stringifyUrlParams(valueObj) {  
+  if(!isValid(valueObj)) throw Error(`value is undefined`);
+
   const returnObj = {};
 
   for (const [key, value] of Object.entries(valueObj)) {
-    if (value !== undefined){
-      returnObj[key] = toUrlParam(value);
+    if (isValid(value)){
+      returnObj[key] = sanitizeUrlParam(value);
     }
   }
-  
   return returnObj;
 }
 

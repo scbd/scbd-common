@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError, toUrlParams, isValid, } from './api-base';
+import ApiBase, { tryCastToApiError, stringifyUrlParams } from './api-base';
 
 export default class RealmConfigurationAPI extends ApiBase
 {
@@ -8,7 +8,7 @@ export default class RealmConfigurationAPI extends ApiBase
   }
 
   async queryRealmConfigurations({q, f, s, sk, l , c, fo, ag }={})  { 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
+    const params = stringifyUrlParams( {q, f, s, sk, l , c, fo, ag });
 
     return this.http.get(`/api/v2018/realm-configurations`,  { params } )
                     .then(res => res.data)

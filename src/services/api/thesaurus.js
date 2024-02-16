@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError, toUrlParam, toUrlParams, isValid} from './api-base';
+import ApiBase, { tryCastToApiError, sanitizeUrlParam, isValid} from './api-base';
 
 export default class ThesaurusApi extends ApiBase
 {
@@ -9,18 +9,15 @@ export default class ThesaurusApi extends ApiBase
   }
 
   async getDomains()  { 
-    return this.http.get(`/api/v2013/thesaurus/domains/`)
+    return this.http.get(`/api/v2013/thesaurus/domains`)
       .then(res => res.data)
       .catch(tryCastToApiError);
   }
   
-  async getDomain(identifier, { relations } = {})  {     
+  async getDomain(identifier)  {     
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);
 
-    const params= { };
-    if(relations) params.relations = toUrlParam(relations);
- 
-    return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(identifier)}`,  { params } )
+    return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(identifier)}` )
                     .then(res => res.data)
                     .catch(tryCastToApiError);   
   }
@@ -29,7 +26,7 @@ export default class ThesaurusApi extends ApiBase
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);
 
     const params= { };
-    if(relations) params.relations = toUrlParam(relations);
+    if(relations) params.relations = sanitizeUrlParam(relations);
 
     return this.http.get(`/api/v2013/thesaurus/domains/${encodeURIComponent(identifier)}/terms`, { params } )
                     .then(res => res.data)
@@ -40,7 +37,7 @@ export default class ThesaurusApi extends ApiBase
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
     const params= { }; 
-    if(relations) params.relations = toUrlParam(relations);
+    if(relations) params.relations = sanitizeUrlParam(relations);
 
     return this.http.get(`/api/v2013/thesaurus/terms/${encodeURIComponent(identifier)}`,  { params } )
                     .then(res => res.data)

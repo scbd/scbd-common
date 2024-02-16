@@ -34,26 +34,6 @@ test('getDomain func: get domans of countries', async () => {
   
 })
 
-test('getDomain func: get domain of countries, relation = "domain"', async () => {  
-  const data = await myAPI.getDomain("countries",{relations:"domain"});
-
-  expect.objectContaining({
-      "domainId":   expect.any(Number),
-      "identifier": expect.any(String),
-      "name":       expect.any(String)
-  });   
-})
-
-test('getDomain func: get domain of countries, relation = "all"', async () => {  
-  const data = await myAPI.getDomain("countries",{relations:"all"});
-
-  expect.objectContaining({
-      "domainId":   expect.any(Number),
-      "identifier": expect.any(String),
-      "name":       expect.any(String)
-  });       
-})
-
 test('getDomainTerms func: throw error on wrong params ', async () => {
   await expect(() => myAPI.getDomainTerms()).rejects.toThrowError(/invalid value for identifier/)
 })
