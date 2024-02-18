@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError , toUrlParam, toUrlParams, isValid} from './api-base';
+import ApiBase, { tryCastToApiError ,  toUrlParams, isValid} from './api-base';
 
 export default class CountriesApi extends ApiBase
 {

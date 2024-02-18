@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { mapObjectId, isObjectId, toUrlParam, toUrlParams, isValid } from '../../../src/services/api/api-base'
+import { mapObjectId, isObjectId, sanitizeUrlParam, toUrlParams, isValid } from '../../../src/services/api/api-base'
 
 test('isObjectId Test:', () => {
    expect.soft(isObjectId(1)).toBe(false);
@@ -11,11 +11,11 @@ test('mapObjectId Test:', () => {
 })
 
 test('Params -> URL Param',() => {
-  expect.soft(toUrlParam("I am a string")).toEqual("I am a string");
-  expect.soft(toUrlParam(1)).toBe(1);
-  expect.soft(toUrlParam(new Date("2024-09-13T05:00:00.000+05:00"))).toBe("2024-09-13T00:00:00.000Z");
-  expect.soft(toUrlParam({code:"AD"})).toEqual('{"code":"AD"}')
-  expect.soft(toUrlParam({name: "John", age: 30, city: "New York"})).toEqual('{"name":"John","age":30,"city":"New York"}');
+  expect.soft(sanitizeUrlParam("I am a string")).toEqual("I am a string");
+  expect.soft(sanitizeUrlParam(1)).toBe(1);
+  expect.soft(sanitizeUrlParam(new Date("2024-09-13T05:00:00.000+05:00"))).toBe("2024-09-13T00:00:00.000Z");
+  expect.soft(sanitizeUrlParam({code:"AD"})).toEqual('{"code":"AD"}')
+  expect.soft(sanitizeUrlParam({name: "John", age: 30, city: "New York"})).toEqual('{"name":"John","age":30,"city":"New York"}');
 }) 
 
 

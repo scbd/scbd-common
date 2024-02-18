@@ -12,7 +12,13 @@ const  serviceUrls = {
   securityUrl           (identifier, operation){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/securities/${encodeURIComponent(operation)}` },
   draftSecurityUrl      (identifier, operation){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft/securities/${encodeURIComponent(operation)}` },
   draftLockUrl          (identifier, lockID)   { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft/locks/${encodeURIComponent(lockID)}` },
+  draftLockListUrl      (identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft/locks` },
   documentVersionUrl    (identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions` },
+}
+
+const DefaultValues = {
+  Realm  : "CHM",
+  Accept : "application/json"
 }
 
 export default class KmStorageApi extends ApiBase
@@ -32,108 +38,132 @@ class KmDocumentsApi extends ApiBase
   constructor(options) {
     super(options);
     this.self = this;
+    this.config.headers = {
+      Realm:   DefaultValues.Realm,
+      Accept : DefaultValues.Accept,
+    }
   }
-  //TODO: params doesn't work
-  async query( realm, {q, s, sk, l ,collection }={}){
+
+  async query( realm=null, {q, s, l, sk }={}){
+
     const params = toUrlParams( { 
       $filter:q, 
       $orderby:s,
       $skip:sk, 
       $top:l,
-      collection // "my"      
+      collection : "my"
     });
 
-    const headers ={ Realm:realm };
-
-    return this.http.get(serviceUrls.documentQueryUrl(), { params, headers} )
-                    .then(res => res.data)
-                    .catch(tryCastToApiError);
-
-  }
-
-  async get(identifier, {q, f, s, sk, l , c, fo, ag }={}){
-    if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-
-    return this.http.get(serviceUrls.documentUrl(identifier), { params } )
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+    
+    return this.http.get(serviceUrls.documentQueryUrl(), { headers, params } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  // TODO: check interface : no return
-  async exists(identifier,{q, f, s, sk, l , c, fo, ag }={}){
+  async get(identifier, realm=null ){
+    if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
+        
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.get(serviceUrls.documentUrl(identifier) ,{ headers } )
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
+  async exists( identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
-    return this.http.head(serviceUrls.documentUrl(identifier), { params })
+    return this.http.head(serviceUrls.documentUrl(identifier), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-   //TODO: confirm interface
-  async put(identifier, body, {q, f, s, sk, l , c, fo, ag }={}){
+ 
+ //TODO: confirm interface
+ async put( identifier, body, realm=null){
+  if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
+  if(!isValid(body)) throw Error(`invalid value for body`);  
+
+  //const params = toUrlParams( {schema}); 
+
+  const Realm = realm ? { Realm : realm } : {};  
+  const ContentType = { "Content-Type" : "application/json" };
+  const headers =  { ...Realm , ...ContentType}
+
+  return this.http.put(serviceUrls.draftUrl(identifier), body , { headers })
+                  .then(res => res.data)
+                  .catch(tryCastToApiError);
+}
+
+
+  async delete(identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.delete(serviceUrls.documentUrl(identifier), { headers })
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
+ 
+  async validate(body, {realm, schema, metadata }={}){
     if(!isValid(body)) throw Error(`invalid value for body`);  
 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
+    const params = toUrlParams( { schema, metadata });
 
-    return this.http.put(serviceUrls.documentUrl(identifier), body, { params })
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+   
+    return this.http.put(serviceUrls.validateUrl(), body, { headers, params } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async delete(identifier, {q, f, s, sk, l , c, fo, ag }={}){
+
+   async canCreate(identifier, realm=null, {schema, metadata}={}){
+    if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
+    if(!isValid(schema)) throw Error(`invalid value for schema`);  
+
+    const params = toUrlParams({ schema, metadata });
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.get(serviceUrls.securityUrl(identifier, 'create'), { headers, params })
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
+
+  async canUpdate(identifier, realm=null, {metadata }={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
+    const params = toUrlParams( {metadata });
 
-    return this.http.delete(serviceUrls.documentUrl(identifier), { params })
-                    .then(res => res.data)
-                    .catch(tryCastToApiError);
-  }
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
-  //TODO:  "message": "schema not specified",
-  async validate(body, {q, f, s, sk, l , c, fo, ag }={}){
-    if(!isValid(body)) throw Error(`invalid value for body`);  
-
-    params = {q, f, s, sk, l , c, fo, ag }|| {};
-
-    if (!params?.schema && body?.header?.schema)
-        params.schema = body.header.schema;
-        
-    params.identifier = body.header.identifier;    
-
-    return this.http.put(serviceUrls.validateUrl(), body, toUrlParams(params)  )
-                    .then(res => res.data)
-                    .catch(tryCastToApiError);
-  }
-  //TODO: message": "Schema not specified in metadata",
-  async canCreate(identifier, {q, f, s, sk, l , c, fo, ag }={}){
-    if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.get(serviceUrls.securityUrl(identifier, 'create'), { params })
-                    .then(res => res.data)
-                    .catch(tryCastToApiError);
-  }
-
-  //TODO: "message": "Please pass a valid realm. (#1ED41)",
-  async canUpdate(identifier, {q, f, s, sk, l , c, fo, ag }={}){
-    if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.get(serviceUrls.securityUrl(identifier, 'update'), { params })
+    return this.http.get(serviceUrls.securityUrl(identifier, 'update'), { headers, params })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
  
-    //TODO: "message": "Please pass a valid realm. (#1ED41)",
-  async canDelete(identifier, {q, f, s, sk, l , c, fo, ag }={}){
-    if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    return this.http.get(serviceUrls.securityUrl(identifier, 'delete'), { params })
+ 
+  async canDelete(identifier, realm=null ){
+    if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
+    
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+   
+    return this.http.get(serviceUrls.securityUrl(identifier, 'delete'), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
@@ -142,37 +172,52 @@ class KmDocumentsApi extends ApiBase
 class KmDraftsApi extends ApiBase
 {
   constructor(options) {
+
     super(options);
-    
+    this.self = this;
+    this.config.headers = {
+      Realm:   DefaultValues.Realm,
+      Accept : DefaultValues.Accept,
+    }
   }
 
-  async query({q, f, s, sk, l , c, fo, ag }={}){
-    const params = {q, f, s, sk, l , c, fo, ag }
-    params.collection = "mydraft";
-  
-    const data =  this.http.get(serviceUrls.documentQueryUrl(), toUrlParams(params))
-                     .then(res => res.data)
-                     .catch(tryCastToApiError);
-    
+   async query(realm=null, {q, s, l, sk }={}){  
+    const params = toUrlParams( {    
+      $filter:q, 
+      $orderby:s,
+      $top:l,
+      $skip:sk, 
+      collection : "mydraft"  
+    });
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    const data =  this.http.get(serviceUrls.documentQueryUrl(), { headers, params} )
+                           .then(res => res.data)
+                           .catch(tryCastToApiError);
+     
     if(data?.Items?.length){
-        data.Items = data.Items.map(e=>{
-                        if(e.workingDocumentBody){
-                            e.body = e.workingDocumentBody;
-                        }
-                        return e;
-                    });
+      data.Items = data.Items.map(e=>{
+            if(e.workingDocumentBody){
+                e.body = e.workingDocumentBody;
+            }
+            return e;
+      });
     }
 
     return data;
   }
 
-  async get(identifier, {q, f, s, sk, l , c, fo, ag }={}){
+  async get(identifier,realm=null  ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
+    
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });
-    const data =  this.http.get(serviceUrls.draftUrl(identifier), { params })
-                          .then(res => res.data)
-                          .catch(tryCastToApiError);
+    const data =  this.http.get(serviceUrls.draftUrl(identifier), { headers })
+                           .then(res => res.data)
+                           .catch(tryCastToApiError);
     
     if(data.workingDocumentBody){
         data.body = data.workingDocumentBody;
@@ -181,108 +226,160 @@ class KmDraftsApi extends ApiBase
     return data;
   }
 
-  //TODO: confirm return content
-  async exists(identifier,{q, f, s, sk, l , c, fo, ag }={}){
+
+  async exists( identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag });      
-    return this.http.head(serviceUrls.draftUrl(identifier), { params })
-                    .then(res => res.data)
-                    .catch(tryCastToApiError);
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+     return this.http.head(serviceUrls.draftUrl(identifier), { headers })
+                     .then(res => res.data)
+                     .catch(tryCastToApiError);
   }
-  //TODO: may I change it?
-  async put(identifier, body, {q, f, s, sk, l , c, fo, ag }={}){
+
+  //TODO: confirm interface
+  async put( identifier, body, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(body)) throw Error(`invalid value for body`);  
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.put(serviceUrls.draftUrl(identifier), { params })
+
+    //const params = toUrlParams( {schema}); 
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const ContentType = { "Content-Type" : "application/json" };
+    const headers =  { ...Realm , ...ContentType}
+
+    return this.http.put(serviceUrls.draftUrl(identifier),  body , { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  //TODO: may I delete it?
-  async delete(identifier, {q, f, s, sk, l , c, fo, ag }={}){
+
+  async delete(identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.delete(serviceUrls.draftUrl(identifier), { params })
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.delete(serviceUrls.draftUrl(identifier), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
   
-  //TODO: confirm interface
-  async canCreate(identifier, {q, f, s, sk, l , c, fo, ag }={}){
+  async canCreate(identifier, {realm, schema, metadata }={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'create'), { params })
+
+
+    const params = toUrlParams( {schema, metadata }); 
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'create'), { headers, params })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  //TODO:    "message": "Please pass a valid realm. (#1ED41)",
-  async canUpdate(identifier, {q, f, s, sk, l , c, fo, ag }={}){
+  async canUpdate(identifier, {realm, metadata}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'update'), { params })
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    const params = toUrlParams( {metadata}); 
+    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'update'), { headers, params })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  //TODO: "message": "Please pass a valid realm. (#1ED41)",
-  async canDelete(identifier, {q, f, s, sk, l , c, fo, ag }={}){
+
+  async canDelete(identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'delete'), { params })
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'delete'), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 }
+
 class KmLocksApi extends ApiBase
 {
   constructor(options) {
     super(options);
+    this.config.headers = {
+      Realm:   DefaultValues.Realm,
+      Accept : DefaultValues.Accept,
+    }
   }
 
-  async get(identifier, lockID, {q, f, s, sk, l , c, fo, ag }={}){
+  async query(identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-    if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.get(serviceUrls.draftLockUrl(identifier, lockID), { params })
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+ 
+    return this.http.get(serviceUrls.draftLockListUrl(identifier), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async exists(identifier,lockID ,{q, f, s, sk, l , c, fo, ag }={}){
+
+   async get(identifier, lockID, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.head(serviceUrls.draftLockUrl(identifier, lockID), { params })
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.get(serviceUrls.draftLockUrl(identifier, lockID), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async put(identifier,lockID, body, {q, f, s, sk, l , c, fo, ag }={}){
+  async exists(identifier,lockID, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
-    if(!isValid(body)) throw Error(`invalid value for body`);  
 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.put(serviceUrls.draftLockUrl(identifier,lockID), body,{ params })
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.head(serviceUrls.draftLockUrl(identifier, lockID), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async delete(identifier,lockID, {q, f, s, sk, l , c, fo, ag }={}){
+  
+ 
+  async put(identifier,lockID, body, realm=null){
+    if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
+    if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
+   
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+    
+    return this.http.put(serviceUrls.draftLockUrl(identifier,lockID), body, { headers })
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
+ 
+  async delete(identifier,lockID, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
 
-    const params = toUrlParams( {q, f, s, sk, l , c, fo, ag }); 
-    return this.http.delete(serviceUrls.draftLockUrl(identifier,lockID), { params })
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.delete(serviceUrls.draftLockUrl(identifier,lockID), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 }
+
 class KmAttachmentsApi extends ApiBase
 {
   constructor(options) {
@@ -291,9 +388,9 @@ class KmAttachmentsApi extends ApiBase
 
   async uploadTempFile(identifier, file, fileName, options)  {
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-    if(!isValid(file)) throw Error(`invalid value for file`);  
-    if(!isValid(fileName)) throw Error(`invalid value for fileName`);  
-    if(!isValid(options)) throw Error(`invalid value for options`);  
+    if(!isValid(file))       throw Error(`invalid value for file`);  
+    if(!isValid(fileName))   throw Error(`invalid value for fileName`);  
+    if(!isValid(options))    throw Error(`invalid value for options`);  
     
     
     const { timeout, onUploadProgress, onDownloadProgress }= { ...(options||{}) };
@@ -329,21 +426,19 @@ class KmAttachmentsApi extends ApiBase
 
     const key = S4();
     // get a temporary slot from S3 to upload the file
-    const temporarySlot = this.http.put(serviceUrls.temporaryAttachmentUrl(), {key}, body=tempSlotBody )
+    const temporarySlot = this.http.put(serviceUrls.temporaryAttachmentUrl(),  tempSlotBody , {key} )
                                    .then(res => res.data)
                                    .catch(tryCastToApiError);
     
     // upload the file to the temporary slot on S3    
     apiConfig.headers['Content-Type' ] = temporarySlot.contentType;
     apiConfig.headers['Authorization'] = undefined;
-    const temporaryAttachment =  await useAPIFetch(temporarySlot.url,   { key,  method:'PUT', body:file, ...apiConfig})
-
-                                // this.http.put(temporarySlot.url,key, body=file,  { apiConfig} )
-                                //                                       .then(res => res.data)
-                                //                                       .catch(tryCastToApiError);
+    const temporaryAttachment =  this.http.put(temporarySlot.url, file,  { key, ...apiConfig} )
+                                         .then(res => res.data)
+                                         .catch(tryCastToApiError);
 
     //persists the file using the KM persists attachments endpoint
-    const persistedAttachment =  this.http.post(serviceUrls.persistAttachmentUrl(identifier, temporarySlot.uid),key, body={fileName},  { params } )
+    const persistedAttachment =  this.http.post(serviceUrls.persistAttachmentUrl(identifier, temporarySlot.uid), fileName,  { key, params } )
                                           .then(res => res.data)
                                           .catch(tryCastToApiError);
     
@@ -353,6 +448,7 @@ class KmAttachmentsApi extends ApiBase
         url     : config.public.API_URL+persistedAttachment.url        
     };
   }
+
   async upload(identifier, file, {q, f, s, sk, l , c, fo, ag }={}) {
         if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
         if(!isValid(file)) throw Error(`invalid value for file`);  
@@ -370,8 +466,8 @@ class KmAttachmentsApi extends ApiBase
         ////TEMP////////////////
             //upload to temp url
             const data = this.http.put(serviceUrls.attachmentUrl(identifier, file.name), body,  { params } )
-                            .then(res => res.data)
-                            .catch(tryCastToApiError);
+                                  .then(res => res.data)
+                                  .catch(tryCastToApiError);
             
             const config = useRuntimeConfig()
             data.url = config.public.API_URL+data.url;

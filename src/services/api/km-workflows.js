@@ -31,21 +31,21 @@ export default class KmWorkflowsApi extends ApiBase
     }
 
     async updateActivity(id, activityName, body) {  
-        if(!isValid(id)) throw Error(`invalid value for id`);
-        if(!isValid(activityName)) throw Error(`invalid value for activityName`);
-        if(!isValid(body)) throw Error(`invalid value for body`);
+        if(!isValid(id))            throw Error(`invalid value for id`);
+        if(!isValid(activityName))  throw Error(`invalid value for activityName`);
+        if(!isValid(body))          throw Error(`invalid value for body`);
 
-        return this.http.put(`/api/v2013/workflows/" + id + "/activities/" + activityName`, body)
+        return this.http.put(`/api/v2013/workflows/${id}/activities/${activityName}`, body)
                         .then(res => res.data)
                         .catch(tryCastToApiError);
     }
 
     async updateBatchActivity(id, activityName, body) {
-        if(!isValid(id)) throw Error(`invalid value for id`);
+        if(!isValid(id))           throw Error(`invalid value for id`);
         if(!isValid(activityName)) throw Error(`invalid value for activityName`);
-        if(!isValid(body)) throw Error(`invalid value for body`);
+        if(!isValid(body))         throw Error(`invalid value for body`);
 
-        return this.http.put("/api/v2013/workflows/batches/" + id + "/activities/" + activityName, body)
+        return this.http.put(`/api/v2013/workflows/batches/${id}/activities/${activityName}` , body)
                         .then(res => res.data)
                         .catch(tryCastToApiError);    
     }
@@ -61,6 +61,7 @@ export default class KmWorkflowsApi extends ApiBase
 
     async cancelBatch(batchId) {
         if(!isValid(batchId)) throw Error(`invalid value for batchId`);
+        
         const params = { 'action': 'cancel' };
 
         return this.http.delete(`/api/v2013/workflows/batches/${batchId}`,{ params })
