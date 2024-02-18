@@ -57,20 +57,7 @@ async function loadAsyncHeaders(baseConfig) {
       headers.Authorization = `${tokenType||'Bearer'} ${token}`;
   }
 
-  const instance = axios.create({ ...config, headers } );
-  
-  // // Add a request interceptor
-  // instance.interceptors.request.use((config) => {
-  //     // Log the request headers before the request is sent
-  //     console.log(config.headers);
-  //     return config;
-  // }, (error) => {
-  //     // Do something with request error
-  //     return Promise.reject(error);
-  // });
-
-  return instance;
-
+  return axios.create({ ...config, headers } );
 }
 
 //////////////////////////

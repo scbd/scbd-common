@@ -1,4 +1,3 @@
-
 import ApiBase, { tryCastToApiError, isValid, stringifyUrlParams } from './api-base';
 
 const  serviceUrls = { 
@@ -44,8 +43,7 @@ class KmDocumentsApi extends ApiBase
     }
   }
 
-  async query( realm=null, {q, s, l, sk }={}){
-
+  async query( {realm, q, s, l, sk }={}){
     const params = stringifyUrlParams( { 
       $filter:q, 
       $orderby:s,
@@ -84,23 +82,18 @@ class KmDocumentsApi extends ApiBase
                     .catch(tryCastToApiError);
   }
 
- 
- //TODO: confirm interface
- async put( identifier, body, realm=null){
-  if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-  if(!isValid(body)) throw Error(`invalid value for body`);  
+  async put( identifier, body, realm=null){
+    if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
+    if(!isValid(body)) throw Error(`invalid value for body`);  
 
-  //const params = stringifyUrlParams( {schema}); 
-
-  const Realm = realm ? { Realm : realm } : {};  
-  const ContentType = { "Content-Type" : "application/json" };
-  const headers =  { ...Realm , ...ContentType}
-
-  return this.http.put(serviceUrls.draftUrl(identifier), body , { headers })
-                  .then(res => res.data)
-                  .catch(tryCastToApiError);
-}
-
+    const Realm = realm ? { Realm : realm } : {};  
+    const ContentType = { 'Content-Type': 'application/json' };
+    const headers =  { ...Realm , ...ContentType}
+    
+    return this.http.put(serviceUrls.draftUrl(identifier), body , { headers })
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
 
   async delete(identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
@@ -112,8 +105,7 @@ class KmDocumentsApi extends ApiBase
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
-
- 
+   
   async validate(body, {realm, schema, metadata }={}){
     if(!isValid(body)) throw Error(`invalid value for body`);  
 
@@ -127,8 +119,7 @@ class KmDocumentsApi extends ApiBase
                     .catch(tryCastToApiError);
   }
 
-
-   async canCreate(identifier, realm=null, {schema, metadata}={}){
+  async canCreate(identifier, {realm, schema, metadata}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(schema)) throw Error(`invalid value for schema`);  
 
@@ -142,8 +133,7 @@ class KmDocumentsApi extends ApiBase
                     .catch(tryCastToApiError);
   }
 
-
-  async canUpdate(identifier, realm=null, {metadata }={}){
+  async canUpdate(identifier,  {realm, metadata }={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
     const params = stringifyUrlParams( {metadata });
@@ -154,8 +144,7 @@ class KmDocumentsApi extends ApiBase
     return this.http.get(serviceUrls.securityUrl(identifier, 'update'), { headers, params })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
-  }
- 
+  } 
  
   async canDelete(identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
@@ -181,7 +170,7 @@ class KmDraftsApi extends ApiBase
     }
   }
 
-   async query(realm=null, {q, s, l, sk }={}){  
+  async query({realm, q, s, l, sk }={}){  
     const params = stringifyUrlParams( {    
       $filter:q, 
       $orderby:s,
@@ -226,7 +215,6 @@ class KmDraftsApi extends ApiBase
     return data;
   }
 
-
   async exists( identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
@@ -238,22 +226,20 @@ class KmDraftsApi extends ApiBase
                      .catch(tryCastToApiError);
   }
 
-  //TODO: confirm interface
-  async put( identifier, body, realm=null,{ schema}){
+  async put( identifier, body, {realm, schema}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(body)) throw Error(`invalid value for body`);  
 
     const params = stringifyUrlParams( {schema}); 
 
     const Realm = realm ? { Realm : realm } : {};  
-    const ContentType = { "Content-Type" : "application/json" };
+    const ContentType = { 'Content-Type': 'application/json' };
     const headers =  { ...Realm , ...ContentType}
 
     return this.http.put(serviceUrls.draftUrl(identifier),  body , { headers, params })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
-
 
   async delete(identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
@@ -268,7 +254,6 @@ class KmDraftsApi extends ApiBase
   
   async canCreate(identifier, {realm, schema, metadata }={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
-
 
     const params = stringifyUrlParams( {schema, metadata }); 
 
@@ -291,7 +276,6 @@ class KmDraftsApi extends ApiBase
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
-
 
   async canDelete(identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
@@ -326,11 +310,9 @@ class KmLocksApi extends ApiBase
                     .catch(tryCastToApiError);
   }
 
-
-   async get(identifier, lockID, realm=null ){
+  async get(identifier, lockID, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
-
 
     const Realm = realm ? { Realm : realm } : {};  
     const headers =  { ...Realm }
@@ -350,9 +332,7 @@ class KmLocksApi extends ApiBase
     return this.http.head(serviceUrls.draftLockUrl(identifier, lockID), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
-  }
-
-  
+  }  
  
   async put(identifier,lockID, body, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
@@ -365,7 +345,6 @@ class KmLocksApi extends ApiBase
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
-
  
   async delete(identifier,lockID, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
@@ -432,8 +411,8 @@ class KmAttachmentsApi extends ApiBase
     
     // upload the file to the temporary slot on S3    
     apiConfig.headers['Content-Type' ] = temporarySlot.contentType;
-    apiConfig.headers['Authorization'] = undefined;
-    const temporaryAttachment =  this.http.put(temporarySlot.url, file,  { key, ...apiConfig} )
+    //apiConfig.headers['Authorization'] = undefined;
+    const temporaryAttachment =  this.http.put(temporarySlot.url, file,  {  ...apiConfig} )
                                          .then(res => res.data)
                                          .catch(tryCastToApiError);
 
@@ -449,11 +428,11 @@ class KmAttachmentsApi extends ApiBase
     };
   }
 
-  async upload(identifier, file, contentType=null, { q, f, s, sk, l , c, fo, ag }={}) {
+  async upload(identifier, file,  {contentType, headers  }={}) {
         if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
         if(!isValid(file)) throw Error(`invalid value for file`);  
 
-        params = {q, f, s, sk, l , c, fo, ag } || {};
+        params = {contentType, identifier, filename } || {};
         params.identifier = identifier;
         params.filename = file.name;
 
@@ -465,7 +444,7 @@ class KmAttachmentsApi extends ApiBase
 
         ////TEMP////////////////
             //upload to temp url
-            const data = this.http.put(serviceUrls.attachmentUrl(identifier, file.name), body=file,  { headers, params } )
+            const data = this.http.put(serviceUrls.attachmentUrl(identifier, file.name), body=file,  { params } )
                                   .then(res => res.data)
                                   .catch(tryCastToApiError);
             
