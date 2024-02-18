@@ -424,9 +424,9 @@ class KmAttachmentsApi extends ApiBase
         throw new Error("File type not supported: " + mimeType + "(" + file.name + ")");
     }
 
-    const key = S4();
+    //const key = S4();
     // get a temporary slot from S3 to upload the file
-    const temporarySlot = this.http.put(serviceUrls.temporaryAttachmentUrl(),  tempSlotBody , {key} )
+    const temporarySlot = this.http.put(serviceUrls.temporaryAttachmentUrl(),  tempSlotBody  )
                                    .then(res => res.data)
                                    .catch(tryCastToApiError);
     
@@ -438,7 +438,7 @@ class KmAttachmentsApi extends ApiBase
                                          .catch(tryCastToApiError);
 
     //persists the file using the KM persists attachments endpoint
-    const persistedAttachment =  this.http.post(serviceUrls.persistAttachmentUrl(identifier, temporarySlot.uid), fileName,  { key, params } )
+    const persistedAttachment =  this.http.post(serviceUrls.persistAttachmentUrl(identifier, temporarySlot.uid), fileName,  { params } )
                                           .then(res => res.data)
                                           .catch(tryCastToApiError);
     
@@ -449,7 +449,7 @@ class KmAttachmentsApi extends ApiBase
     };
   }
 
-  async upload(identifier, file, {q, f, s, sk, l , c, fo, ag }={}) {
+  async upload(identifier, file, contentType=null, { q, f, s, sk, l , c, fo, ag }={}) {
         if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
         if(!isValid(file)) throw Error(`invalid value for file`);  
 
@@ -465,7 +465,7 @@ class KmAttachmentsApi extends ApiBase
 
         ////TEMP////////////////
             //upload to temp url
-            const data = this.http.put(serviceUrls.attachmentUrl(identifier, file.name), body,  { params } )
+            const data = this.http.put(serviceUrls.attachmentUrl(identifier, file.name), body=file,  { headers, params } )
                                   .then(res => res.data)
                                   .catch(tryCastToApiError);
             
