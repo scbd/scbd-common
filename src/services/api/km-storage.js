@@ -239,17 +239,17 @@ class KmDraftsApi extends ApiBase
   }
 
   //TODO: confirm interface
-  async put( identifier, body, realm=null){
+  async put( identifier, body, realm=null,{ schema}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(body)) throw Error(`invalid value for body`);  
 
-    //const params = stringifyUrlParams( {schema}); 
+    const params = stringifyUrlParams( {schema}); 
 
     const Realm = realm ? { Realm : realm } : {};  
     const ContentType = { "Content-Type" : "application/json" };
     const headers =  { ...Realm , ...ContentType}
 
-    return this.http.put(serviceUrls.draftUrl(identifier),  body , { headers })
+    return this.http.put(serviceUrls.draftUrl(identifier),  body , { headers, params })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
