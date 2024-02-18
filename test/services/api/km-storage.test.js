@@ -15,8 +15,18 @@ test('document-query--default',  async  () => {
     ) 
 })
 
+test('document-query--default',  async  () => {  
+    const data = await myAPI.documents.query({l:1});
+    expect.soft(data).toEqual(
+        expect.objectContaining({       
+          "Items":  expect.any(Array),     
+          "Count":   expect.any(Number),
+        })
+    ) 
+})
+
 test('document-query--ABS-DEV',  async  () => {  
-    const data = await myAPI.documents.query("ABS-DEV");
+    const data = await myAPI.documents.query({realm:"ABS-DEV"});
     expect.soft(data).toEqual(
         expect.objectContaining({       
           "Items":  expect.any(Array),     
@@ -157,7 +167,7 @@ test('document-validate',  async  () => {
 })
 
 test('document-canCreate--ABS',  async  () => {  
-    const data = await myAPI.documents.canCreate("C44FCD4E-548C-EB88-77F7-CB3E1C7C9790","ABS",{ schema: "authority", metadata:{ government : "ca" }});  
+    const data = await myAPI.documents.canCreate("C44FCD4E-548C-EB88-77F7-CB3E1C7C9790",{ realm : "ABS",schema: "authority", metadata:{ government : "ca" }});  
 
     expect.soft(data).toEqual(
         expect.objectContaining({       
@@ -167,7 +177,7 @@ test('document-canCreate--ABS',  async  () => {
 })
 
 test('document-canUpdate-CHM',  async  () => {  
-    const data = await myAPI.documents.canUpdate("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737","CHM",{ schema: "authority", metadata:{ government : "ca" }});  
+    const data = await myAPI.documents.canUpdate("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737",{ realm: "CHM", schema: "authority", metadata:{ government : "ca" }});  
 
     expect.soft(data).toEqual(
         expect.objectContaining({       

@@ -44,7 +44,7 @@ class KmDocumentsApi extends ApiBase
     }
   }
 
-  async query( realm=null, {q, s, l, sk }={}){
+  async query( {realm, q, s, l, sk }={}){
 
     const params = toUrlParams( { 
       $filter:q, 
@@ -93,9 +93,9 @@ class KmDocumentsApi extends ApiBase
   //const params = toUrlParams( {schema}); 
 
   const Realm = realm ? { Realm : realm } : {};  
-  const ContentType = { "Content-Type" : "application/json" };
+  const ContentType = { 'Content-Type': 'application/json', };
   const headers =  { ...Realm , ...ContentType}
-
+  
   return this.http.put(serviceUrls.draftUrl(identifier), body , { headers })
                   .then(res => res.data)
                   .catch(tryCastToApiError);
@@ -128,7 +128,7 @@ class KmDocumentsApi extends ApiBase
   }
 
 
-   async canCreate(identifier, realm=null, {schema, metadata}={}){
+   async canCreate(identifier, {realm=null, schema, metadata}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(schema)) throw Error(`invalid value for schema`);  
 
@@ -143,7 +143,7 @@ class KmDocumentsApi extends ApiBase
   }
 
 
-  async canUpdate(identifier, realm=null, {metadata }={}){
+  async canUpdate(identifier,  {realm=null, metadata }={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
     const params = toUrlParams( {metadata });
@@ -181,7 +181,7 @@ class KmDraftsApi extends ApiBase
     }
   }
 
-   async query(realm=null, {q, s, l, sk }={}){  
+   async query({realm=null, q, s, l, sk }={}){  
     const params = toUrlParams( {    
       $filter:q, 
       $orderby:s,
@@ -432,8 +432,8 @@ class KmAttachmentsApi extends ApiBase
     
     // upload the file to the temporary slot on S3    
     apiConfig.headers['Content-Type' ] = temporarySlot.contentType;
-    apiConfig.headers['Authorization'] = undefined;
-    const temporaryAttachment =  this.http.put(temporarySlot.url, file,  { key, ...apiConfig} )
+    //apiConfig.headers['Authorization'] = undefined;
+    const temporaryAttachment =  this.http.put(temporarySlot.url, file,  {  ...apiConfig} )
                                          .then(res => res.data)
                                          .catch(tryCastToApiError);
 
@@ -449,11 +449,11 @@ class KmAttachmentsApi extends ApiBase
     };
   }
 
-  async upload(identifier, file, contentType=null, { q, f, s, sk, l , c, fo, ag }={}) {
+  async upload(identifier, file,  {contentType, headers  }={}) {
         if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
         if(!isValid(file)) throw Error(`invalid value for file`);  
 
-        params = {q, f, s, sk, l , c, fo, ag } || {};
+        params = {contentType, identifier, filename } || {};
         params.identifier = identifier;
         params.filename = file.name;
 
@@ -465,7 +465,7 @@ class KmAttachmentsApi extends ApiBase
 
         ////TEMP////////////////
             //upload to temp url
-            const data = this.http.put(serviceUrls.attachmentUrl(identifier, file.name), body=file,  { headers, params } )
+            const data = this.http.put(serviceUrls.attachmentUrl(identifier, file.name), body=file,  { params } )
                                   .then(res => res.data)
                                   .catch(tryCastToApiError);
             
