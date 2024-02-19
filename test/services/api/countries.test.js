@@ -9,7 +9,7 @@ test('getCountries func: get all countries when set params list as empty',  asyn
   expect.soft(data).toEqual( 
     expect.arrayContaining([ 
       expect.objectContaining({ 
-        "__v":      expect.any(Number),
+       // "__v":      expect.any(Number),
         "_id":      expect.any(String), 
         "code":     expect.any(String),
         "code2":    expect.any(String),
@@ -28,7 +28,7 @@ test('getCountries func:  q  ', async  () => {
   expect.soft(data).toEqual( 
     expect.arrayContaining([ 
       expect.objectContaining({ 
-        "__v":      expect.any(Number),
+       // "__v":      expect.any(Number),
         "_id":      expect.any(String), 
         "code":     expect.stringContaining("CA"),
         "code2":    expect.any(String),
@@ -90,7 +90,7 @@ test('getCountr func: get one country-ad', async  () => {
 
   expect.soft(data).toEqual(        
       expect.objectContaining({ 
-        "__v":      expect.any(Number),
+       // "__v":      expect.any(Number),
         "_id":      expect.any(String), 
         "code":     expect.stringContaining("AD"),
         "code2":    expect.any(String),

@@ -6,7 +6,7 @@ let sitePrefixUrl = 'https://api.cbd.int';
 
 if(/\.cbd\.int$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbd.int';
 if(/\.cbddev\.xyz$/i.test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbddev.xyz';
-// if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
+ if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
 
 const defaultOptions = { 
    prefixUrl:  sitePrefixUrl, 
@@ -76,10 +76,10 @@ export function tryCastToApiError(error) {
   throw error
 }
 
-export function sanitizeUrlParam(value) {  
-  if (value instanceof(Date))  return value.toISOString();
-  if (value instanceof(Object)) return JSON.stringify(value);  
+export function stringifyUrlParam(value) {  
+  if(value!==undefined) value = JSON.stringify(value);
   return value; 
+
 }
 
 export function stringifyUrlParams(valueObj) {  
@@ -89,7 +89,7 @@ export function stringifyUrlParams(valueObj) {
 
   for (const [key, value] of Object.entries(valueObj)) {
     if (isValid(value)){
-      returnObj[key] = sanitizeUrlParam(value);
+      returnObj[key] = stringifyUrlParam(value);
     }
   }
   return returnObj;

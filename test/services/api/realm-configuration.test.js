@@ -37,7 +37,7 @@ test('queryRealmConfigurations',  async  () => {
 
   
 test('getRealmConfigurationByHost',  async  () => {  
-  const data = await myAPI.getRealmConfigurationByHost("bch.cbd.int");
+  const data = await myAPI.getRealmConfigurationByHost({host: "bch.cbd.int"});
 
   expect.soft(data).toEqual( 
     expect.arrayContaining([ 
@@ -62,24 +62,3 @@ test('getRealmConfigurationByHost',  async  () => {
     ]) 
   )   
 })
-
-
-  
-
-
-
-
-
-
-
-
-  // async getRealmConfigurationByHost(host)  {
-  //   if(!host){
-  //     host = window.location.host || useRuntimeConfig().public.REALM_CONF_HOST
-  //   }
-
-  //   return this.http.get(`/api/v2018/realm-configurations/${encodeURIComponent(host)||''}`)
-  //                   .then(res => res.data)
-  //                   .catch(tryCastToApiError);
-  // }
-

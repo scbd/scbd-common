@@ -15,7 +15,7 @@ export default class RealmConfigurationAPI extends ApiBase
                     .catch(tryCastToApiError);
   }
 
-  async getRealmConfigurationByHost(host)  {
+  async getRealmConfigurationByHost({host})  {
     if(!host){
       host = window.location.host || useRuntimeConfig().public.REALM_CONF_HOST
     }
