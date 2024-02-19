@@ -3,6 +3,7 @@ import ApiBase, { tryCastToApiError, isValid, stringifyUrlParams } from './api-b
 const  serviceUrls = { 
   documentQueryUrl      (){ return "/api/v2013/documents/" },
   documentUrl           (identifier){ return `/api/v2013/documents/${encodeURIComponent(identifier)}` },
+  documentInfoUrl       (identifier){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/info` }, 
   validateUrl           (){ return "/api/v2013/documents/x/validate" },
   draftUrl              (identifier){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft` },
   attachmentUrl         (identifier, filename) { return `/api/v2013/documents/${encodeURIComponent(identifier)}/attachments/${encodeURIComponent(filename)}` },
@@ -20,7 +21,7 @@ const DefaultValues = {
   Accept : "application/json"
 }
 
-export default class KmStorageApi extends ApiBase
+export default class KmStorageApi extends ApiBase 
 {
   constructor(options) {
     super(options);
@@ -71,6 +72,18 @@ class KmDocumentsApi extends ApiBase
                     .catch(tryCastToApiError);
   }
 
+
+  async getInfo(identifier, realm=null ){
+    if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
+        
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.get(serviceUrls.documentInfoUrl(identifier) ,{ headers } )
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
   async exists( identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
 
@@ -90,7 +103,7 @@ class KmDocumentsApi extends ApiBase
     const ContentType = { 'Content-Type': 'application/json' };
     const headers =  { ...Realm , ...ContentType}
     
-    return this.http.put(serviceUrls.draftUrl(identifier), body , { headers })
+    return this.http.put(serviceUrls.documentUrl(identifier), body , { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }

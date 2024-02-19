@@ -58,6 +58,30 @@ test('document-get--ABS-DEV',  async  () => {
     ) 
 })
 
+
+test('document-getinfo--ABS-DEV',  async  () => {  
+    const data = await myAPI.documents.getInfo("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737","ABS-DEV");  
+
+    expect.soft(data).toEqual(
+        expect.objectContaining({      
+            "metadata":             expect.any(Object),            
+            "body":                 expect.any(Object),     
+            "Realm":                expect.any(String),  
+            "Identifier":           expect.any(String),     
+            "documentID":           expect.any(Number),  
+            "createdOn":            expect.any(Date),     
+            "createdBy":            expect.any(Object),  
+            "updatedOn":            expect.any(Date),     
+            "updatedBy":            expect.any(Object),  
+            "submittedOn":          expect.any(Date),  
+            "submittedBy":          expect.any(Object),     
+            "type":                 expect.any(String),  
+            "owner":                expect.any(String),     
+           
+        })
+    ) 
+})
+
 test('document-exists--ABS-DEV',  async  () => {  
     const data = await myAPI.documents.exists("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737","ABS-DEV");  
     expect.soft(data).toEqual(
