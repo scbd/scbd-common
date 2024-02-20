@@ -16,16 +16,10 @@ const  serviceUrls = {
   documentVersionUrl    (identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions` },
 }
 
-const DefaultValues = {
-  Realm  : "CHM",
-  Accept : "application/json"
-}
-
 export default class KmStorageApi extends ApiBase
 {
-  constructor(options) {
+  constructor({ realm, ...options }) {
     super(options);
-    
     this.documents    = new KmDocumentsApi(options);
     this.drafts       = new KmDraftsApi(options);
     this.locks        = new KmLocksApi(options);
@@ -35,13 +29,14 @@ export default class KmStorageApi extends ApiBase
 
 class KmDocumentsApi extends ApiBase
 {
-  constructor(options) {
+  #realm;
+
+  constructor({ realm, ...options) {
+
+    this.#realm = realm;
+
     super(options);
     this.self = this;
-    this.config.headers = {
-      Realm:   DefaultValues.Realm,
-      Accept : DefaultValues.Accept,
-    }
   }
 
   async query( {realm, q, s, l, sk }={}){
@@ -54,15 +49,14 @@ class KmDocumentsApi extends ApiBase
       collection : "my"
     });
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm = realm || this.#realm || undefined };
     
     return this.http.get(serviceUrls.documentQueryUrl(), { headers, params } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async get(identifier, realm=null ){
+  async get(identifier, { realm=null}  ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
         
     const Realm = realm ? { Realm : realm } : {};  
