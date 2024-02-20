@@ -1,27 +1,20 @@
 import ApiBase, { tryCastToApiError, isValid, stringifyUrlParams } from '../api-base';
 
 const  serviceUrls = { 
+  documentQueryUrl      (                     ){ return "/api/v2013/documents" },
   draftUrl              (identifier           ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft` },
   draftSecurityUrl      (identifier, operation){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft/securities/${encodeURIComponent(operation)}` },
   draftLockUrl          (identifier, lockID   ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft/locks/${encodeURIComponent(lockID)}` },
   draftLockListUrl      (identifier           ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft/locks` },
 }
 
-const DefaultValues = {
-  Realm  : "CHM",
-  Accept : "application/json"
-}
-
 export class KmDraftsApi extends ApiBase
 {
-  constructor(options) {
-
+  #realm;
+  constructor(options) {    
     super(options);
     this.self = this;
-    this.config.headers = {
-      Realm:   DefaultValues.Realm,
-      Accept : DefaultValues.Accept,
-    }
+    this.#realm = options.realm;
   }
 
   async query({realm, q, s, l, sk }={}){  
@@ -33,10 +26,9 @@ export class KmDraftsApi extends ApiBase
       collection : "mydraft"  
     });
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
-    const data =  this.http.get(serviceUrls.draftUrl(), { headers, params} )
+    const data =  this.http.get(serviceUrls.documentQueryUrl(), { headers, params} )
                            .then(res => res.data)
                            .catch(tryCastToApiError);
      
@@ -52,11 +44,10 @@ export class KmDraftsApi extends ApiBase
     return data;
   }
 
-  async get(identifier,realm=null  ){
+  async get(identifier, {realm}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
     const data =  this.http.get(serviceUrls.draftUrl(identifier), { headers })
                            .then(res => res.data)
@@ -69,11 +60,10 @@ export class KmDraftsApi extends ApiBase
     return data;
   }
 
-  async exists( identifier, realm=null){
+  async exists( identifier, {realm}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
      return this.http.head(serviceUrls.draftUrl(identifier), { headers })
                      .then(res => res.data)
@@ -86,7 +76,7 @@ export class KmDraftsApi extends ApiBase
 
     const params = stringifyUrlParams( {schema}); 
 
-    const Realm = realm ? { Realm : realm } : {};  
+    const Realm =  { Realm : realm || this.#realm || undefined };
     const ContentType = { 'Content-Type': 'application/json' };
     const headers =  { ...Realm , ...ContentType}
 
@@ -95,11 +85,10 @@ export class KmDraftsApi extends ApiBase
                     .catch(tryCastToApiError);
   }
 
-  async delete(identifier, realm=null){
+  async delete(identifier, {realm}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
     return this.http.delete(serviceUrls.draftUrl(identifier), { headers })
                     .then(res => res.data)
@@ -111,8 +100,7 @@ export class KmDraftsApi extends ApiBase
 
     const params = stringifyUrlParams( {schema, metadata }); 
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
     return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'create'), { headers, params })
                     .then(res => res.data)
@@ -122,8 +110,7 @@ export class KmDraftsApi extends ApiBase
   async canUpdate(identifier, {realm, metadata}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
     const params = stringifyUrlParams( {metadata}); 
     return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'update'), { headers, params })
@@ -131,11 +118,10 @@ export class KmDraftsApi extends ApiBase
                     .catch(tryCastToApiError);
   }
 
-  async canDelete(identifier, realm=null){
+  async canDelete(identifier, {realm}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
     return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'delete'), { headers })
                     .then(res => res.data)
@@ -146,67 +132,61 @@ export class KmDraftsApi extends ApiBase
 
 export class KmLocksApi extends ApiBase
 {
-  constructor(options) {
+  #realm;
+  constructor(options) {    
     super(options);
-    this.config.headers = {
-      Realm:   DefaultValues.Realm,
-      Accept : DefaultValues.Accept,
-    }
+    this.self = this;
+    this.#realm = options.realm;
   }
 
-  async query(identifier, realm=null){
+  async query(identifier, {realm}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
  
     return this.http.get(serviceUrls.draftLockListUrl(identifier), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async get(identifier, lockID, realm=null ){
+  async get(identifier, lockID, {realm}={} ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
     return this.http.get(serviceUrls.draftLockUrl(identifier, lockID), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async exists(identifier,lockID, realm=null){
+  async exists(identifier,lockID, {realm}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
     return this.http.head(serviceUrls.draftLockUrl(identifier, lockID), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }  
  
-  async put(identifier,lockID, body, realm=null){
+  async put(identifier,lockID, body, {realm}={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
-   
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+
+    const headers =  { Realm : realm || this.#realm || undefined };
     
     return this.http.put(serviceUrls.draftLockUrl(identifier,lockID), body, { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
  
-  async delete(identifier,lockID, realm=null ){
+  async delete(identifier,lockID, {realm}={} ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(lockID)) throw Error(`invalid value for lockID`); 
 
-    const Realm = realm ? { Realm : realm } : {};  
-    const headers =  { ...Realm }
+    const headers =  { Realm : realm || this.#realm || undefined };
 
     return this.http.delete(serviceUrls.draftLockUrl(identifier,lockID), { headers })
                     .then(res => res.data)

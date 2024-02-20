@@ -58,6 +58,7 @@ async function loadAsyncHeaders(baseConfig) {
   }
 
   return axios.create({ ...config, headers } );
+
 }
 
 //////////////////////////

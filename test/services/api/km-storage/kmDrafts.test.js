@@ -3,7 +3,7 @@ import   KmStorageApi  from '../../../../src/services/api/km-storage/KmStorage'
 
 const dotenv = require('dotenv');
 dotenv.config();
-const myAPI = new  KmStorageApi ({tokentype:"Bearer", token: process.env.MyToken});
+const myAPI = new  KmStorageApi ({tokentype:"Bearer", token: process.env.MyToken, realm:"CHM", Accept:"application/json"});
 
 
 test('drafts-query - default',  async  () => {  
@@ -42,7 +42,7 @@ test('drafts-get-default',  async  () => {
 })
 
 test('drafts-get - ABS-DEV',  async  () => {  
-    const data = await myAPI.drafts.get("0B3D2BB0-4446-522C-3440-DD0C791D71BB","ABS-DEV");  
+    const data = await myAPI.drafts.get("0B3D2BB0-4446-522C-3440-DD0C791D71BB",{realm:"ABS-DEV"});  
 
     expect.soft(data).toEqual(
         expect.objectContaining({       
@@ -62,7 +62,7 @@ test('drafts-get - ABS-DEV',  async  () => {
 })
 
 test('drafts-exists--ABS-DEV',  async  () => {  
-    const data = await myAPI.drafts.exists("0B3D2BB0-4446-522C-3440-DD0C791D71BB","ABS-DEV");  
+    const data = await myAPI.drafts.exists("0B3D2BB0-4446-522C-3440-DD0C791D71BB",{realm:"ABS-DEV"});  
     expect.soft(data).toEqual(
         expect.objectContaining({   
         })
@@ -70,7 +70,7 @@ test('drafts-exists--ABS-DEV',  async  () => {
 })
 
 test('drafts-put',  async  () => {  
-    const data = await myAPI.drafts.put("0B3D2BB0-4446-522C-3440-DD0C791D71B9", "body","ABS");  
+    const data = await myAPI.drafts.put("0B3D2BB0-4446-522C-3440-DD0C791D71B9", "body",{realm:"ABS"});  
 
     expect.soft(data).toEqual(
         expect.objectContaining({       
@@ -80,7 +80,7 @@ test('drafts-put',  async  () => {
 })
 
 test('drafts-delete',  async  () => {  
-    const data = await myAPI.drafts.delete("0B3D2BB0-4446-522C-3440-DD0C791D71B9","ABS");  
+    const data = await myAPI.drafts.delete("0B3D2BB0-4446-522C-3440-DD0C791D71B9",{realm:"ABS"});  
 
     expect.soft(data).toEqual(
         expect.objectContaining({       
@@ -89,7 +89,7 @@ test('drafts-delete',  async  () => {
     ) 
 })
 
-test('drafts-canCreate--CHM',  async  () => {  
+test('drafts-canCreate--ABS',  async  () => {  
     const data = await myAPI.drafts.canCreate("0B3D2BB0-4446-522C-3440-DD0C791D71B9", { realm: "ABS", schema: "authority", metadata:{ government : "ca" }});  
 
     expect.soft(data).toEqual(
@@ -120,7 +120,7 @@ test('drafts-canDelete',  async  () => {
 })
 
 test('drafts-canDelete',  async  () => {  
-    const data = await myAPI.drafts.canDelete("4E3A68B3-8609-9E39-3270-FF546ABD66E7","CHM");  
+    const data = await myAPI.drafts.canDelete("4E3A68B3-8609-9E39-3270-FF546ABD66E7",{realm:"CHM"});  
     
     expect.soft(data).toEqual(
         expect.objectContaining({       
@@ -158,7 +158,7 @@ test('lock exists',  async  () => {
 
 test('lock-put',  async  () => {      
     const body = {};
-    const data = await myAPI.locks.put("57869e05-7dc3-4c86-b9c5-c35dc52643e7","a1234567890");  
+    const data = await myAPI.locks.put("57869e05-7dc3-4c86-b9c5-c35dc52643e7","a1234567890", {realm:"CHM"});  
 
     expect.soft(data).toEqual(
         expect.objectContaining({       
