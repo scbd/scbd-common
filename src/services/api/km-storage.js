@@ -13,7 +13,14 @@ const  serviceUrls = {
   draftSecurityUrl      (identifier, operation){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft/securities/${encodeURIComponent(operation)}` },
   draftLockUrl          (identifier, lockID)   { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft/locks/${encodeURIComponent(lockID)}` },
   draftLockListUrl      (identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/draft/locks` },
-  documentVersionUrl    (identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions` },
+  documentVersionListUrl(identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions` },
+  documentVersionUrl    (identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/:revision` },
+  documentVersionInfoUrl(identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/:revision/info` },
+ 
+  // exists  /api/v2013/documents/:uid/versions/:revision
+  // getinfo /api/v2013/documents/:uid/versions/:revision/info
+  // get     /api/v2013/documents/:uid/versions/:revision
+  // list    /api/v2013/documents/:uid/versions
 }
 
 const DefaultValues = {
@@ -170,6 +177,64 @@ class KmDocumentsApi extends ApiBase
                     .catch(tryCastToApiError);
   }
 }
+
+class KmDocumentsVersionApi extends ApiBase
+{
+  constructor(options) {
+    super(options);
+    this.self = this;
+    this.config.headers = {
+      Realm:   DefaultValues.Realm,
+      Accept : DefaultValues.Accept,
+    }
+  }
+
+  async query(identifier, realm=null){
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+    
+    return this.http.get(serviceUrls. documentVersionListUrl(identifier) , { headers, params } )
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
+  async get(identifier, realm=null ){
+    if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
+        
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.get(serviceUrls.documentVersionUrl(identifier) ,{ headers } )
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
+
+  async getInfo(identifier, realm=null ){
+    if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
+        
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.get(serviceUrls.documentVersionUrl(identifier) ,{ headers } )
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
+  async exists( identifier, realm=null ){
+    if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
+
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
+
+    return this.http.head(serviceUrls.documentVersionUrl(identifier), { headers })
+                    .then(res => res.data)
+                    .catch(tryCastToApiError);
+  }
+
+}
+
 
 class KmDraftsApi extends ApiBase
 {
