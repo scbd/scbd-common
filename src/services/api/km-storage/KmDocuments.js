@@ -1,27 +1,35 @@
 import ApiBase, { tryCastToApiError, isValid, stringifyUrlParams } from '../api-base';
 
 const  serviceUrls = { 
-  documentQueryUrl      (                     ){ return "/api/v2013/documents" },
-  documentUrl           (identifier           ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}` },
-  documentInfoUrl       (identifier           ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/info` }, 
-  validateUrl           (                     ){ return "/api/v2013/documents/x/validate" },
-  attachmentUrl         (identifier, filename ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/attachments/${encodeURIComponent(filename)}` },
-  temporaryAttachmentUrl(                     ){ return `/api/v2015/temporary-files` },
-  persistAttachmentUrl  (identifier, guid     ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/attachments/persist-temporary/${encodeURIComponent(guid)}` },
+  documentQueryUrl      (){ return "/api/v2013/documents" },
+  documentUrl           (identifier){ return `/api/v2013/documents/${encodeURIComponent(identifier)}` },
+  documentInfoUrl       (identifier){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/info` }, 
+  validateUrl           (){ return "/api/v2013/documents/x/validate" },
+  attachmentUrl         (identifier, filename) { return `/api/v2013/documents/${encodeURIComponent(identifier)}/attachments/${encodeURIComponent(filename)}` },
+  temporaryAttachmentUrl(                    ) { return `/api/v2015/temporary-files` },
+  persistAttachmentUrl  (identifier, guid    ) { return `/api/v2013/documents/${encodeURIComponent(identifier)}/attachments/persist-temporary/${encodeURIComponent(guid)}` },
   securityUrl           (identifier, operation){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/securities/${encodeURIComponent(operation)}` },
-  documentVersionListUrl(identifier           ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions` },
-  documentVersionUrl    (identifier           ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/:revision` },
-  documentVersionInfoUrl(identifier           ){ return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/:revision/info` } 
+  documentVersionListUrl(identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions` },
+  documentVersionUrl    (identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/:revision` },
+  documentVersionInfoUrl(identifier)           { return `/api/v2013/documents/${encodeURIComponent(identifier)}/versions/:revision/info` },
+ 
+}
+
+const DefaultValues = {
+  Realm  : "CHM",
+  Accept : "application/json"
 }
 
 
 export class KmDocumentsApi extends ApiBase
 {
-  #realm;
-  constructor(options) {  
-    super(options );
+  constructor(options) {
+    super(options);
     this.self = this;
-    this.#realm = options.realm;
+    this.config.headers = {
+      Realm:   DefaultValues.Realm,
+      Accept : DefaultValues.Accept,
+    }
   }
 
   async query( {realm, q, s, l, sk }={}){
@@ -33,17 +41,19 @@ export class KmDocumentsApi extends ApiBase
       collection : "my"
     });
 
-    const headers =  { Realm : realm || this.#realm || undefined };
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
     
     return this.http.get(serviceUrls.documentQueryUrl(), { headers, params } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async get(identifier, {realm}={} ){
+  async get(identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
         
-    const headers =  { Realm : realm || this.#realm || undefined };
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
     return this.http.get(serviceUrls.documentUrl(identifier) ,{ headers } )
                     .then(res => res.data)
@@ -51,31 +61,33 @@ export class KmDocumentsApi extends ApiBase
   }
 
 
-  async getInfo(identifier, {realm}={} ){
+  async getInfo(identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
         
-    const headers =  { Realm : realm || this.#realm || undefined };
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
     return this.http.get(serviceUrls.documentInfoUrl(identifier) ,{ headers } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async exists( identifier, {realm}={} ){
+  async exists( identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
 
-    const headers =  { Realm : realm || this.#realm || undefined };
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
     return this.http.head(serviceUrls.documentUrl(identifier), { headers })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async put( identifier, body, {realm}){
+  async put( identifier, body, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(body)) throw Error(`invalid value for body`);  
-  
-    const Realm =  { Realm : realm || this.#realm || undefined };  
+
+    const Realm = realm ? { Realm : realm } : {};  
     const ContentType = { 'Content-Type': 'application/json' };
     const headers =  { ...Realm , ...ContentType}
     
@@ -84,10 +96,11 @@ export class KmDocumentsApi extends ApiBase
                     .catch(tryCastToApiError);
   }
 
-  async delete(identifier, {realm}={}){
+  async delete(identifier, realm=null){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
-    const headers =  { Realm : realm || this.#realm || undefined };  
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
     return this.http.delete(serviceUrls.documentUrl(identifier), { headers })
                     .then(res => res.data)
@@ -99,7 +112,8 @@ export class KmDocumentsApi extends ApiBase
 
     const params = stringifyUrlParams( { schema, metadata });
 
-    const headers =  { Realm : realm || this.#realm || undefined };  
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
    
     return this.http.put(serviceUrls.validateUrl(), body, { headers, params } )
                     .then(res => res.data)
@@ -112,7 +126,8 @@ export class KmDocumentsApi extends ApiBase
 
     const params = stringifyUrlParams({ schema, metadata });
 
-    const headers =  { Realm : realm || this.#realm || undefined };  
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
     return this.http.get(serviceUrls.securityUrl(identifier, 'create'), { headers, params })
                     .then(res => res.data)
@@ -124,17 +139,19 @@ export class KmDocumentsApi extends ApiBase
 
     const params = stringifyUrlParams( {metadata });
 
-    const headers =  { Realm : realm || this.#realm || undefined };  
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
     return this.http.get(serviceUrls.securityUrl(identifier, 'update'), { headers, params })
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   } 
  
-  async canDelete(identifier, {realm}={} ){
+  async canDelete(identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
     
-    const headers =  { Realm : realm || this.#realm || undefined };  
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
    
     return this.http.get(serviceUrls.securityUrl(identifier, 'delete'), { headers })
                     .then(res => res.data)
@@ -144,27 +161,30 @@ export class KmDocumentsApi extends ApiBase
 
 export class KmDocumentsVersionApi extends ApiBase
 {
-  #realm;
-  constructor(options) {    
+  constructor(options) {
     super(options);
     this.self = this;
-    this.#realm = options.realm;
+    this.config.headers = {
+      Realm:   DefaultValues.Realm,
+      Accept : DefaultValues.Accept,
+    }
   }
-  
 
-  async query(identifier, {realm}={}){
+  async query(identifier, realm=null){
 
-    const headers =  { Realm : realm || this.#realm || undefined };  
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
     
     return this.http.get(serviceUrls. documentVersionListUrl(identifier) , { headers, params } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async get(identifier, {realm}={} ){
+  async get(identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
         
-    const headers =  { Realm : realm || this.#realm || undefined };  
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
     return this.http.get(serviceUrls.documentVersionUrl(identifier) ,{ headers } )
                     .then(res => res.data)
@@ -172,20 +192,22 @@ export class KmDocumentsVersionApi extends ApiBase
   }
 
 
-  async getInfo(identifier, {realm}={} ){
+  async getInfo(identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
         
-    const headers =  { Realm : realm || this.#realm || undefined };  
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
     return this.http.get(serviceUrls.documentVersionInfoUrl(identifier) ,{ headers } )
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
 
-  async exists( identifier, {realm}={} ){
+  async exists( identifier, realm=null ){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`); 
 
-    const headers =  { Realm : realm || this.#realm || undefined };  
+    const Realm = realm ? { Realm : realm } : {};  
+    const headers =  { ...Realm }
 
     return this.http.head(serviceUrls.documentVersionUrl(identifier), { headers })
                     .then(res => res.data)
@@ -196,11 +218,8 @@ export class KmDocumentsVersionApi extends ApiBase
 
 export class KmAttachmentsApi extends ApiBase
 {
-  #realm;
-  constructor(options) {    
+  constructor(options) {
     super(options);
-    this.self = this;
-    this.#realm = options.realm;
   }
 
   async uploadTempFile(identifier, file, fileName, options)  {
