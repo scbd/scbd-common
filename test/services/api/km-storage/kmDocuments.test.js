@@ -3,7 +3,7 @@ import   KmStorageApi  from '../../../../src/services/api/km-storage/KmStorage'
 
 const dotenv = require('dotenv');
 dotenv.config();
-const myAPI = new  KmStorageApi ({tokentype:"Bearer", token: process.env.MyToken});
+const myAPI = new  KmStorageApi ({tokentype:"Bearer", token: process.env.MyToken, realm:"CHM", Accept:"application/json"});
 
 test('document-query--default',  async  () => {  
     const data = await myAPI.documents.query();
@@ -36,7 +36,7 @@ test('document-query--ABS-DEV',  async  () => {
 })
 
 test('document-get--ABS-DEV',  async  () => {  
-    const data = await myAPI.documents.get("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737","ABS-DEV");  
+    const data = await myAPI.documents.get("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737",{realm:"ABS-DEV"});  
 
     expect.soft(data).toEqual(
         expect.objectContaining({       
@@ -60,7 +60,7 @@ test('document-get--ABS-DEV',  async  () => {
 
 
 test('document-getinfo--ABS-DEV',  async  () => {  
-    const data = await myAPI.documents.getInfo("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737","ABS-DEV");  
+    const data = await myAPI.documents.getInfo("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737",{realm :"ABS-DEV"});  
 
     expect.soft(data).toEqual(
         expect.objectContaining({      
@@ -86,7 +86,7 @@ test('document-getinfo--ABS-DEV',  async  () => {
 })
 
 test('document-exists--ABS-DEV',  async  () => {  
-    const data = await myAPI.documents.exists("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737","ABS-DEV");  
+    const data = await myAPI.documents.exists("C44FCD4E-548C-EB88-77F7-CB3E1C7CC737",{realm:"ABS-DEV"});  
     expect.soft(data).toEqual(
         expect.objectContaining({   
         })
@@ -110,7 +110,7 @@ test('document-put',  async  () => {
         "latestRevision": 1,
         "isRequest": false
     };  
-    const data = await myAPI.documents.put( "C44FCD4E-548C-EB88-77F7-CB3E1C7C9790", body, "ABS-DEV");
+    const data = await myAPI.documents.put( "C44FCD4E-548C-EB88-77F7-CB3E1C7C9790", body, {realm:"ABS-DEV"});
     expect.soft(data).toEqual(
         expect.objectContaining({       
 
@@ -211,7 +211,7 @@ test('document-canUpdate-CHM',  async  () => {
  })
 
 test('document-canDelete-CHM',  async  () => {  
-    const data = await myAPI.documents.canDelete("3BAA2053-A614-DD7C-40F8-F77F2471D2A5","CHM");  
+    const data = await myAPI.documents.canDelete("3BAA2053-A614-DD7C-40F8-F77F2471D2A5",{realm:"CHM"});  
 
     expect.soft(data).toEqual(
         expect.objectContaining({       
