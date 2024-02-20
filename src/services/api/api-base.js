@@ -6,7 +6,7 @@ let sitePrefixUrl = 'https://api.cbd.int';
 
 if(/\.cbd\.int$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbd.int';
 if(/\.cbddev\.xyz$/i.test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbddev.xyz';
- if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
+if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
 
 const defaultOptions = { 
    prefixUrl:  sitePrefixUrl, 
@@ -23,27 +23,25 @@ export default class ApiBase
 
     const { token, prefixUrl, timeout, tokenType } = { ...defaultOptions, ...options }
 
-
-    const baseConfig = {
+    this.config = {
       baseURL : prefixUrl,
       timeout,
       tokenType,
-      token
+      token,
     }
 
-    const http = async function (...args) {
-      console.log(args)
-      return (await loadAsyncHeaders(baseConfig))(...args);
+    const http = async function (...args) {   
+      return (await loadAsyncHeaders(this.config))(...args);
     }
 
-    http.get     = async (...args)=> (await loadAsyncHeaders(baseConfig)).get    (...args);
-    http.head    = async (...args)=> (await loadAsyncHeaders(baseConfig)).head   (...args);
-    http.post    = async (...args)=> (await loadAsyncHeaders(baseConfig)).post   (...args);
-    http.put     = async (...args)=> (await loadAsyncHeaders(baseConfig)).put    (...args);
-    http.patch   = async (...args)=> (await loadAsyncHeaders(baseConfig)).patch  (...args);
-    http.delete  = async (...args)=> (await loadAsyncHeaders(baseConfig)).delete (...args);
-    http.options = async (...args)=> (await loadAsyncHeaders(baseConfig)).options(...args);
-    http.request = async (...args)=> (await loadAsyncHeaders(baseConfig)).request(...args);
+    http.get     = async (...args)=> (await loadAsyncHeaders(this.config)).get    (...args);
+    http.head    = async (...args)=> (await loadAsyncHeaders(this.config)).head   (...args);
+    http.post    = async (...args)=> (await loadAsyncHeaders(this.config)).post   (...args);
+    http.put     = async (...args)=> (await loadAsyncHeaders(this.config)).put    (...args);
+    http.patch   = async (...args)=> (await loadAsyncHeaders(this.config)).patch  (...args);
+    http.delete  = async (...args)=> (await loadAsyncHeaders(this.config)).delete (...args);
+    http.options = async (...args)=> (await loadAsyncHeaders(this.config)).options(...args);
+    http.request = async (...args)=> (await loadAsyncHeaders(this.config)).request(...args);
 
     this.http = http;
   }
@@ -60,6 +58,7 @@ async function loadAsyncHeaders(baseConfig) {
   }
 
   return axios.create({ ...config, headers } );
+
 }
 
 //////////////////////////
@@ -76,15 +75,13 @@ export function tryCastToApiError(error) {
   throw error
 }
 
-export function stringifyUrlParam(value) {  
-  if(value!==undefined) value = JSON.stringify(value);
+export function stringifyUrlParam(value) {
+  if (value instanceof(Date))   {return value.toISOString()}    
+  if (value instanceof(Object)) {return JSON.stringify(value)}  
   return value; 
-
 }
 
-export function stringifyUrlParams(valueObj) {  
-  if(!isValid(valueObj)) throw Error(`value is undefined`);
-
+export function stringifyUrlParams(valueObj) {
   const returnObj = {};
 
   for (const [key, value] of Object.entries(valueObj)) {
@@ -92,6 +89,7 @@ export function stringifyUrlParams(valueObj) {
       returnObj[key] = stringifyUrlParam(value);
     }
   }
+  
   return returnObj;
 }
 

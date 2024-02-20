@@ -22,5 +22,4 @@ export default class CountriesApi extends ApiBase
                     .then(res => res.data)
                     .catch(tryCastToApiError);
   }
-
 }

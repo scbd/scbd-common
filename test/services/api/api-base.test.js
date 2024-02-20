@@ -30,11 +30,3 @@ test('isValid Test:', () => {
   expect.soft(isValid("a string")).toBe(true);
   expect.soft(isValid(1)).toBe(true); 
 })
-
-
-
- 
-
-
-
-

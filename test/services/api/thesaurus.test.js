@@ -169,16 +169,3 @@ test('getTerm func: term="ad", relations="domain"', async () => {
     "nonPreferedTerms": expect.any(Array),
   });  
 })
-
-
-
-
-  
-
-
-
-
-
-
-
-
