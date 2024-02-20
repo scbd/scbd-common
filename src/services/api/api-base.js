@@ -6,7 +6,7 @@ let sitePrefixUrl = 'https://api.cbd.int';
 
 if(/\.cbd\.int$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbd.int';
 if(/\.cbddev\.xyz$/i.test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbddev.xyz';
-// if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
+if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
 
 const defaultOptions = { 
    prefixUrl:  sitePrefixUrl, 
@@ -86,9 +86,10 @@ export function stringifyUrlParams(valueObj) {
 
   for (const [key, value] of Object.entries(valueObj)) {
     if (isValid(value)){
-      returnObj[key] = sanitizeUrlParam(value);
+      returnObj[key] = stringifyUrlParam(value);
     }
   }
+  
   return returnObj;
 }
 

@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError, sanitizeUrlParam, stringifyUrlParams, isValid, mapObjectId} from './api-base';
+import ApiBase, { tryCastToApiError, stringifyUrlParam, stringifyUrlParams, isValid, mapObjectId} from './api-base';
 
 export default class ArticlesApi extends ApiBase
 {
@@ -40,7 +40,7 @@ export default class ArticlesApi extends ApiBase
    const query = q;   
    
    if (tag){
-    params.q = sanitizeUrlParam({...query, ...{tags: mapObjectId(tag)}});    
+    params.q = stringifyUrlParam({...query, ...{tags: mapObjectId(tag)}});    
    } 
 
     return this.http.get(`api/v2017/articles`,  { params })
