@@ -1,5 +1,4 @@
 <template>
-    
      <div class="image-credit-wrapper"  v-if="coverImage.url">    
         <div :class="'img cover-image cover-image-position-' + (coverImage.position||'center') + ' cover-image-size-' + (coverImage.size||'cover')" 
             v-if="coverImage.url_1200||coverImage.url" :style="'background-image: url(' + cssEscapeUrl(coverImage.url_1200||coverImage.url) + ');'">
@@ -7,7 +6,6 @@
         <span class="image-credit" v-if="coverImage.credits">{{coverImage.credits}}</span>
         <slot></slot>
     </div>
-
 </template>
  
 <script setup>
