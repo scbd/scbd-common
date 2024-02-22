@@ -13,7 +13,7 @@
 </template>
     
 <script setup>
-    const { label, fieldId } = defineProps ({
+    const { label, fieldId, checked } = defineProps ({
             label: { type: String, required: true },
             fieldId: { type: String, required: true },
             checked: { type: Boolean, default: false },

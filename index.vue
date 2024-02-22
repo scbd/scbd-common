@@ -39,6 +39,7 @@
 </template>
 
 <script setup>
+  import { ref } from 'vue';
   // ToDo path will change after rollup fixes
   import ScbdHeader from './src/components/cbd-nav/header.vue'
   import ScbdFooter from './src/components/cbd-nav/footer.vue'
