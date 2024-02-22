@@ -4,7 +4,6 @@
         <input type="checkbox" class="form-check-input"
             v-model="isChecked"
             :id="fieldId" 
-            :checked="checked"  
         />
         <label :for="fieldId" class="form-check-label">            
             {{ label }}
@@ -13,10 +12,9 @@
 </template>
     
 <script setup>
-    const { label, fieldId, checked } = defineProps ({
+    const { label, fieldId } = defineProps ({
             label: { type: String, required: true },
             fieldId: { type: String, required: true },
-            checked: { type: Boolean, default: false },
         })
     const isChecked = defineModel();
 </script>
