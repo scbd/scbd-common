@@ -23,7 +23,7 @@
 </script>
 
 <template>
-  <Input    id = "dateSelector"
+  <input    id = "dateSelector"
             v-model="model"       
             :type=type
             placeholder="Select date"
