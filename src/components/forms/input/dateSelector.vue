@@ -1,22 +1,20 @@
-<script setup  lang="ts">
-    import defineModel from Vue
-
+<script setup>
+    //TODO: check if browser support datepicker
+    //https://stackoverflow.com/questions/10193294/how-can-i-tell-if-a-browser-supports-input-type-date
     const model = defineModel()
 
-    type Type = "date"|"month"
-
-    interface Props {    
-        modelValue?: string ;
-        disabled?: boolean;
-        type?: Type;      
-    }
-
-    const props = withDefaults(defineProps<Props>(), {    
-        type:"date",
-        modelValue: "",
-        disabled: false,
+    const props = defineProps({
+        modelValue: {
+            type    : [ Object ],
+            required: true,
+            default:""
+        },
+        'type':{
+            type:String,
+            default:"date"
+        }
+      
     });
-
     const emit  = defineEmits(['update:modelValue']);
 
     const onChange = (event) => {
@@ -25,7 +23,7 @@
 </script>
 
 <template>
-    <Input  id = "dateSelector"
+  <Input    id = "dateSelector"
             v-model="model"       
             :type=type
             placeholder="Select date"
