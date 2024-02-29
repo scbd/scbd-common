@@ -22,6 +22,13 @@
           <date-selector  class="test" v-model="dateValue"></date-selector>
         </div>
       </div>
+      <div class="row mt-5">
+        <div class="col-6">
+          <!-- Testing cbdArticleCoverImage -->
+          <h3>Testing cbd Article Cover Image</h3>
+          <cbd-article-cover-image :cover-image="coverImage" > </cbd-article-cover-image>
+        </div>
+      </div>
     </div>
     <br>
     <br>
@@ -44,6 +51,14 @@
   const endDate = new Date('2024-04-20');
   const copUrl = 'https://www.unep.org/un-biodiversity-conference-cop-15';
   const dateValue = ref('2024-02-06');
+
+  //<--------------- Testing CBD Article Cover Image component ----------------------> 
+  import cbdArticleCoverImage from './src/components/articles/cbd-article-cover-image.vue';
+  const coverImage = {
+            "url": "https://attachments.cbd.int/6d60d013f7f2ed996312f5caf90d1d7d/Manila Risk Assessment workshop-1 (1).png",
+            "credits": 'The credit goes to you.'
+        };
+
 
 </script>
 
