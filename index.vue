@@ -37,8 +37,27 @@
   import ScbdFooter from './src/components/cbd-nav/footer.vue'
   import CopCountDown from './src/components/countdown/cop-count-down.vue';
   import dateSelector from  './src/components/inputs/dateSelector.vue'
-  import { ref } from 'vue';
+  import { ref, provide } from 'vue';
 
+  provide('auth', {
+    user(){
+      return {
+        "userID": 999999,
+        "name": "Test User",
+        "email": "test.user@cbd.int",
+        "institution": "CBD",
+        "userGroups": [
+          "user:999999"
+        ],
+        "isAuthenticated": true,
+        "roles": [
+          "Everyone",
+          "User",          
+        ],
+        "isEmailVerified": true
+      }
+    }
+  })
   //<--------------- Testing Area ----------------------> 
   //Cop-count-down testing entries
   const endDate = new Date('2024-04-20');
