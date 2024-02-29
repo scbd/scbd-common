@@ -21,6 +21,15 @@
           <h3>Date Selector</h3> {{ dateValue }}
           <date-selector  class="test" v-model="dateValue"></date-selector>
         </div>
+        <div class="col-3">
+          <h3>Notes</h3>         
+          <ul v-if="notes.length">        
+            <li v-for="(item, index) of notes">
+                {{ item }}  
+            </li>          
+        </ul>
+          <kmnotes  class="test" :list="notes"></kmnotes>
+        </div>
       </div>
       <div class="row mt-5">
         <div class="col-6">
@@ -44,7 +53,8 @@
   import ScbdFooter from './src/components/cbd-nav/footer.vue'
   import CopCountDown from './src/components/countdown/cop-count-down.vue';
   import dateSelector from  './src/components/inputs/dateSelector.vue'
-  import { ref, provide } from 'vue';
+  import kmnotes from  './src/components/inputs/notes.vue'
+  import { ref } from 'vue';
 
   provide('auth', {
     user(){
@@ -68,7 +78,7 @@
   //<--------------- Testing Area ----------------------> 
   //Cop-count-down testing entries
   const endDate = new Date('2024-04-20');
-  const copUrl = 'https://www.unep.org/un-biodiversity-conference-cop-15';
+  const copUrl = 'https://www.unep.org/un-biodiversity-conferencnodee-cop-15';
   const dateValue = ref('2024-02-06');
 
   //<--------------- Testing CBD Article Cover Image component ----------------------> 
@@ -79,6 +89,9 @@
         };
 
 
+ 
+  const notes = ref(["[Yuan Li | Feb 23, 2024 2:30:20 PM ] -first note","[Yuan Li|Feb 23, 2024 2:40:20 PM ] -second note"]) 
+  //const notes = "[\"[ Yuan Li | Feb 29, 2024 9:29:54 AM ] - first notes\",\"[ Yuan Li | Feb 29, 2024 9:30:07 AM ] - seco\"]"
 </script>
 
 <style scoped>
