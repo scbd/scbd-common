@@ -68,6 +68,7 @@
       }
     }
   })
+  const notes = ref(["[Yuan Li | Feb 23, 2024 2:30:20 PM ] -first note","[Yuan Li|Feb 23, 2024 2:40:20 PM ] -second note"]) 
 </script>
 
 <style scoped>
