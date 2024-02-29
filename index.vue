@@ -27,7 +27,7 @@
             <li v-for="(item, index) of notes">
                 {{ item }}  
             </li>          
-        </ul>
+          </ul>
           <kmnotes  class="test" :list="notes"></kmnotes>
         </div>
       </div>
