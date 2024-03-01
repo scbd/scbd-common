@@ -21,14 +21,10 @@
           <h3>Date Selector</h3> {{ dateValue }}
           <date-selector  class="test" v-model="dateValue"></date-selector>
         </div>
-        <div class="col-3">
-          <h3>checkbox Value: {{ isChecked }}</h3> 
-          <checkbox  v-model="isChecked">
-            <template #label>
-              <!-- Content for the label slot -->
-              This is the label slot
-            </template>
-          </checkbox>
+        <div class="col-6">
+          <h3>Notes</h3>{{ notes }}      
+          <kmnotes  class="test" v-model="notes"></kmnotes>   
+      
         </div>
       </div>
       <div class="row mt-5">
@@ -53,7 +49,8 @@
   import ScbdFooter from './src/components/cbd-nav/footer.vue'
   import CopCountDown from './src/components/countdown/cop-count-down.vue';
   import dateSelector from  './src/components/inputs/dateSelector.vue'
-  import { ref, provide } from 'vue';
+  import kmnotes from  './src/components/inputs/notes.vue'
+  import { ref ,provide} from 'vue';
 
   provide('auth', {
     user(){
@@ -77,7 +74,7 @@
   //<--------------- Testing Area ----------------------> 
   //Cop-count-down testing entries
   const endDate = new Date('2024-04-20');
-  const copUrl = 'https://www.unep.org/un-biodiversity-conference-cop-15';
+  const copUrl = 'https://www.unep.org/un-biodiversity-conferencnodee-cop-15';
   const dateValue = ref('2024-02-06');
 
   //<--------------- Testing CBD Article Cover Image component ----------------------> 
@@ -88,6 +85,10 @@
         };
   import checkbox from './src/components/inputs/checkbox.vue';
   const isChecked = ref(true)
+
+
+  const notes = ref("[\"[ Yuan Li | Feb 29, 2024 3:04:00 PM ] - this is first notes\",\"[ Yuan Li | Feb 29, 2024 5:26:42 PM ] - this is second notes\"]")
+ 
 
 </script>
 
