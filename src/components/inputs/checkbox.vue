@@ -1,28 +1,30 @@
 
 <template>
-    <div :class="$attrs.class">
+    <div class="form-check">
         <input
             type="checkbox"
             v-model="model"
             :id="$attrs.id"
             :required="$attrs.required"
             :disabled="$attrs.disabled"
+            :class="$attrs.class"
+            class="form-check-input"
         />
-        <label :for="$attrs.id">{{ label }}</label>
+        <label :for="$attrs.id" class="form-check-label">
+            <slot name="label">{{ label }}</slot>
+        </label>
     </div>
 </template>
 
 <script setup>
-    const model = defineModel();
+    const model = defineModel({
+        type: Boolean,
+        required: true,
+    });
     const props = defineProps({
         label: {
         type: String,
-        required: false,
+        required: true,
         },
     });
 </script>
-<style scoped>
-    label {
-    margin-left: 10px;
-    }
-</style>

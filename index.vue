@@ -23,7 +23,12 @@
         </div>
         <div class="col-3">
           <h3>checkbox Value: {{ isChecked }}</h3> 
-          <checkbox  class="text-danger" label="this is a test checkbox" v-model="isChecked"></checkbox>
+          <checkbox  v-model="isChecked">
+            <template #label>
+              <!-- Content for the label slot -->
+              This is the label slot
+            </template>
+          </checkbox>
         </div>
       </div>
       <div class="row mt-5">
