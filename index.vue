@@ -23,7 +23,7 @@
         </div>
         <div class="col-3">
           <h3>Notes</h3>{{ notes }}      
-          <kmnotes  class="test" v-model="notes"></kmnotes>
+          <kmnotes  class="test" v-model="notes"></kmnotes>   
         </div>
       </div>
       <div class="row mt-5">
@@ -49,7 +49,7 @@
   import CopCountDown from './src/components/countdown/cop-count-down.vue';
   import dateSelector from  './src/components/inputs/dateSelector.vue'
   import kmnotes from  './src/components/inputs/notes.vue'
-  import { ref } from 'vue';
+  import { ref ,provide} from 'vue';
 
   provide('auth', {
     user(){
@@ -84,10 +84,6 @@
         };
 
 
- 
-  //const notes = ref(["[Yuan Li | Feb 23, 2024 2:30:20 PM ] -first note","[Yuan Li|Feb 23, 2024 2:40:20 PM ] -second note"]) 
-  //const notes = ref("[\"[ Yuan Li | Feb 29, 2024 3:04:00 PM ] - this is first notes\"]")
-  //const notes = ref("[\"[ Yuan Li | Feb 29, 2024 3:04:00 PM ] - this is first notes","[  Yuan Li | Feb 29, 2024, 3:12:01 PM ] - this is second notes\"]")
   const notes = ref("[\"[ Yuan Li | Feb 29, 2024 3:04:00 PM ] - this is first notes\",\"[ Yuan Li | Feb 29, 2024 5:26:42 PM ] - this is second notes\"]")
  
 

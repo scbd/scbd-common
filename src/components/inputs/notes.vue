@@ -15,8 +15,11 @@
 
 
 <script setup>
-    import { watch,watchEffect, ref, computed } from 'vue'
-   //import {useUser} from '../../../services/composables/useAuth.js'
+   import { ref, computed } from 'vue'
+   import {useUser} from '../../services/composables/useAuth'
+   import {format} from '../../services/filters/datetime'
+   
+ 
    let lastNote = '';
    const model = defineModel({type:String, required:true});
    const newNote = ref()
@@ -26,6 +29,7 @@
         return [];
    }); 
 
+   const user = useUser();
 
    const remove=(index)=>{  
         for (var i = 0; i < notes.value.length; i++) {        
@@ -46,14 +50,12 @@
             second: 'numeric',
             hour12: true
         }).format(new Date());
-    
 
         const lNotes = notes.value;
         if(lNotes[lNotes.length-1] == lastNote)
              lNotes.splice(lNotes.length-1, 1);
-        
-        
-        var newLNote = newNote.value? "[ " +  "useUser()"   + " | " + timestamp + " ] - " + newNote.value:"";  
+            
+        var newLNote = newNote.value? "[ " +  user.value.name  + " | " + timestamp + " ] - " + newNote.value:"";  
         lastNote =newLNote; 
        
 
@@ -63,5 +65,7 @@
 </script>
 
 
+<style>
 
+</style>
        
