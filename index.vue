@@ -21,6 +21,15 @@
           <h3>Date Selector</h3> {{ dateValue }}
           <date-selector  class="test" v-model="dateValue"></date-selector>
         </div>
+        <div class="col-3">
+          <h3>checkbox Value: {{ isChecked }}</h3> 
+          <checkbox  v-model="isChecked">
+            <template #label>
+              <!-- Content for the label slot -->
+              This is the label slot
+            </template>
+          </checkbox>
+        </div>
       </div>
       <div class="row mt-5">
         <div class="col-6">
@@ -77,7 +86,8 @@
             "url": "https://attachments.cbd.int/6d60d013f7f2ed996312f5caf90d1d7d/Manila Risk Assessment workshop-1 (1).png",
             "credits": 'The credit goes to you.'
         };
-
+  import checkbox from './src/components/inputs/checkbox.vue';
+  const isChecked = ref(true)
 
 </script>
 
