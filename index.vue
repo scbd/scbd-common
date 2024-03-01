@@ -21,9 +21,10 @@
           <h3>Date Selector</h3> {{ dateValue }}
           <date-selector  class="test" v-model="dateValue"></date-selector>
         </div>
-        <div class="col-3">
+        <div class="col-6">
           <h3>Notes</h3>{{ notes }}      
           <kmnotes  class="test" v-model="notes"></kmnotes>   
+      
         </div>
       </div>
       <div class="row mt-5">
