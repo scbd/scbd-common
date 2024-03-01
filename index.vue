@@ -2,35 +2,32 @@
   <div>
     <ScbdHeader></ScbdHeader>
     <div class="container">
-      <legend>Controls usage</legend>
-      <hr/>
       <div class="row">
-        <div class="col-3">
-          <h3>COP Countdown</h3>
-          <cop-count-down cop-title="COP 15" :end-date="endDate" :url="copUrl"></cop-count-down>
+        <div class="col-md-2">
+          <ul class="nav flex-column fs-5">
+            <li class="nav-item">
+              <router-link to="/">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/Articles">Articles</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/Inputs">Inputs</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/selectors">selectors</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/controls">Controls</router-link>
+            </li>
+          </ul>
         </div>
-        <div class="col-3">
-          <h3>Date Selector</h3> {{ dateValue }}
-          <date-selector  class="test" v-model="dateValue"></date-selector>
+        <div class="col-md-10">
+          <router-view />
         </div>
-        <div class="col-3">
-          <h3>checkbox Value: {{ isChecked }}</h3> 
-          <checkbox  v-model="isChecked">
-            <template #label>
-              <!-- Content for the label slot -->
-              This is the label slot
-            </template>
-          </checkbox>
-        </div>
+
       </div>
-      <div class="row mt-5">
-        <div class="col-6">
-          <!-- Testing cbdArticleCoverImage -->
-          <h3>Testing cbd Article Cover Image</h3>
-          <cbd-article-cover-image :cover-image="coverImage" > </cbd-article-cover-image>
-        </div>
-      </div>
-    </div>
+  </div>
     <br>
     <br>
     <br>
@@ -44,7 +41,6 @@
   import ScbdHeader from './src/components/cbd-nav/header.vue'
   import ScbdFooter from './src/components/cbd-nav/footer.vue'
   import CopCountDown from './src/components/countdown/cop-count-down.vue';
-  import dateSelector from  './src/components/inputs/dateSelector.vue'
   import { ref, provide } from 'vue';
 
   provide('auth', {
@@ -72,14 +68,7 @@
   const copUrl = 'https://www.unep.org/un-biodiversity-conference-cop-15';
   const dateValue = ref('2024-02-06');
 
-  //<--------------- Testing CBD Article Cover Image component ----------------------> 
-  import cbdArticleCoverImage from './src/components/articles/cbd-article-cover-image.vue';
-  const coverImage = {
-            "url": "https://attachments.cbd.int/6d60d013f7f2ed996312f5caf90d1d7d/Manila Risk Assessment workshop-1 (1).png",
-            "credits": 'The credit goes to you.'
-        };
-  import checkbox from './src/components/inputs/checkbox.vue';
-  const isChecked = ref(true)
+
 
 </script>
 
