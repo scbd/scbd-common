@@ -23,8 +23,19 @@
         </div>
         <div class="col-6">
           <h3>Notes</h3>{{ notes }}      
-          <kmnotes  class="test" v-model="notes"></kmnotes>   
-      
+          <kmnotes  class="test" v-model="notes"></kmnotes>  
+        </div>
+        <div class="col-6">
+          <h3>Link</h3>{{ data }} 
+            <!-- {{ relevantDocuments }}  -->
+            <!-- <table class="table table-striped" v-if="relevantDocuments?.length">
+              <tr  v-for="(item, index) in relevantDocuments" :key="index">
+                  <td>{{item.name}}  </td>   
+                  <td style="width:10px;"><span class="btn" @click="remove(index)"><i class="fa fa-trash-o icon"></i></span></td>
+              </tr>
+          </table>    -->
+         
+          <kmlink  class="test" v-model="data"></kmlink>  
         </div>
       </div>
       <div class="row mt-5">
@@ -34,6 +45,7 @@
           <cbd-article-cover-image :cover-image="coverImage" > </cbd-article-cover-image>
         </div>
       </div>
+      
     </div>
     <br>
     <br>
@@ -50,6 +62,7 @@
   import CopCountDown from './src/components/countdown/cop-count-down.vue';
   import dateSelector from  './src/components/inputs/dateSelector.vue'
   import kmnotes from  './src/components/inputs/notes.vue'
+  import kmlink from  './src/components/controls/link.vue'
   import { ref ,provide} from 'vue';
 
   provide('auth', {
@@ -89,7 +102,31 @@
 
   const notes = ref("[\"[ Yuan Li | Feb 29, 2024 3:04:00 PM ] - this is first notes\",\"[ Yuan Li | Feb 29, 2024 5:26:42 PM ] - this is second notes\"]")
  
+  const relevantInfomation = {"en": "<div><!--block-->this is some info</div>"}
 
+  const relevantDocuments =[
+      {
+        "url": "https://www.dsfgsdfgsdfg",
+        "name": "dsgsdfgsdfgsdfg",
+        "language": "en"
+      },
+      {
+        "url": "https://www.zxcvzx",
+        "name": "asdfasdfasdf",
+        "language": "en"
+      },
+      {
+        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614774/TEST.txt",
+        "name": "TEST.txt",
+        "language": "en"
+      },
+      {
+        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614775/TEST.txt",
+        "name": "TEST.txt",
+        "language": "ar"
+      }]
+    const data = ref({relevantInfomation,relevantDocuments})
+   
 </script>
 
 <style scoped>
