@@ -15,10 +15,16 @@
         </textarea>     
 
         <div style="padding-bottom: 5px;">
-			<button type="button"  @click="addFile()" ><i class="bi bi-plus"></i> addFile</button>
-			<button type="button"  @click="addLink()" ><i class="bi bi-plus"></i> addLink</button>
+			<!-- <button type="button"  @click="addFile()" ><i class="bi bi-plus"></i> addFile</button>
+			<button type="button"  @click="addLink()" ><i class="bi bi-plus"></i> addLink</button> -->
             <!-- <button type="button"  @click="changeInfo()" ><i class="bi bi-plus"></i> changeInfo</button> -->
             <selectfilebutton>Add File</selectfilebutton>
+            <!-- <addLink>Add Link </addLink>  -->
+
+            <button type="button"  @click="modalOpen= true" ><i class="bi bi-plus"></i>Add Link</button> 
+            {{newLink}}
+            <addLinkModal v-model="modalOpen" :newLink.sync="newLink"></addLinkModal>
+            <!-- <modal v-model="data" ></modal>  -->
 		</div>
 
         <table  class="table table-striped" v-if="documents?.length && model">
@@ -36,10 +42,18 @@
 <script setup>
    import { ref, computed } from 'vue'
    import selectfilebutton from  './select-file-button.vue'
-   import addlink from './addLink.vue'
-   import modal from './modal.vue'
+   import addLinkModal from './addLinkModal.vue'
+
  
-   const model = defineModel({type:Object, required:true});
+   const model = defineModel({type:Boolean, required:true});
+
+   const modalOpen = ref(false);
+   const newLink = ref("test");
+
+   const props1 = false;
+   const props2 = "props2";
+   const data = {props1, props2}
+
    
    let info = computed(()=>{
         if(model.value)
@@ -68,7 +82,7 @@
          documents.value.splice(index, 1);        
    };
 
-   const addLink=()=>{  
+   const add_link=()=>{  
         documents.value.push({ "url": "https://www.zxcvzx", "name": "test", "language": "en" });      
         //openModal();
   };
@@ -104,4 +118,4 @@
 </script>
 <style>
  
-</style>
+</style>./addLinkModal.vue
