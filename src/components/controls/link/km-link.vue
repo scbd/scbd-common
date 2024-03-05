@@ -32,7 +32,7 @@
             <!-- <addLinkModal v-model:modalOpen="modalOpen" v-model:link="link" ></addLinkModal>  -->
             <addLinkModal v-model:modalOpen="modalOpen"   :link="link"  @custom-event="handleChildData" ></addLinkModal>
             
-            <p>receive data is :{{ receivedData }}</p>
+            <!-- <p>receive data is :{{ receivedLink }}</p> -->
        
 		</div>
 
@@ -61,14 +61,22 @@
    
    // parameter for modal
    const modalOpen = ref(false);
-   //const modalEdit = ref(false);
-   let link = ref({});  //{ "url": "https://www.zxcvzx", "name": "test", "language": "en" });
+   const modalEdit = ref(false); 
+   const editIndex = ref(0);
 
-   const receivedData = ref(""); // Reactive data
 
-    const handleChildData = (data) => {
-    // Handle the data received from the child
-    receivedData.value = data;
+   let link = ref({});  
+
+   //const receivedLink = ref({}); // Reactive data
+
+    const handleChildData = (newLink) => {  
+        if (modalEdit.value == true){   
+            documents.value[editIndex.value]=newLink;
+        }
+        else{
+            documents.value.push(newLink);
+        }        
+        //receivedLink.value = newLink;
     };
 
    let infoValue = computed(()=>{
@@ -89,20 +97,21 @@
    };
 
    const edit=(index)=>{  
-         link= documents.value[index];//{ "url": "https://www.zxcvzx", "name": "test", "language": "en" };  
-         //modalEdit.value = true;   
+         link= documents.value[index];
+         modalEdit.value = true;   
          modalOpen.value = true;
+         editIndex.value = index;
    };
 
    const openModal = () => { 
         link={};
-        //modalEdit.value = false;
+        modalEdit.value = false;
         modalOpen.value = true;
     };
   const changeInfo =()=>{
-       console.log("before change:"+info)
-       info = "happy";
-       console.log("after:"+info)
+    //    console.log("before change:"+info)
+    //    info = "happy";
+    //    console.log("after:"+info)
    }; 
 
 
@@ -113,28 +122,6 @@
    };
 
 
-
-    watch(modalOpen,  (newValue, oldValue) => {
-      
-    //   alert("open"+modalOpen.value);
-    //   alert("edit"+modalEdit.value);
-    //   alert(modalOpen.value == false );
-    //   alert( modalEdit.value==false);
-    //   alert(modalOpen.value == false &&  modalEdit.value==false);
-    //   if (modalOpen.value == false && modalEdit.value==false)
-    //         alert("new-push");
-     
-        
-      //modalEdit.value = false;
-      console.log("link"+link);  
-    });
-
-    watch(link,  (newValue, oldValue)=> {
-      alert("link change!")
-      console.log(`new: ${newValue}, old: ${oldValue}`)
-    },
-    {deep:true}
-    );
 
 
 </script>
