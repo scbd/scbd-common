@@ -29,9 +29,10 @@
             <!-- <button type="button"  @click="modalOpen= true" ><i class="bi bi-plus"></i>Add Link</button>   -->
             <button type="button"  @click="openModal" ><i class="bi bi-plus"></i>Add Link</button> 
             <p>modalOpen is :{{ modalOpen }}, link is :{{ link }}</p>
-            <addLinkModal v-model:modalOpen="modalOpen" v-model:link="link" ></addLinkModal> 
+            <!-- <addLinkModal v-model:modalOpen="modalOpen" v-model:link="link" ></addLinkModal>  -->
+            <addLinkModal v-model:modalOpen="modalOpen"   :link="link"  @custom-event="handleChildData" ></addLinkModal>
             
-
+            <p>receive data is :{{ receivedData }}</p>
        
 		</div>
 
@@ -52,17 +53,23 @@
    import { ref, computed, watch} from 'vue'
    import selectfilebutton from  '../../inputs/select-file-button.vue'
    import addLinkModal from './add-link-modal.vue'
+  
 
 
    const info = defineModel('relevantInfomation');
    const documents = defineModel('relevantDocuments');
-   let link = ref({});  //{ "url": "https://www.zxcvzx", "name": "test", "language": "en" });
-
+   
    // parameter for modal
    const modalOpen = ref(false);
    //const modalEdit = ref(false);
+   let link = ref({});  //{ "url": "https://www.zxcvzx", "name": "test", "language": "en" });
 
+   const receivedData = ref(""); // Reactive data
 
+    const handleChildData = (data) => {
+    // Handle the data received from the child
+    receivedData.value = data;
+    };
 
    let infoValue = computed(()=>{
         if(info.value)
@@ -82,8 +89,8 @@
    };
 
    const edit=(index)=>{  
-         link = documents.value[index];//{ "url": "https://www.zxcvzx", "name": "test", "language": "en" };  
-         //modalEdit.value = true;
+         link= documents.value[index];//{ "url": "https://www.zxcvzx", "name": "test", "language": "en" };  
+         //modalEdit.value = true;   
          modalOpen.value = true;
    };
 
@@ -130,8 +137,4 @@
     );
 
 
-   
-
-
-
-</script>./add-link-modal.vue
+</script>

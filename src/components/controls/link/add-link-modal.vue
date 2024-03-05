@@ -1,14 +1,16 @@
 
 <template>  
     <p>Child Compont</p>
-    <p>modalOpen is :{{ modalOpen }}, link is :{{ link }}</p>
-    <!-- <p>locallink is :{{ localLink }}</p> -->
+    <p>modalOpen is :{{ modalOpen }}, link is :{{ props.link }}</p>
+    {{ data }}
+    
      <div v-if="modalOpen" class="modal-mask" @click.self="closeModal">
  
            <!-- <div id="editLink" class="modal" data-backdrop="static">  -->
           <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
+                  <button @click="emitData">Emit Data</button>
                   <h3>Editing link</h3>
                 </div>            
                 <div class="modal-body"  >				
@@ -56,15 +58,31 @@
 </template>
 
 <script setup >
+  import { defineEmits } from "vue"; // Import defineProps and defineEmits
   const modalOpen = defineModel('modalOpen');
-  let   link      = defineModel('link'); 
- 
-  const closeModal = () => { 
-    link.value={};  
+  //let   link    = defineModel('link'); 
+  const props = defineProps({link: Object});
+  const emit = defineEmits(['updateLink']);
+
+
+ const emitData = () => {
+  // Emit an event with the data
+  const data = "Data from child";
+  alert(data);
+  //defineEmits(["custom-event"])(data);
+  emit("custom-event", data); 
+  alert(data);
+};
+
+
+  const closeModal = () => {      
     modalOpen.value = false;  
   }
   const save = () =>{  
-    link.value = { "url": document.getElementById("url").value , "name": document.getElementById("name").value , "language": document.getElementById("language").value  };
+    //link.value = { "url": document.getElementById("url").value , "name": document.getElementById("name").value , "language": document.getElementById("language").value  };
+    link = { "url": document.getElementById("url").value , "name": document.getElementById("name").value , "language": document.getElementById("language").value  };
+    alert(link);
+    emit('update:link', {test:"test"});
     modalOpen.value = false;   
   }
 </script>
