@@ -27,18 +27,7 @@
         </div>
         <div class="col-6">
           <h3>Link</h3>
-            <!-- {{ relevantDocuments }}  -->
-            <!-- <table class="table table-striped" v-if="relevantDocuments?.length">
-              <tr  v-for="(item, index) in relevantDocuments" :key="index">
-                  <td>{{item.name}}  </td>   
-                  <td style="width:10px;"><span class="btn" @click="remove(index)"><i class="fa fa-trash-o icon"></i></span></td>
-              </tr>
-          </table>    -->
-          <p>relevant info is : </p>
-          <p>{{ relevantInfomation }}</p>
-          <p>relevant documents is : </p>
-          <p>{{ relevantDocuments }}</p>
-          <!-- <kmlink  class="test" v-model="data"></kmlink>   -->
+ 
           <kmlink  class="test" v-model:relevantInfomation="relevantInfomation" v-model:relevantDocuments = "relevantDocuments"></kmlink>  
         </div>
       </div>
@@ -66,7 +55,7 @@
   import CopCountDown from './src/components/countdown/cop-count-down.vue';
   import dateSelector from  './src/components/inputs/dateSelector.vue'
   import kmnotes from  './src/components/inputs/notes.vue'
-  import kmlink from  './src/components/controls/km-link.vue'
+  import kmlink from  './src/components/controls/link/km-link.vue'
   import { ref ,provide} from 'vue';
 
   provide('auth', {
@@ -129,7 +118,7 @@
         "name": "TEST.txt",
         "language": "ar"
       }])
-    //const data = ref({relevantInfomation,relevantDocuments})
+
    
 </script>
 
@@ -146,4 +135,4 @@
   filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>
-  ./src/components/controls/km-link.vue
+  ./src/components/controls/km-link.vue./src/components/controls/link/km-link.vue
