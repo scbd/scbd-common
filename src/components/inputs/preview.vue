@@ -2,7 +2,7 @@
     <div>
         <h1>CBD input components</h1>
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <h3>Checkbox</h3>
                 <checkbox  v-model="isChecked">
                     <template #label>
@@ -49,7 +49,7 @@
         </div>
         
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <h3>Date Selector</h3> {{ dateValue }}
                 <date-selector  class="test" v-model="dateValue"></date-selector>
             </div>
@@ -86,12 +86,12 @@
 
 <script setup>
 //Checkbox
-  import checkbox from '../../../src/components/inputs/checkbox.vue';
+  import checkbox from './checkbox.vue';
   import { ref} from 'vue';
   const isChecked = ref(true)
 
   //dateSelector
-  import dateSelector from  '../../../src/components/inputs/dateSelector.vue'
+  import dateSelector from  './dateSelector.vue'
   const dateValue = ref('2024-02-06');
  
 </script>

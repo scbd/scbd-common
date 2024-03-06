@@ -25,26 +25,6 @@
 <script type="module">
   import { createApp } from 'vue'
   import App from './index.vue'
-  //ToDo: will move to router file
-  import { createRouter, createWebHistory } from 'vue-router';
-  import home from './src/components/index.vue'
-  import articles from './src/components/articles/index.vue'
-  import inputs from './src/components/inputs/index.vue'
-  import controls from './src/components/controls/index.vue'
-  import selectors from './src/components/selectors/index.vue'
-  const routes = [
-  { path: '/', component: home },
-  { path: '/articles', component: articles },
-  { path: '/controls', component: controls },
-  { path: '/inputs', component: inputs },
-  { path: '/selectors', component: selectors }
-];
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes
-});
-const app = createApp(App);
-app.use(router);
-app.mount('#app');
+  const app = createApp(App);
+  app.mount('#app');
 </script>
