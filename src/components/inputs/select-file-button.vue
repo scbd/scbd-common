@@ -44,8 +44,7 @@ function selectFile () {
     console.log(target);
 
     const files = [...target.files];
-    this.$emit('files', files);
-    alert("emit")
+    this.$emit('files', files);   
   });
 
   thisElement.appendChild(fileInput);

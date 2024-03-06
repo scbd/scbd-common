@@ -1,11 +1,11 @@
 <template>
     <div>
-        <p>Link Component</p>  
+        <!-- <p>Link Component</p>  
         <p>relevant info is : </p>
         <p>{{ info }}</p> 
         <p>relevant documents is : </p>    
         <p>{{ documents }}</p>
-        <p>info lang is : {{ infoLang }}</p> 
+        <p>info lang is : {{ infoLang }}</p>  -->
         <!--{{ documents[0] }}
         {{ documents[1] }}-->
    
@@ -23,14 +23,21 @@
         </textarea>     
 
         <div style="padding-bottom: 5px;">
-            <selectfilebutton @files="receiveFile">Add File</selectfilebutton>        
-            <button type="button"  class="btn" @click="openModal" ><i class="bi bi-plus"></i>Add Link</button> 
-            <button type="button"  class="btn" @click="openModal" ><i class="bi bi-plus"></i>Upload File</button> 
-            <addLinkModal v-model:modalOpen="modalOpen"   :link="link"  @updateLink="handleChildData" ></addLinkModal>
-            <uploadFileModal v-model:modalOpen="modalOpen"    :file="file"  @updateFile="handleChildData"></uploadFileModal>
+            <selectfilebutton @files="receiveFile">+ Add File</selectfilebutton>        
+            <button type="button"  class="btn" @click="openLinkModal" ><i class="bi bi-plus"></i>+ Add Link</button> 
+            <!-- <button type="button"  class="btn" @click="openFileModal" ><i class="bi bi-plus"></i>Upload File</button>  -->
+            <addLinkModal v-model:modalOpen="linkModalOpen"   :link="link"  @updateLink="updateDocument" ></addLinkModal>
+            <uploadFileModal v-model:modalOpen="fileModalOpen"    :file="file"  @updateDocument="updateDocument"></uploadFileModal>
            
-            <p>modalOpen is :{{ modalOpen }}, link is :{{ link }}</p>
+            
+            <!-- <p> linkModalOpen is :{{ linkModalOpen }}</p>
+            <p> fileModalOpen is :{{ fileModalOpen }}</p>
+           
+            <p>link is :{{ link }}</p>
             <p>receive link is :{{ receivedLink }}</p> 
+            <p>receive document record is :{{ receivedRecord }}</p> 
+            {{ file.name }}
+            {{ file.type }} -->
        
 		</div>
 
@@ -55,80 +62,88 @@
    const documents = defineModel('relevantDocuments');
    
    // parameter for modal
-   const modalOpen = ref(false);
    const modalEdit = ref(false); 
    const editIndex = ref(0);
-   const OpenLinkModal = ref(false);
-   const OpenFileModal = ref(false); 
+   const linkModalOpen = ref(false);
+   const fileModalOpen = ref(false); 
 
 
    let link = ref({});  
    let file = ref({});  
 
    const receivedLink = ref({}); // Reactive data
+   const receivedRecord = ref({}); // Reactive data
 
-    const handleChildData = (newLink) => {  
-        if (modalEdit.value == true){   
-            documents.value[editIndex.value]=newLink;
-        }
-        else{
-            documents.value.push(newLink);
-        }        
-        receivedLink.value = newLink;
+
+    const receiveFile = (files) => {         
+        file = files[0];      
+        modalEdit.value = false;   
+        fileModalOpen.value = true;
     };
 
-    const receiveFile = (files) => { 
-        console.log(files[0].name);
-        console.log(files[0].type);
+    const updateDocument = (newRecord) => {
+        if (modalEdit.value == true){   
+            documents.value[editIndex.value]=newRecord;
+        }
+        else{
+            documents.value.push(newRecord);
+        }  
+        console.log(newRecord[0].name);
+        console.log(newRecord[0].type);
     };
     
 
     let infoValue = computed(()=>{
-            if(info.value)
-                return  Object.values(info.value)[0] ;//(model.value.relevantInfomation);        
-            return [];
+        if(info.value)
+            return  Object.values(info.value)[0] ;//(model.value.relevantInfomation);        
+        return [];
     }); 
 
     let infoLang = computed(()=>{
-            if(info.value)
-                return  Object.keys(info.value)[0] ;//(model.value.relevantInfomation);
-            return [];
+        if(info.value)
+            return  Object.keys(info.value)[0] ;//(model.value.relevantInfomation);
+        return [];
     }) 
 
    
     const remove=(index)=>{ 
-            documents.value.splice(index, 1);   
+        documents.value.splice(index, 1);   
     };
 
-    const edit=(index)=>{  
-            link= documents.value[index];
-            modalEdit.value = true;   
-            modalOpen.value = true;
-            editIndex.value = index;
+    const edit=(index)=>{    
+        //TODO: judge document is link or file
+        if (index ==1){            
+            linkModalOpen.value = true;   
+            link = documents.value[index];    
+        } 
+        else {
+            fileModalOpen.value = true;        
+            file = documents.value[index];
+        }
+        modalEdit.value = true;     
+        editIndex.value = index;        
     };
 
     const openModal = () => { 
-            link={};
-            modalEdit.value = false;           
-            modalOpen.value = true;
-        };
-
-    const openLinkModal = () => { 
         link={};
-        modalEdit.value = false;
-        openLinkModal.value = true;
-      
+        modalEdit.value = false;     
     };
 
-    const openUploadFileModal = () => { 
-        file={};
+    const openLinkModal = () => { 
+        link={};       
         modalEdit.value = false;
-        modalOpen.value = true;
-        openFileModal.value = true;
+        linkModalOpen.value = true;  
+    };
+
+    const openFileModal = () => { 
+        file={};
+        modalEdit.value = false;   
+        fileModalOpen.value = true;
     };
 
 
   const changeInfo =()=>{
+   
     //    console.log("before change:"+info)
     //    info = "happy";
     //    console.log("after:"+info)
@@ -136,12 +151,10 @@
 
 
    const saveInfo=()=>{
+        //TODO: save info
         //const rInfo = {infoLang:info};
         info = document.getElementById("info").value;
         //model.value = {"relevantInfomation ":{"en":info},"relevantDocuments":documents};;
    };
-
-
-
 
 </script>

@@ -1,5 +1,5 @@
 <template> 
-    <div v-if="modalOpen" class="modal-mask" @click.self="closeModal"> 
+    <div  v-if="modalOpen"  class="modal" > <!--</div>@click.self="closeModal">--> 
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header"> 
@@ -7,11 +7,13 @@
           </div>            
           <div class="modal-body"  >
             <form>
+                <div class="mb-3" >
+                  <label class="col-form-label" for="name">Uploading Progress</label>           						
+                </div>
               <div class="mb-3" >
                   <label class="col-form-label" for="name">File name</label>           						
-                  <input class="form-control"  id ="name" :value="file.name" type="text" style="width:98%"    />
+                  <input class="form-control"  id ="name" :value="file.name"  type="text" style="width:98%"    />
               </div>
-
               <div class="mb-3">
                   <label for="language" class="col-form-label">Language <span style="color: #e32"> *</span></label>       
                     <select class="form-select"  name="language" id="language" :value="file.language||'en'"> 
@@ -23,21 +25,20 @@
                       <option value="ru">Russian</option>
                   </select>
               </div>
-
               <div class="mb-3" >
                   <label for="tags" class="col-form-label" >Tags</label>
-                  <input class="form-control" id="tags" :value="file.tag" type="text" style="width:98%"  />
+                  <input class="form-control" id="tags" :value="file.tag|| ''" type="text" style="width:98%"  />
               </div>
             </form>
           </div> 
           <div class="modal-footer ">  
-            <button type="button" class="btn btn-secondary" @click="closeModal" >Cancel</button>
+            <button type="button" class="btn btn-secondary" @click="close" >Cancel</button>
             <button type="button" class="btn btn-primary  " @click="save" >Save</button>         
           </div>
         </div>
       </div>
   
-    </div>  
+    </div>   
   </template>
   
   <script setup >
@@ -46,31 +47,35 @@
   
     const modalOpen = defineModel('modalOpen');
     const props = defineProps({file: Object});
-    const emit = defineEmits(['updateFile']);
+    const emit = defineEmits(['updateDocument']);
+
   
-    const closeModal = () => {      
+    const close = () => {      
       modalOpen.value = false;  
     }  
   
     const save = () =>{ 
-      const newFile = { "name": document.getElementById("name").value , "language": document.getElementById("language").value , "tag": document.getElementById("tag").value  };
+      const newFile = { "name": document.getElementById("name").value , "language": document.getElementById("language").value , "tags": document.getElementById("tags").value  };
       modalOpen.value = false;   
-      emit("updateFile", newFile);     
+      emit("updateDocument", newFile);  
     }
   </script>
+
+
   
   
-  <style>
-    .modal-mask {
-      position: fixed;
-      z-index: 9998;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5); 
-      display: flex;
-      transition: opacity 0.3s ease; 
+ 
+<style scoped>
+    .modal {
+        position: fixed;
+        z-index: 9998;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); 
+        display: flex;
+        transition: opacity 0.3s ease; 
     }
-  </style>
+</style>
   

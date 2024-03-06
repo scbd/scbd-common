@@ -1,5 +1,5 @@
 <template> 
-  <div v-if="modalOpen" class="modal-mask" @click.self="closeModal"> 
+  <div v-if="modalOpen" class="modal" > <!--@click.self="closeModal">--> 
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header"> 
@@ -33,13 +33,15 @@
           </form>
         </div> 
         <div class="modal-footer ">  
-          <button type="button" class="btn btn-secondary" @click="closeModal" >Cancel</button>
+          <button type="button" class="btn btn-secondary" @click="close" >Cancel</button>
           <button type="button" class="btn btn-primary  " @click="save" >Save</button>         
         </div>
       </div>
     </div>
-
   </div>  
+
+
+ 
 </template>
 
 <script setup >
@@ -50,7 +52,7 @@
   const props = defineProps({link: Object});
   const emit = defineEmits(['updateLink']);
 
-  const closeModal = () => {      
+  const close = () => {      
     modalOpen.value = false;  
   }  
 
@@ -62,8 +64,8 @@
 </script>
 
 
-<style>
-  .modal-mask {
+<style scoped>
+  .modal {
     position: fixed;
     z-index: 9998;
     top: 0;
