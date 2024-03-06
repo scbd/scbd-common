@@ -23,16 +23,12 @@
         </textarea>     
 
         <div style="padding-bottom: 5px;">
-
-            <selectfilebutton>Add File</selectfilebutton>
-        
-            <!-- <button type="button"  @click="modalOpen= true" ><i class="bi bi-plus"></i>Add Link</button>   -->
+            <selectfilebutton @files="receiveFile">Add File</selectfilebutton>        
             <button type="button"  @click="openModal" ><i class="bi bi-plus"></i>Add Link</button> 
+            <addLinkModal v-model:modalOpen="modalOpen"   :link="link"  @updateLink="handleChildData" ></addLinkModal>
+           
             <p>modalOpen is :{{ modalOpen }}, link is :{{ link }}</p>
-            <!-- <addLinkModal v-model:modalOpen="modalOpen" v-model:link="link" ></addLinkModal>  -->
-            <addLinkModal v-model:modalOpen="modalOpen"   :link="link"  @custom-event="handleChildData" ></addLinkModal>
-            
-            <!-- <p>receive data is :{{ receivedLink }}</p> -->
+            <p>receive link is :{{ receivedLink }}</p> 
        
 		</div>
 
@@ -44,8 +40,6 @@
             </tr>
         </table>  
         
-
-     
     </div> 
 </template>
 
@@ -54,8 +48,6 @@
    import selectfilebutton from  '../../inputs/select-file-button.vue'
    import addLinkModal from './add-link-modal.vue'
   
-
-
    const info = defineModel('relevantInfomation');
    const documents = defineModel('relevantDocuments');
    
@@ -67,7 +59,7 @@
 
    let link = ref({});  
 
-   //const receivedLink = ref({}); // Reactive data
+   const receivedLink = ref({}); // Reactive data
 
     const handleChildData = (newLink) => {  
         if (modalEdit.value == true){   
@@ -76,38 +68,44 @@
         else{
             documents.value.push(newLink);
         }        
-        //receivedLink.value = newLink;
+        receivedLink.value = newLink;
     };
 
-   let infoValue = computed(()=>{
-        if(info.value)
-            return  Object.values(info.value)[0] ;//(model.value.relevantInfomation);        
-        return [];
-   }); 
+    const receiveData = (files) => {  
+        alert(files);
+    };
 
-   let infoLang = computed(()=>{
-        if(info.value)
-            return  Object.keys(info.value)[0] ;//(model.value.relevantInfomation);
-        return [];
-   }) 
+    let infoValue = computed(()=>{
+            if(info.value)
+                return  Object.values(info.value)[0] ;//(model.value.relevantInfomation);        
+            return [];
+    }); 
+
+    let infoLang = computed(()=>{
+            if(info.value)
+                return  Object.keys(info.value)[0] ;//(model.value.relevantInfomation);
+            return [];
+    }) 
 
    
-   const remove=(index)=>{ 
-        documents.value.splice(index, 1);   
-   };
-
-   const edit=(index)=>{  
-         link= documents.value[index];
-         modalEdit.value = true;   
-         modalOpen.value = true;
-         editIndex.value = index;
-   };
-
-   const openModal = () => { 
-        link={};
-        modalEdit.value = false;
-        modalOpen.value = true;
+    const remove=(index)=>{ 
+            documents.value.splice(index, 1);   
     };
+
+    const edit=(index)=>{  
+            link= documents.value[index];
+            modalEdit.value = true;   
+            modalOpen.value = true;
+            editIndex.value = index;
+    };
+
+    const openModal = () => { 
+            link={};
+            modalEdit.value = false;
+            modalOpen.value = true;
+        };
+
+
   const changeInfo =()=>{
     //    console.log("before change:"+info)
     //    info = "happy";

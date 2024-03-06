@@ -99,13 +99,13 @@
 
   const relevantDocuments =ref([
       {
-        "url": "https://www.dsfgsdfgsdfg",
-        "name": "dsgsdfgsdfgsdfg",
+        "url": "https://www.google",
+        "name": "website 1",
         "language": "en"
       },
       {
         "url": "https://www.zxcvzx",
-        "name": "asdfasdfasdf",
+        "name": "website 2",
         "language": "en"
       },
       {
