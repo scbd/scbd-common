@@ -1,13 +1,13 @@
 <template>
     <div>
-        <!-- <p>Link Component</p>  
+        <p>Link Component</p>  
         <p>relevant info is : </p>
         <p>{{ info }}</p> 
         <p>relevant documents is : </p>    
         <p>{{ documents }}</p>
-        <p>info lang is : {{ infoLang }}</p> -->
+        <p>info lang is : {{ infoLang }}</p> 
         <!--{{ documents[0] }}
-        {{ documents[1] }} -->
+        {{ documents[1] }}-->
    
     
         <textarea            
@@ -24,9 +24,10 @@
 
         <div style="padding-bottom: 5px;">
             <selectfilebutton @files="receiveFile">Add File</selectfilebutton>        
-            <button type="button"  @click="openModal" ><i class="bi bi-plus"></i>Add Link</button> 
+            <button type="button"  class="btn" @click="openModal" ><i class="bi bi-plus"></i>Add Link</button> 
+            <button type="button"  class="btn" @click="openModal" ><i class="bi bi-plus"></i>Upload File</button> 
             <addLinkModal v-model:modalOpen="modalOpen"   :link="link"  @updateLink="handleChildData" ></addLinkModal>
-            <uploadFileModal v-model:modalOpen="modalOpen"   :file="file"  @updateFile="handleChildData"></updateFileModal>
+            <uploadFileModal v-model:modalOpen="modalOpen"    :file="file"  @updateFile="handleChildData"></uploadFileModal>
            
             <p>modalOpen is :{{ modalOpen }}, link is :{{ link }}</p>
             <p>receive link is :{{ receivedLink }}</p> 
@@ -57,9 +58,12 @@
    const modalOpen = ref(false);
    const modalEdit = ref(false); 
    const editIndex = ref(0);
+   const OpenLinkModal = ref(false);
+   const OpenFileModal = ref(false); 
 
 
    let link = ref({});  
+   let file = ref({});  
 
    const receivedLink = ref({}); // Reactive data
 
@@ -73,10 +77,9 @@
         receivedLink.value = newLink;
     };
 
-    const receiveFile = (files) => {  
-        alert("receive data");
-        alert(files);
-        console.log(files);
+    const receiveFile = (files) => { 
+        console.log(files[0].name);
+        console.log(files[0].type);
     };
     
 
@@ -106,9 +109,23 @@
 
     const openModal = () => { 
             link={};
-            modalEdit.value = false;
+            modalEdit.value = false;           
             modalOpen.value = true;
         };
+
+    const openLinkModal = () => { 
+        link={};
+        modalEdit.value = false;
+        openLinkModal.value = true;
+      
+    };
+
+    const openUploadFileModal = () => { 
+        file={};
+        modalEdit.value = false;
+        modalOpen.value = true;
+        openFileModal.value = true;
+    };
 
 
   const changeInfo =()=>{
