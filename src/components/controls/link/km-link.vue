@@ -25,7 +25,9 @@
         <div style="padding-bottom: 5px;">
             <!--<selectfilebutton @files="receiveFile">Add File</selectfilebutton>  -->      
             <button type="button"  @click="openModal" ><i class="bi bi-plus"></i>Add Link</button> 
-            <addLinkModal v-model:modalOpen="modalOpen"   :link="link"  @updateLink="handleChildData" ></addLinkModal>
+            <addLinkModal v-model:modalOpen="modalOpen"   :link="link"  @updateLink="handleChildData" >               
+                Editing link
+            </addLinkModal>
            
             <!-- <p>modalOpen is :{{ modalOpen }}, link is :{{ link }}</p>
             <p>receive link is :{{ receivedLink }}</p>  -->

@@ -1,9 +1,9 @@
 <template> 
   <div v-if="modalOpen" class="modal-mask" @click.self="closeModal"> 
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content">        
         <div class="modal-header"> 
-          <h3 class="modal-title">Editing Link</h3>  
+          <h3 class="modal-title"><slot></slot></h3>  
         </div>            
         <div class="modal-body"  >				
           <div class="alert alert-info">Please provide the URL of the website (e.g.
@@ -13,7 +13,7 @@
             <div class="mb-3" >
                 <label class="col-form-label" for="url">Url <span style="color: #e32"> *</span></label>
                 <div class="help-block">Protocol is required (https:// or http://)</div>							
-                <input class="form-control"  id ="url" :value="link.url" type="url" style="width:98%" ng-model="editor.url"  placeholder=" https://www." />
+                <input class="form-control"  id ="url" :value="link.url" type="url" style="width:98%"  placeholder=" https://www." />
             </div>
             <div class="mb-3" >
                 <label for="name" class="col-form-label" >Name</label>
