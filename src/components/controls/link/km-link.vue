@@ -26,6 +26,7 @@
             <selectfilebutton @files="receiveFile">Add File</selectfilebutton>        
             <button type="button"  @click="openModal" ><i class="bi bi-plus"></i>Add Link</button> 
             <addLinkModal v-model:modalOpen="modalOpen"   :link="link"  @updateLink="handleChildData" ></addLinkModal>
+            <uploadFileModal v-model:modalOpen="modalOpen"   :file="file"  @updateFile="handleChildData"></updateFileModal>
            
             <p>modalOpen is :{{ modalOpen }}, link is :{{ link }}</p>
             <p>receive link is :{{ receivedLink }}</p> 
@@ -47,6 +48,7 @@
    import { ref, computed, watch} from 'vue'
    import selectfilebutton from  '../../inputs/select-file-button.vue'
    import addLinkModal from './add-link-modal.vue'
+   import uploadFileModal from './upload-file-modal.vue'
   
    const info = defineModel('relevantInfomation');
    const documents = defineModel('relevantDocuments');
@@ -71,9 +73,12 @@
         receivedLink.value = newLink;
     };
 
-    const receiveData = (files) => {  
+    const receiveFile = (files) => {  
+        alert("receive data");
         alert(files);
+        console.log(files);
     };
+    
 
     let infoValue = computed(()=>{
             if(info.value)
