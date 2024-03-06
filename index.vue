@@ -20,15 +20,26 @@
 </template>
 
 <script setup>
+  import { ref, provide, defineAsyncComponent } from 'vue';
   import ScbdHeader from './src/components/cbd-nav/header.vue'
   import ScbdFooter from './src/components/cbd-nav/footer.vue'
   // Preview tabs
-  import home from './src/components/preview.vue'
-  import articles from './src/components/articles/preview.vue'
-  import inputs from './src/components/inputs/preview.vue'
-  import controls from './src/components/controls/preview.vue'
-  import selectors from './src/components/selectors/preview.vue'
-  import { ref, provide } from 'vue';
+  const home = defineAsyncComponent(() =>
+    import('./src/components/preview.vue')
+  )
+  const articles = defineAsyncComponent(() =>
+    import('./src/components/articles/preview.vue')
+  )
+  const inputs = defineAsyncComponent(() =>
+    import('./src/components/inputs/preview.vue')
+  )
+  const controls = defineAsyncComponent(() =>
+    import('./src/components/controls/preview.vue')
+  )
+  const selectors = defineAsyncComponent(() =>
+    import('./src/components/selectors/preview.vue')
+  )
+  
   const currentTab = ref('home')
   const tabs = {
       home,
