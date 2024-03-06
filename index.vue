@@ -1,13 +1,5 @@
 <template>
   <div>
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=BenchNine:300,400,600,900" media="all" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,npm/@scbd/www-css@1.0.1/dist/style.min.css,npm/animate.css@3.5.2/animate.min.css">
-
-  <link rel="stylesheet" href="https://www.cbd.int/app/template-phoenix-overrides.css">
-  <link rel="stylesheet" href="https://www.cbd.int/app/css/bootstrap-migrate-3-to-4.css">
-
     <ScbdHeader></ScbdHeader>
     <div class="container">
       <legend>Controls usage</legend>

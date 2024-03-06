@@ -40,7 +40,7 @@
     "dev": "vite",
     "build": "rm -rf ./dist && rollup -c",
     "build:watch": "rm -rf ./dist && rollup -c --watch",
-    "cleanup": "rm -rf ./dist && rm -rf ./node_modules",
+    "cleanup": "rm -rf ./dist && rm -rf ./node_modules && npm install",
     "cleanup:hard": "rm -rf ./dist && rm -rf ./node_modules && rm -rf ./package-lock.json",
     "test": "vitest"
   },
