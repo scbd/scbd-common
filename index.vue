@@ -20,15 +20,11 @@
         <div class="col-3">
           <h3>Date Selector</h3> {{ dateValue }}
           <date-selector  class="test" v-model="dateValue"></date-selector>
-        </div>
-        <div class="col-3">
-          <h3>checkbox Value: {{ isChecked }}</h3> 
-          <checkbox  v-model="isChecked">
-            <template #label>
-              <!-- Content for the label slot -->
-              This is the label slot
-            </template>
-          </checkbox>
+        </div>      
+        <div class="col-6">
+          <h3>Link</h3>
+ 
+          <kmlink  class="test" v-model:relevantInfomation="relevantInfomation" v-model:relevantDocuments = "relevantDocuments"></kmlink>  
         </div>
       </div>
       <div class="row mt-5">
@@ -38,6 +34,7 @@
           <cbd-article-cover-image :cover-image="coverImage" > </cbd-article-cover-image>
         </div>
       </div>
+      
     </div>
     <br>
     <br>
@@ -53,7 +50,8 @@
   import ScbdFooter from './src/components/cbd-nav/footer.vue'
   import CopCountDown from './src/components/countdown/cop-count-down.vue';
   import dateSelector from  './src/components/inputs/dateSelector.vue'
-  import { ref, provide } from 'vue';
+  import kmlink from  './src/components/controls/link/km-link.vue'
+  import { ref ,provide} from 'vue';
 
   provide('auth', {
     user(){
@@ -77,7 +75,7 @@
   //<--------------- Testing Area ----------------------> 
   //Cop-count-down testing entries
   const endDate = new Date('2024-04-20');
-  const copUrl = 'https://www.unep.org/un-biodiversity-conference-cop-15';
+  const copUrl = 'https://www.unep.org/un-biodiversity-conferencnodee-cop-15';
   const dateValue = ref('2024-02-06');
 
   //<--------------- Testing CBD Article Cover Image component ----------------------> 
@@ -89,6 +87,32 @@
   import checkbox from './src/components/inputs/checkbox.vue';
   const isChecked = ref(true)
 
+
+  const relevantInfomation = ref({"en": "<div><!--block-->this is some info</div>"})
+
+  const relevantDocuments =ref([
+      {
+        "url": "https://www.google",
+        "name": "website 1",
+        "language": "en"
+      },
+      {
+        "url": "https://www.zxcvzx",
+        "name": "website 2",
+        "language": "en"
+      },
+      {
+        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614774/TEST.txt",
+        "name": "TEST.txt",
+        "language": "en"
+      },
+      {
+        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614775/TEST.txt",
+        "name": "TEST.txt",
+        "language": "ar"
+      }])
+
+   
 </script>
 
 <style scoped>
@@ -104,4 +128,4 @@
   filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>
-  
+  ./src/components/controls/km-link.vue./src/components/controls/link/km-link.vue
