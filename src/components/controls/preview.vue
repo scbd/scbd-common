@@ -17,6 +17,7 @@
                             <div class="col-4">
                                 <strong>km notes sample code</strong>
                                 <textarea rows="10" cols="80" class="bg-purple text-white"> 
+                                    <div>                                    
                                     <template>
                                         <div>                                  
                                             <table class="table table-striped" v-if="notes?.length">
@@ -81,6 +82,7 @@
                                         };
                                     </script>
                                 </textarea>
+                      
                             </div>
                         </div>
                     </div>               
