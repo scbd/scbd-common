@@ -1,5 +1,5 @@
 
-import ApiBase, { tryCastToApiError, isValid, toUrlParams } from './api-base';
+import ApiBase, { tryCastToApiError, isValid, stringifyUrlParams } from './api-base';
 
 const  serviceUrls = { 
   documentQueryUrl      (){ return "/api/v2013/documents/" },
@@ -41,7 +41,7 @@ class KmDocumentsApi extends ApiBase
 
   async query( {realm, q, s, l, sk }={}){
 
-    const params = toUrlParams( { 
+    const params = stringifyUrlParams( { 
       $filter:q, 
       $orderby:s,
       $skip:sk, 
@@ -84,7 +84,7 @@ class KmDocumentsApi extends ApiBase
   if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
   if(!isValid(body)) throw Error(`invalid value for body`);  
 
-  //const params = toUrlParams( {schema}); 
+  //const params = stringifyUrlParams( {schema}); 
 
   const Realm = realm ? { Realm : realm } : {};  
   const ContentType = { 'Content-Type': 'application/json', };
@@ -111,7 +111,7 @@ class KmDocumentsApi extends ApiBase
   async validate(body, {realm, schema, metadata }={}){
     if(!isValid(body)) throw Error(`invalid value for body`);  
 
-    const params = toUrlParams( { schema, metadata });
+    const params = stringifyUrlParams( { schema, metadata });
 
     const Realm = realm ? { Realm : realm } : {};  
     const headers =  { ...Realm }
@@ -126,7 +126,7 @@ class KmDocumentsApi extends ApiBase
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(schema)) throw Error(`invalid value for schema`);  
 
-    const params = toUrlParams({ schema, metadata });
+    const params = stringifyUrlParams({ schema, metadata });
 
     const Realm = realm ? { Realm : realm } : {};  
     const headers =  { ...Realm }
@@ -140,7 +140,7 @@ class KmDocumentsApi extends ApiBase
   async canUpdate(identifier,  {realm=null, metadata }={}){
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
-    const params = toUrlParams( {metadata });
+    const params = stringifyUrlParams( {metadata });
 
     const Realm = realm ? { Realm : realm } : {};  
     const headers =  { ...Realm }
@@ -176,7 +176,7 @@ class KmDraftsApi extends ApiBase
   }
 
    async query({realm=null, q, s, l, sk }={}){  
-    const params = toUrlParams( {    
+    const params = stringifyUrlParams( {    
       $filter:q, 
       $orderby:s,
       $top:l,
@@ -237,7 +237,7 @@ class KmDraftsApi extends ApiBase
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
     if(!isValid(body)) throw Error(`invalid value for body`);  
 
-    //const params = toUrlParams( {schema}); 
+    //const params = stringifyUrlParams( {schema}); 
 
     const Realm = realm ? { Realm : realm } : {};  
     const ContentType = { "Content-Type" : "application/json" };
@@ -264,7 +264,7 @@ class KmDraftsApi extends ApiBase
     if(!isValid(identifier)) throw Error(`invalid value for identifier`);  
 
 
-    const params = toUrlParams( {schema, metadata }); 
+    const params = stringifyUrlParams( {schema, metadata }); 
 
     const Realm = realm ? { Realm : realm } : {};  
     const headers =  { ...Realm }
@@ -280,7 +280,7 @@ class KmDraftsApi extends ApiBase
     const Realm = realm ? { Realm : realm } : {};  
     const headers =  { ...Realm }
 
-    const params = toUrlParams( {metadata}); 
+    const params = stringifyUrlParams( {metadata}); 
     return this.http.get(serviceUrls.draftSecurityUrl(identifier, 'update'), { headers, params })
                     .then(res => res.data)
                     .catch(tryCastToApiError);

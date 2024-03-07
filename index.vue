@@ -1,52 +1,54 @@
 <template>
-  <div>
     <ScbdHeader></ScbdHeader>
     <div class="container">
-      <legend>Controls usage</legend>
-      <hr/>
-      <div class="row">
-        <div class="col-3">
-          <h3>COP Countdown</h3>
-          <cop-count-down cop-title="COP 15" :end-date="endDate" :url="copUrl"></cop-count-down>
+        <div class="preview">
+          <ul class="nav nav-tabs mt-3" id="myTab" role="tablist" >
+            <li class="nav-item" v-for="(_, tab) in tabs" :key="tab">
+              <a class="nav-link" :class="{ active: currentTab === tab }" :id="tab + '-tab'" @click="currentTab = tab"
+              data-toggle="tab" :href="'#'+ tab" role="tab" 
+                :aria-controls="tab" aria-selected="true">{{tab}}</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane bg-white" :class="{  'fade show active': currentTab === tab }" :id="tab" role="tab" :aria-labelledby="tab+'-tab'" v-for="(_, tab) in tabs" :key="tab">
+              <component :is="tabs[currentTab]" class="p-3"></component>
+            </div>
+          </div>        
         </div>
-        <div class="col-3">
-          <h3>Date Selector</h3> {{ dateValue }}
-          <date-selector  class="test" v-model="dateValue"></date-selector>
-        </div>
-        <div class="col-3">
-          <h3>checkbox Value: {{ isChecked }}</h3> 
-          <checkbox  v-model="isChecked">
-            <template #label>
-              <!-- Content for the label slot -->
-              This is the label slot
-            </template>
-          </checkbox>
-        </div>
-      </div>
-      <div class="row mt-5">
-        <div class="col-6">
-          <!-- Testing cbdArticleCoverImage -->
-          <h3>Testing cbd Article Cover Image</h3>
-          <cbd-article-cover-image :cover-image="coverImage" > </cbd-article-cover-image>
-        </div>
-      </div>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
     <ScbdFooter></ScbdFooter>
-  </div>
 </template>
 
 <script setup>
-  // ToDo path will change after rollup fixes
+  import { ref, provide, defineAsyncComponent } from 'vue';
   import ScbdHeader from './src/components/cbd-nav/header.vue'
   import ScbdFooter from './src/components/cbd-nav/footer.vue'
-  import CopCountDown from './src/components/countdown/cop-count-down.vue';
-  import dateSelector from  './src/components/inputs/dateSelector.vue'
-  import { ref, provide } from 'vue';
-
+  // Preview tabs
+  const home = defineAsyncComponent(() =>
+    import('./src/components/preview.vue')
+  )
+  const articles = defineAsyncComponent(() =>
+    import('./src/components/articles/preview.vue')
+  )
+  const inputs = defineAsyncComponent(() =>
+    import('./src/components/inputs/preview.vue')
+  )
+  const controls = defineAsyncComponent(() =>
+    import('./src/components/controls/preview.vue')
+  )
+  const selectors = defineAsyncComponent(() =>
+    import('./src/components/selectors/preview.vue')
+  )
+  
+  const currentTab = ref('home')
+  const tabs = {
+      home,
+      articles,
+      inputs,
+      controls,
+      selectors
+    }
+    
   provide('auth', {
     user(){
       return {
@@ -66,21 +68,6 @@
       }
     }
   })
-  //<--------------- Testing Area ----------------------> 
-  //Cop-count-down testing entries
-  const endDate = new Date('2024-04-20');
-  const copUrl = 'https://www.unep.org/un-biodiversity-conference-cop-15';
-  const dateValue = ref('2024-02-06');
-
-  //<--------------- Testing CBD Article Cover Image component ----------------------> 
-  import cbdArticleCoverImage from './src/components/articles/cbd-article-cover-image.vue';
-  const coverImage = {
-            "url": "https://attachments.cbd.int/6d60d013f7f2ed996312f5caf90d1d7d/Manila Risk Assessment workshop-1 (1).png",
-            "credits": 'The credit goes to you.'
-        };
-  import checkbox from './src/components/inputs/checkbox.vue';
-  const isChecked = ref(true)
-
 </script>
 
 <style scoped>
@@ -97,3 +84,16 @@
 }
 </style>
   
+<style>
+/* Tabs style  */
+.preview {
+  font-family: sans-serif;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  padding: 20px 30px;
+  margin-top: 1em;
+  margin-bottom: 40px;
+  user-select: none;
+  overflow-x: auto;
+}
+</style>
