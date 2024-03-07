@@ -68,6 +68,7 @@
       }
     }
   })
+  const notes = ref(["[Yuan Li | Feb 23, 2024 2:30:20 PM ] -first note","[Yuan Li|Feb 23, 2024 2:40:20 PM ] -second note"]) 
 </script>
 
 <style scoped>
@@ -84,16 +85,3 @@
 }
 </style>
   
-<style>
-/* Tabs style  */
-.preview {
-  font-family: sans-serif;
-  border: 1px solid #eee;
-  border-radius: 2px;
-  padding: 20px 30px;
-  margin-top: 1em;
-  margin-bottom: 40px;
-  user-select: none;
-  overflow-x: auto;
-}
-</style>
