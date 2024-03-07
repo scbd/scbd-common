@@ -38,6 +38,10 @@
           <cbd-article-cover-image :cover-image="coverImage" > </cbd-article-cover-image>
         </div>
       </div>
+
+      <div class = "row mt-3">
+        <parent></parent>
+      </div>
       
     </div>
     <br>
@@ -56,6 +60,7 @@
   import dateSelector from  './src/components/inputs/dateSelector.vue'
   import kmnotes from  './src/components/inputs/notes.vue'
   import kmlink from  './src/components/controls/link/km-link.vue'
+  import parent from  './src/components/controls/link/Parent.vue'
   import { ref ,provide} from 'vue';
 
   provide('auth', {

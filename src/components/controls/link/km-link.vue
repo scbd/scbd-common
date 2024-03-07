@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-   import { ref, computed, watch} from 'vue'
+   import { ref, computed } from 'vue'
    import selectfilebutton from  '../../inputs/select-file-button.vue'
    import addLinkModal from './add-link-modal.vue'
    import uploadFileModal from './upload-file-modal.vue'
@@ -112,13 +112,14 @@
 
     const edit=(index)=>{    
         //TODO: judge document is link or file
-        if (index ==1){            
-            linkModalOpen.value = true;   
-            link = documents.value[index];    
-        } 
-        else {
+        
+        if (documents.value[index].name.includes(".")){            
             fileModalOpen.value = true;        
             file = documents.value[index];
+        } 
+        else {
+            linkModalOpen.value = true;   
+            link = documents.value[index];    
         }
         modalEdit.value = true;     
         editIndex.value = index;        
