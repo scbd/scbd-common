@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>CBD count-down components</h1>
+        <h3>CBD count-down components</h3>
     </div>
 </template>
 

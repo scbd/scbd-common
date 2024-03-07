@@ -1,9 +1,30 @@
 <template>
-  <div class="row">
+    <div>
+        <h3>CBD Articles</h3>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        CBD Article Cover Image
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <cbd-article-cover-image :cover-image="coverImage">
+                                </cbd-article-cover-image>
+                            </div>
+                            <div class="col-4">
+                                <strong></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
     <div class="col-4">
-      <h3>CBD Article Cover Image</h3>
-      <cbd-article-cover-image :cover-image="coverImage">
-      </cbd-article-cover-image>
+      
     </div>
     <div class="col-4">
       <h3>Code</h3>
@@ -145,16 +166,15 @@
      </textarea
       >
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup>
 import cbdArticleCoverImage from "./cbd-article-cover-image.vue";
 const coverImage = {
-  url: "https://attachments.cbd.int/6d60d013f7f2ed996312f5caf90d1d7d/Manila Risk Assessment workshop-1 (1).png",
-  credits: "The credit goes to you.",
+    url: "https://attachments.cbd.int/6d60d013f7f2ed996312f5caf90d1d7d/Manila Risk Assessment workshop-1 (1).png",
+    credits: "The credit goes to you.",
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

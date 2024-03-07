@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>Welcome to the SCBD common project </h1>
-        <h3>Please select the components you want to use from the above tabs</h3>
+        <h3>Welcome to the SCBD common project </h3>
+        <p>Please navigate components using the tabs</p>
     </div>
 </template>
 

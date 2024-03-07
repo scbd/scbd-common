@@ -1,21 +1,21 @@
 <template>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=BenchNine:300,400,600,900" media="all" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,npm/@scbd/www-css@1.0.1/dist/style.min.css,npm/animate.css@3.5.2/animate.min.css">
-  <link rel="stylesheet" href="https://www.cbd.int/app/template-phoenix-overrides.css">
-  <link rel="stylesheet" href="https://www.cbd.int/app/css/bootstrap-migrate-3-to-4.css">
     <ScbdHeader></ScbdHeader>
-      <div class="preview">
-        <button
-          v-for="(_, tab) in tabs"
-          :key="tab"
-          :class="['tab-button', { active: currentTab === tab }]"
-          @click="currentTab = tab"
-        >
-          {{ tab }}
-        </button>
-        <component :is="tabs[currentTab]" class="tab"></component>
-      </div>
+    <div class="container">
+        <div class="preview">
+          <ul class="nav nav-tabs mt-3" id="myTab" role="tablist" >
+            <li class="nav-item" v-for="(_, tab) in tabs" :key="tab">
+              <a class="nav-link" :class="{ active: currentTab === tab }" :id="tab + '-tab'" @click="currentTab = tab"
+              data-toggle="tab" :href="'#'+ tab" role="tab" 
+                :aria-controls="tab" aria-selected="true">{{tab}}</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane bg-white" :class="{  'fade show active': currentTab === tab }" :id="tab" role="tab" :aria-labelledby="tab+'-tab'" v-for="(_, tab) in tabs" :key="tab">
+              <component :is="tabs[currentTab]" class="p-3"></component>
+            </div>
+          </div>        
+        </div>
+    </div>
     <ScbdFooter></ScbdFooter>
 </template>
 
@@ -95,25 +95,5 @@
   margin-bottom: 40px;
   user-select: none;
   overflow-x: auto;
-}
-.tab-button {
-  padding: 6px 10px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background: #f0f0f0;
-  margin-bottom: -1px;
-  margin-right: -1px;
-}
-.tab-button:hover {
-  background: #e0e0e0;
-}
-.tab-button.active {
-  background: #e0e0e0;
-}
-.tab {
-  border: 1px solid #ccc;
-  padding: 10px;
 }
 </style>

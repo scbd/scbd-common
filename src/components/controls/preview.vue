@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>CBD controls components</h1>
+        <h3>CBD controls components</h3>
     </div>
 </template>
 
