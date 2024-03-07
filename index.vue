@@ -30,6 +30,7 @@
  
           <kmlink  class="test" v-model:relevantInfomation="relevantInfomation" v-model:relevantDocuments = "relevantDocuments"></kmlink>  
         </div>
+     
       </div>
       <div class="row mt-5">
         <div class="col-6">
@@ -39,9 +40,7 @@
         </div>
       </div>
 
-      <div class = "row mt-3">
-        <parent></parent>
-      </div>
+  
       
     </div>
     <br>
@@ -50,6 +49,8 @@
     <br>
     <ScbdFooter></ScbdFooter>
   </div>
+
+ 
 </template>
 
 <script setup>
@@ -60,7 +61,7 @@
   import dateSelector from  './src/components/inputs/dateSelector.vue'
   import kmnotes from  './src/components/inputs/notes.vue'
   import kmlink from  './src/components/controls/link/km-link.vue'
-  import parent from  './src/components/controls/link/Parent.vue'
+  //import parent from  './src/components/controls/link/Parent.vue'
   import { ref ,provide} from 'vue';
 
   provide('auth', {

@@ -8,7 +8,9 @@
         <p>info lang is : {{ infoLang }}</p>  -->
         <!--{{ documents[0] }}
         {{ documents[1] }}-->
-   
+
+        <!-- Button trigger modal -->
+  
     
         <textarea            
             v-model="infoValue"           
@@ -24,11 +26,15 @@
 
         <div style="padding-bottom: 5px;">
             <selectfilebutton @files="receiveFile">+ Add File</selectfilebutton>        
-            <button type="button"  class="btn" @click="openLinkModal" ><i class="bi bi-plus"></i>+ Add Link</button> 
+            <!-- <button type="button"  class="btn" @click="openLinkModal" ><i class="bi bi-plus"></i>+ Add Link</button>  -->
             <!-- <button type="button"  class="btn" @click="openFileModal" ><i class="bi bi-plus"></i>Upload File</button>  -->
-            <addLinkModal v-model:modalOpen="linkModalOpen"   :link="link"  @updateLink="updateDocument" ></addLinkModal>
+            <!-- <addLinkModal v-model:modalOpen="linkModalOpen"   :link="link"  @updateLink="updateDocument" ></addLinkModal> -->
             <uploadFileModal v-model:modalOpen="fileModalOpen"    :file="file"  @updateDocument="updateDocument"></uploadFileModal>
-           
+          
+            <button @click="addLink()">add Link</button>        
+            <!-- close event will pass the edited `link` or null of cancel -->
+            <link-editor ref="linkEditorRef" @close="closed($event)"></link-editor>        
+            <link-list :link="allLinks"></link-list>   
             
             <!-- <p> linkModalOpen is :{{ linkModalOpen }}</p>
             <p> fileModalOpen is :{{ fileModalOpen }}</p>
@@ -44,19 +50,58 @@
         <table  class="table table-striped" v-if="documents?.length  ">
             <tr  v-for="(item, index) in documents" :key="index">
                 <td>{{item.language}} {{item.name}}  </td>   
-                <td style="width:10px;"><span class="btn" @click="edit(index)"><i class="fa fa-edit icon"></i></span></td>
+                <td style="width:10px;"><span class="btn" @click="editLink(item, index)"><i class="fa fa-edit icon"></i></span></td>
                 <td style="width:10px;"><span class="btn" @click="remove(index)"><i class="fa fa-trash-o icon"></i></span></td>
             </tr>
         </table>  
+
+
+       
         
     </div> 
+    
 </template>
 
 <script setup>
    import { ref, computed } from 'vue'
    import selectfilebutton from  '../../inputs/select-file-button.vue'
-   import addLinkModal from './add-link-modal.vue'
+//    import addLinkModal from './add-link-modal.vue'
    import uploadFileModal from './upload-file-modal.vue'
+
+    //change for link-editor  
+    import linkEditor from './link-editor.vue';
+    
+    const linkEditorRef= ref(null);
+    let allLinks = [];
+    let editedLinkIndex = -1;
+
+    function addLink() { 
+        editLink({},-1);
+    }
+        
+    function editLink(linkToEdit,index) {
+        editedLinkIndex = index;
+        //editedLinkIndex = allLinks.indexOf(linkToEdit); // if not foud will be -1 maning bew
+        linkEditorRef.value.show(linkToEdit || {}) // `show` function need to be expose from the child component  
+    }
+
+    function closed(newValue) {       
+        if(Object.keys(newValue).length ==0) {// mean cacnel => return              
+            return;
+        } 
+        else{
+            if(editedLinkIndex<0) { // mean new              
+                //allLinks.push(newValue);
+                documents.value.push(newValue);
+            } 
+            else {                
+                //allLinks[editedLinkIndex] = newValue;
+                documents.value[editedLinkIndex]=newValue;
+            } 
+        }       
+    }
+
+
   
    const info = defineModel('relevantInfomation');
    const documents = defineModel('relevantDocuments');
