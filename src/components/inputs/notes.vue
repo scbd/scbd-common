@@ -13,10 +13,12 @@
         </textarea>       
    
         <table class="table table-striped" v-if="notes?.length">
-            <tr v-for="(item, index) in notes" :key="index">
-                <td>{{item}}  </td>   
-                <td ><span class="btn float-end" @click="remove(index)"><i class="fa fa-trash-o icon"></i></span></td>
-              </tr>        
+            <tbody>
+                <tr v-for="(item, index) in notes" :key="index">
+                    <td>{{item}}  </td>   
+                    <td ><span class="btn float-end" @click="remove(index)"><i class="fa fa-trash-o icon"></i></span></td>
+                </tr>    
+            </tbody>    
         </table>   
     </div> 
 </template>
