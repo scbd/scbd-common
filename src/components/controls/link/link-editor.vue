@@ -3,7 +3,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header"> 
-            <h3 class="modal-title">Editing Link--link editor</h3>  
+            <h3 class="modal-title"><slot>Editing link</slot></h3>  
           </div>            
           <div class="modal-body"  >				
             <div class="alert alert-info">Please provide the URL of the website (e.g.
@@ -53,46 +53,6 @@
     const urlErrorMsgShow = ref(false);
     const languageErrorMsgShow = ref(false);
   
-    const close = () => {      
-      modalOpen.value = false;  
-      emit("close", {});  
-    }  
-
-    const validate = () => {   
-        
-        if (isValidHttpUrl(document.getElementById("url").value)){          
-            urlErrorMsgShow.value =false;
-        }
-        else{
-            urlErrorMsgShow.value = true;   
-        }
-  
-        if ( document.getElementById("language").value =="") {        
-            languageErrorMsgShow.value  = true;        }
-        else{         
-            languageErrorMsgShow.value = false;
-        }
-        
-        const isValid = !languageErrorMsgShow.value  && !urlErrorMsgShow.value;    
-        return isValid;  
-    }
-  
-    const save = () =>{ 
-      const isValid = validate();
-   
-      if (isValid){
-        const newLink = { "url": document.getElementById("url").value , "name": document.getElementById("name").value , "language": document.getElementById("language").value  };
-        modalOpen.value = false;   
-        emit("close", newLink);  
-
-      }
-      else{
-        link.value= { "url": document.getElementById("url").value , "name": document.getElementById("name").value , "language": document.getElementById("language").value  };
-        
-      }
-
-    }
-    
     const show= (linkToEdit)=>{  
         modalOpen.value = true;          
         link.value = linkToEdit;   
@@ -100,7 +60,37 @@
         urlErrorMsgShow.value = false;  
     }
 
-   const isValidHttpUrl =(string)=> {
+    const close = () => {      
+      modalOpen.value = false;  
+      emit("close", {});  
+    }  
+
+    const save = () =>{ 
+      const isValid = validate();
+   
+      if (isValid){
+        const newLink = { "url": document.getElementById("url").value , "name": document.getElementById("name").value , "language": document.getElementById("language").value  };
+        modalOpen.value = false;   
+        emit("close", newLink);  
+      }
+      else{
+        link.value= { "url": document.getElementById("url").value , "name": document.getElementById("name").value , "language": document.getElementById("language").value  };        
+      }
+    }
+
+    const validate = () => {   
+        // check url validation                 
+        urlErrorMsgShow.value =!isValidHttpUrl(document.getElementById("url").value);       
+        
+        // check language validation              
+        languageErrorMsgShow.value  = document.getElementById("language").value ==""; 
+        
+        const isValid = !languageErrorMsgShow.value  && !urlErrorMsgShow.value;    
+        return isValid;  
+    }
+  
+    
+    const isValidHttpUrl =(string)=> {
         try {
             const newUrl = new URL(string);
             return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
@@ -108,6 +98,7 @@
             return false;
         }
     }
+
 
     defineExpose({
         show

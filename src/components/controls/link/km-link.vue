@@ -31,9 +31,9 @@
             <!-- <addLinkModal v-model:modalOpen="linkModalOpen"   :link="link"  @updateLink="updateDocument" ></addLinkModal> -->
             <uploadFileModal v-model:modalOpen="fileModalOpen"    :file="file"  @updateDocument="updateDocument"></uploadFileModal>
           
-            <button @click="addLink()">add Link</button>        
+            <button @click="addLink()">+ Add Link</button>        
             <!-- close event will pass the edited `link` or null of cancel -->
-            <link-editor ref="linkEditorRef" @close="closed($event)"></link-editor>        
+            <link-editor ref="linkEditorRef" @close="closed($event)">Editing link</link-editor>        
             <link-list :link="allLinks"></link-list>   
             
             <!-- <p> linkModalOpen is :{{ linkModalOpen }}</p>
