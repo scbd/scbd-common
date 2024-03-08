@@ -1,11 +1,11 @@
 <template>
-  <div :id="$attrs.id" class="km-input mb-2">
+  <div :id="$attrs.id" class="scbd-controls km-input-lstring mb-2">
     <slot></slot>
     <div
       class="input-group mb-1"
-      v-for="locale in locales"
+      v-for="locale in userLocales"
       :key="locale"
-      :class="`km-input-${locale}`"
+      :class="`km-input-lstring-${locale}`"
     >
       <input
         type="text"
@@ -41,6 +41,7 @@ const props = defineProps({
   modelValue: {
     type: Object,
     default: () => ({}),
+    required: true,
   },
   disabled: { type: Boolean, default: false },
 });
