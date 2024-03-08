@@ -55,7 +55,10 @@
             </tr>
         </table>  
 
+        <!-- <km-view-links></km-view-links> -->
+        <km-add-link></km-add-link>
 
+   
        
         
     </div> 
@@ -65,8 +68,9 @@
 <script setup>
    import { ref, computed } from 'vue'
    import selectfilebutton from  '../../inputs/select-file-button.vue'
-//    import addLinkModal from './add-link-modal.vue'
+   import kmViewLinks from './km-view-links.vue'
    import uploadFileModal from './upload-file-modal.vue'
+   import kmAddLink from './km-add-link.vue'
 
     //change for link-editor  
     import linkEditor from './link-editor.vue';
