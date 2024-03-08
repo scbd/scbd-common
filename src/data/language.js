@@ -1,9 +1,8 @@
-const languages = {
-    ar : 'Arabic',
-    en : 'English',
-    cn : 'Chinese',
-    fr : 'French' ,
-    es : 'Spanish',
-    ru : 'Russian'
+export const languages = {
+    "ar" : "العربية",
+    "zh" : "中文",
+    "en" : "English",
+    "es" : "Español",
+    "fr" : "Français",
+    "ru" : "Русский"
 }
-export default languages

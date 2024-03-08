@@ -43,7 +43,7 @@
   
   <script setup >
     import { defineEmits, ref, computed } from "vue"; 
-    import languages from '../../../data/language';
+    import { languages } from '../../../data/language';
     
     //TODO: use km-form-control when its available    
     
@@ -68,10 +68,10 @@
     }  
 
     const save = () =>{  
-      if (isUrlValid.value && isLangValid.value){       
+      if (isUrlValid.value && isLangValid.value){   
         const newLink = { "url": link.value.url , "name": link.value.name , "language": link.value.language  };
         modalOpen.value = false;   
-        emit("close", newLink);  
+        emit("close", newLink);      
       }
     }
     
