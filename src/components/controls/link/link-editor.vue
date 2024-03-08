@@ -18,22 +18,17 @@
                             <small class="help-block">Protocol is required (https:// or http://)</small>	               				
                             <input class="form-control"  id ="url" v-model="link.url" type="url" style="width:98%"  placeholder=" https://www." />
                             <p v-if="!isUrlValid" ><span style="color: #e32"> Please provide valid URL</span></p>
-                            </div>
+                        </div>
                         <div class="mb-3" >
                             <label for="name" class="col-form-label" >Name</label>
                             <input class="form-control" id="name" v-model="link.name" type="text" style="width:98%"  placeholder="example:SCBD website" />
                         </div>
                         <div class="mb-3">
                             <label for="language" class="col-form-label">Language <span style="color: #e32"> *</span></label>   
-                            <p v-if="!isLangValid" ><span style="color: #e32"> Please select Language </span></p>
                                 <select class="form-select"  name="language" id="language" v-model="link.language"> 
-                                <option value="ar">Arabic</option>                 
-                                <option value="en">English</option>     
-                                <option value="cn">Chinese</option>
-                                <option value="fr">French</option>                 
-                                <option value="es">Spanish</option>
-                                <option value="ru">Russian</option>
+                                <option v-for="(language, key) in languages" :value="key" :key="key">{{ language }}</option> 
                             </select>
+                            <p v-if="!isLangValid" ><span style="color: #e32"> Please select Language </span></p>
                         </div>
                         </form>
                 </div>
@@ -48,16 +43,25 @@
   
   <script setup >
     import { defineEmits, ref, computed } from "vue"; 
-     
+    
+    //TODO: use km-form-control when its available
+    //TODO : move to data file
+    const languages = {
+        ar : 'Arabic',
+        en : 'English',
+        cn : 'Chinese',
+        fr : 'French' ,
+        es : 'Spanish',
+        ru : 'Russian',
+    }
+    
     const modalOpen = ref(false) ;
     const link = ref({});     
   
     const emit = defineEmits(['close']);
 
     const isUrlValid  = computed(()=>{ return isValidHttpUrl(link.value.url)});
-    const isLangValid = computed(()=>{ 
-        return !(typeof (link.value.language)=== 'undefined' || link.value.lang == "" );  
-    });
+    const isLangValid = computed(()=>!!link.value?.language?.trim() && Object.keys(languages).includes(link.value.language));  
 
  
     const show= (linkToEdit)=>{  
@@ -83,9 +87,10 @@
         try {
             const newUrl = new URL(string);
             return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
-        } catch (err) {
-            return false;
         }
+        catch(e){};
+        
+        return false;
     }
 
     defineExpose({
