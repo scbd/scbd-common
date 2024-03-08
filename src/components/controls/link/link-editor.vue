@@ -1,5 +1,5 @@
 <template> 
-    <div id="linkEditorModal" v-if="modalOpen" class="modal fade show overflow-auto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" style="padding-right: 17px; display: block;">
+    <div id="linkEditorModal" v-if="modalOpen" class="modal fade show overflow-auto d-block scbd-controls link-editor" tabindex="-1" role="dialog" aria-labelledby="linkEditor" >
         <div class="modal-dialog" role="document" >
             <div class="modal-content">
                 <div class="modal-header">     
@@ -14,21 +14,21 @@
                         </div>					
                         <form>
                         <div class="mb-3" >
-                            <label class="col-form-label" for="url">Url <span style="color: #e32"> *</span></label><br/>
+                            <label class="col-form-label" for="url">Url <span class="text-danger"> *</span></label><br/>
                             <small class="help-block">Protocol is required (https:// or http://)</small>	               				
-                            <input class="form-control"  id ="url" v-model="link.url" type="url" style="width:98%"  placeholder=" https://www." />
-                            <p v-if="!isUrlValid" ><span style="color: #e32"> Please provide valid URL</span></p>
+                            <input class="form-control"  id ="url" v-model="link.url" type="url"  placeholder=" https://www." />
+                            <p v-if="!isUrlValid" ><span class="text-danger"> Please provide valid URL</span></p>
                         </div>
                         <div class="mb-3" >
                             <label for="name" class="col-form-label" >Name</label>
-                            <input class="form-control" id="name" v-model="link.name" type="text" style="width:98%"  placeholder="example:SCBD website" />
+                            <input class="form-control" id="name" v-model="link.name" type="text"  placeholder="example:SCBD website" />
                         </div>
                         <div class="mb-3">
-                            <label for="language" class="col-form-label">Language <span style="color: #e32"> *</span></label>   
+                            <label for="language" class="col-form-label">Language <span class="text-danger"> *</span></label>   
                                 <select class="form-select"  name="language" id="language" v-model="link.language"> 
                                 <option v-for="(language, key) in languages" :value="key" :key="key">{{ language }}</option> 
                             </select>
-                            <p v-if="!isLangValid" ><span style="color: #e32"> Please select Language </span></p>
+                            <p v-if="!isLangValid" ><span class="text-danger"> Please select Language </span></p>
                         </div>
                         </form>
                 </div>
@@ -43,17 +43,9 @@
   
   <script setup >
     import { defineEmits, ref, computed } from "vue"; 
+    import languages from '../../../data/language';
     
-    //TODO: use km-form-control when its available
-    //TODO : move to data file
-    const languages = {
-        ar : 'Arabic',
-        en : 'English',
-        cn : 'Chinese',
-        fr : 'French' ,
-        es : 'Spanish',
-        ru : 'Russian',
-    }
+    //TODO: use km-form-control when its available    
     
     const modalOpen = ref(false) ;
     const link = ref({});     
