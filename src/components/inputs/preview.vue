@@ -130,12 +130,15 @@
             </div>
             <div class="card-body"> 
                 <div class="row">
-                    <div class="col-6">
+                   <div class="col-6">
                         
                     </div>
-                    <div class="col-4">
-                        <strong>e</strong>
-                        
+                    <div class="col-6">
+                        <div class="callout callout-warning">
+                            <code>                                    
+                                ///HTML Escape////
+                            </code>   
+                        </div>                                                            
                     </div>
                 </div>
             </div>               
