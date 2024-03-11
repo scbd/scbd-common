@@ -26,13 +26,36 @@
                 </div>
             </div>        
         </div>
-        
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Km view links
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6">  
+                                <km-view-links v-model="links"   @editLink = "editLink($event)"  @deleteLink = "deleteLink($event)"></km-view-links>                                
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                    <code>                             
+                                        &lt;km-view-links v-model=&quot;links&quot;   @editLink = &quot;editLink($event)&quot;  @deleteLink = &quot;deleteLink($event)&quot;&gt;&lt;/km-view-links&gt;                         
+                                    </code>   
+                                </div>                                                            
+                            </div>
+                        </div>
+                    </div>               
+                </div>
+            </div>        
+        </div>       
     </div>
 </template>
 
 <script setup>
 import { onMounted, ref} from 'vue'
 import linkEditor from './link/link-editor.vue';
+import kmViewLinks from './link/km-view-links.vue';
 
 const linkEditorRef = ref();
 
@@ -42,6 +65,31 @@ const showLinkEditor = ()=>{
 const onLinkEditorClose = (newVal)=>{
     console.log(newVal)
 }
+
+
+const links =ref([
+      {
+        "url": "https://www.google.com",
+        "name": "website 1",
+        "language": "en"
+      },
+      {
+        "url": "https://www.bing.com",
+        "name": "website 2",
+        "language": "en"
+      },
+      {
+        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614774/TEST.txt",
+        "name": "TEST.txt",
+        "language": "en"
+      },
+      {
+        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614775/TEST.txt",
+        "name": "TEST.txt",
+        "language": "ar"
+      }
+    ]);
+  
 </script>
 
 <style lang="scss" scoped>
