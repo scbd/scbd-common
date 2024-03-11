@@ -1,17 +1,17 @@
 <template>
     <button type="button" class="btn btn-primary" @click="addLink()">+ Add Link</button>   
     <link-editor ref="linkEditorRef" @close="closed($event)">Editing link</link-editor>    
-    <km-view-links v-model="links"></km-view-links>
+    <km-view-links v-model="links"    @deleteLink = "deleteLink($event)"></km-view-links>
     
 </template>
 <script setup>
-  import { ref, computed } from 'vue'  
+  import { ref } from 'vue'  
   import kmViewLinks from './km-view-links.vue';
-  import linkEditor from './link-editor.vue';
+  import linkEditor  from './link-editor.vue';
 
 
-    const linkEditorRef= ref(null); 
-    let editedLinkIndex = -1;
+  const linkEditorRef= ref(null); 
+  let editedLinkIndex = -1;
 
   const links =ref([
       {
@@ -43,7 +43,11 @@
         
     function editLink(linkToEdit,index) {
         editedLinkIndex = index;   
-        linkEditorRef.value.show(linkToEdit || {}) // `show` function need to be expose from the child component  
+        linkEditorRef.value.show(linkToEdit || {}) 
+    }
+
+    function deleteLink(index) {    
+        links.value.splice(index, 1);   
     }
 
     function closed(newValue) {       
@@ -51,7 +55,7 @@
             return;
         } 
         else{
-            if(editedLinkIndex<0) {    
+            if(editedLinkIndex<0) {              
                 links.value.push(newValue);
             } 
             else {        
@@ -59,5 +63,4 @@
             } 
         }       
     }
-
 </script>
