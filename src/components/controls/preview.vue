@@ -35,7 +35,7 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6"> 
-                                <km-view-links v-model="links"   @onEdit = "edit($event)"  @onDelete = "remove($event)"></km-view-links>                                
+                                <km-view-links v-model="links"   @on-edit = "edit($event)"  @on-delete = "remove($event)"></km-view-links>                                
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
