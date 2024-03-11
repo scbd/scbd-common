@@ -50,7 +50,7 @@
     const modalOpen = ref(false) ;
     const link = ref({});     
   
-    const emit = defineEmits(['close']);
+    const emit = defineEmits(['onClose']);
 
     const isUrlValid  = computed(()=>{ return isValidHttpUrl(link.value.url)});
     const isLangValid = computed(()=>!!link.value?.language?.trim() && Object.keys(languages).includes(link.value.language));  
@@ -64,14 +64,14 @@
 
     const close = () => {      
       modalOpen.value = false;  
-      emit("close");  
+      emit("onClose");  
     }  
 
     const save = () =>{  
       if (isUrlValid.value && isLangValid.value){   
         const newLink = { "url": link.value.url , "name": link.value.name , "language": link.value.language  };
-        modalOpen.value = false;   
-        emit("close", newLink);      
+        modalOpen.value = false;        
+        emit("onClose", newLink);      
       }
     }
     

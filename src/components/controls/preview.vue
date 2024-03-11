@@ -11,10 +11,10 @@
                         <div class="row">
                             <div class="col-6">
                                 <button class="btn btn-default" @click="showLinkEditor()">Show Link editor</button>
-                                <link-editor ref="linkEditorRef" @close="onLinkEditorClose"></link-editor>
+                                <link-editor ref="linkEditorRef" @onClose="onLinkEditorClose"></link-editor>
                             </div>
                             <div class="col-6">
-                                <div class="callout callout-warning">
+                                <div class="callout callout-warning">                                
                                     <code>                                    
                                         &lt;button class=&quot;btn btn-default&quot; @click=&quot;showLinkEditor()&quot;&gt;Show Link editor&lt;/button&gt;
                                         &lt;link-editor ref=&quot;linkEditorRef&quot; @close=&quot;onLinkEditorClose&quot;&gt;&lt;/link-editor&gt;                                 
@@ -80,6 +80,49 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Add Link 
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6">
+                                <km-add-link/>  
+                            </div>
+                            <div class="col-6">
+                                Example 1: default
+                                <div class="callout callout-warning">
+                                    <code>                              
+                                        &lt;km-add-link/&gt;
+                                    </code> 
+                                </div>                                                                        
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">                             
+                                <km-add-link>
+                                    <template v-slot:add-link>
+                                        <p>show something else</p>
+                                    </template>
+                                </km-add-link>
+                            </div>
+                            <div class="col-6">  
+                                Example 2: show customize content  when you want hide add link button and list                               
+                                <div class="callout callout-warning">
+                                    <code>  
+                                        &lt;km-add-link&gt;
+                                            &lt;template v-slot:add-link&gt;
+                                                &lt;p>show something else&lt;/p&gt;
+                                            &lt;/template&gt;
+                                        &lt;/km-add-link&gt;              
+                                    </code> 
+                                </div>                                          
+                            </div>
+                        </div>
+                    </div>               
+                </div>
+            </div> 
         </div>
         <div class="row">
             <div class="col-12">
@@ -116,13 +159,12 @@
 
 <script setup>
 import { onMounted, ref} from 'vue'
-import linkEditor from './link/link-editor.vue';
 import KmInputLstring from "./km-input-lstring.vue";
-import KmInputLstringMl from "./km-input-lstring-ml.vue"
-const kmInputLStringModel = ref({});
-const locales = ref(["en", "fr"]);//, 'zh', 'ru'
 import kmViewLinks from './link/km-view-links.vue';
-const kmInputLStringMlModel = ref([{}]);
+import kmAddLink from './link/km-add-link.vue';
+import linkEditor from './link/link-editor.vue';
+const kmInputLStringModel = ref({});
+const locales = ref(["en", "fr", 'zh', 'ru']);
 
 const linkEditorRef = ref();
 
@@ -133,32 +175,6 @@ const onLinkEditorClose = (newVal)=>{
     console.log(newVal)
 }
 
-
-const links =ref([
-      {
-        "url": "https://www.google.com",
-        "name": "website 1",
-        "language": "en"
-      },
-      {
-        "url": "https://www.bing.com",
-        "name": "website 2",
-        "language": "en"
-      },
-      {
-        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614774/TEST.txt",
-        "name": "TEST.txt",
-        "language": "en"
-      },
-      {
-        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614775/TEST.txt",
-        "name": "TEST.txt",
-        "language": "ar"
-      }
-    ]);
-  
-
-
 const removeLocale = () => {
     locales.value.splice(1, 1);
 }
@@ -167,4 +183,3 @@ const removeLocale = () => {
 <style lang="scss" scoped>
 
 </style> 
-
