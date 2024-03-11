@@ -4,8 +4,8 @@
             <tr  v-for="(item, index) in links" :key="index">  
                 <td>{{languages[item.language]}}  <a :href="item.url" >{{item.name}}</a></td>   
                 <td class = "text-end">
-                    <span class="btn m-1" @click="editLink(index)"><i class="fa fa-edit icon"></i></span>
-                    <span class="btn" @click="deleteLink(index)"><i class="fa fa-trash-o icon"></i></span>
+                    <span class="btn m-1" @click="edit(index)"><i class="bi bi-pencil-square"></i></span>
+                    <span class="btn" @click="remove(index)"><i class="bi bi-trash3"></i></span>
                 </td>
            </tr>        
         </tbody>
@@ -17,7 +17,7 @@
   import { languages } from '../../../data/language'
 
   const model = defineModel({type:Array, required:true});
-  const emit = defineEmits(['deleteLink'],['editLink']);
+  const emit = defineEmits(['onDelete','onEdit']);
    
     let links = computed(()=>{
         if(model.value)
@@ -25,11 +25,11 @@
         return [];
     });   
  
-    const deleteLink = (index) =>{    
-        emit("deleteLink", index);        
+    const remove = (index) =>{    
+        emit("onDelete", index);        
     }
 
-    const editLink = (index) =>{    
-        emit("editLink", index);        
+    const edit = (index) =>{    
+        emit("onEdit", index);        
     }
 </script>
