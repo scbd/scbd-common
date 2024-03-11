@@ -1,7 +1,7 @@
 <template>
     <button type="button" class="btn btn-primary" @click="addLink()">+ Add Link</button>   
     <link-editor ref="linkEditorRef" @close="closed($event)">Editing link</link-editor>    
-    <km-view-links v-model="links"    @deleteLink = "deleteLink($event)"></km-view-links>
+    <km-view-links v-model="links"    @deleteLink = "deleteLink($event)"   @editLink = "editLink($event)"></km-view-links>
     
 </template>
 <script setup>
@@ -41,9 +41,15 @@
         editLink({},-1);
     }
         
-    function editLink(linkToEdit,index) {
+    // function editLink(linkToEdit,index) {
+    //     editedLinkIndex = index;   
+    //     linkEditorRef.value.show(linkToEdit || {}) 
+    // }
+
+    function editLink(index) {     
         editedLinkIndex = index;   
-        linkEditorRef.value.show(linkToEdit || {}) 
+        linkEditorRef.value.show(links.value[index] || {}) 
+      
     }
 
     function deleteLink(index) {    
