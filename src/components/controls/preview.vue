@@ -34,13 +34,13 @@
                     </div>
                     <div class="card-body"> 
                         <div class="row">
-                            <div class="col-6">  
-                                <km-view-links v-model="links"   @editLink = "editLink($event)"  @deleteLink = "deleteLink($event)"></km-view-links>                                
+                            <div class="col-6"> 
+                                <km-view-links v-model="links"   @onEdit = "edit($event)"  @onDelete = "remove($event)"></km-view-links>                                
                             </div>
                             <div class="col-6">
-                                <div class="callout callout-warning">
-                                    <code>                             
-                                        &lt;km-view-links v-model=&quot;links&quot;   @editLink = &quot;editLink($event)&quot;  @deleteLink = &quot;deleteLink($event)&quot;&gt;&lt;/km-view-links&gt;                         
+                                <div class="callout callout-warning">                              
+                                    <code id="kmViewLinks">                             
+                                        &lt;km-view-links v-model=&quot;links&quot;    @onEdit  = &quot;edit($event)&quot;  @onDelete = &quot;remove($event)&quot;&gt;&lt;/km-view-links&gt;                         
                                     </code>   
                                 </div>                                                            
                             </div>
@@ -90,8 +90,10 @@ const links =ref([
       }
     ]);
   
+
 </script>
 
 <style lang="scss" scoped>
 
-</style>
+</style> 
+
