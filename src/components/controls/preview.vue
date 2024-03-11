@@ -40,7 +40,7 @@
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
                                     <code id="kmViewLinks">                             
-                                        &lt;km-view-links v-model=&quot;links&quot;    @onEdit  = &quot;edit($event)&quot;  @onDelete = &quot;remove($event)&quot;&gt;&lt;/km-view-links&gt;                         
+                                        &lt;km-view-links v-model=&quot;links&quot;    @on-edit  = &quot;edit($event)&quot;  @on-delete = &quot;remove($event)&quot;&gt;&lt;/km-view-links&gt;                         
                                     </code>   
                                 </div>                                                            
                             </div>
