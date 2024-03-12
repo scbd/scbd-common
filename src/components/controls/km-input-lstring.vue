@@ -1,0 +1,72 @@
+<template>
+  <div :id="$attrs.id" class="scbd-controls km-input-lstring mb-2">
+    <slot></slot>
+    <div
+      class="input-group mb-1"
+      v-for="locale in locales"
+      :key="locale"
+      :class="`km-input-lstring-${locale}`"
+    >
+      <input
+        type="text"
+        class="form-control"
+        aria-describedby="basic-addon2"
+        v-model="model[locale]"
+        :dir="locale == 'ar' ? 'rtl' : 'ltr'"
+        @input="emitChange"
+      />
+
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-primary"
+          type="button"
+          id="basic-addon2"
+          :data-bs-toggle="'tooltip'"
+          :data-bs-placement="'top'"
+          :title="getTerm(locale).title"
+        >
+          {{ locale.toUpperCase() }}
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, watch, onMounted, defineEmits, computed } from "vue";
+import { without } from "lodash";
+const model = defineModel({type:Object, required: true, default:{}})
+const props = defineProps({
+  locales: { type: Array, required: true },
+  disabled: { type: Boolean, default: false },
+});
+
+const binding = ref(props.modelValue);
+
+const loadLanguages = () => {
+  props.locales?.forEach((e) => {
+    //TODO: call thesaurus service API
+  });
+};
+
+const getTerm = (term) => {
+  //TODO: call thesaurus service API
+  return { title: term };
+};
+
+watch(()=>props.locales,
+  (newVal, oldVal) => {
+    const deleted = without(Object.keys(model.value), ...newVal);
+    if (deleted?.length) {
+      deleted.forEach((e) => {
+        model.value[e] = undefined;
+      });
+    }
+    loadLanguages();
+  }, {deep:true}
+);
+
+onMounted(() => {
+  loadLanguages();
+});
+</script>
