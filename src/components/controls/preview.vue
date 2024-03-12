@@ -27,6 +27,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -142,18 +143,51 @@
             </div>    
         </div> 
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Km form group
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6"> 
+                                <km-form-group :name="name" :caption="caption" :data-content="dataContent"
+                                    ></km-form-group>                              
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">                              
+                                    <code>
+                                        &lt;km-form-group :name=&quot;name&quot; :caption=&quot;caption&quot; data-content=&quot;Test Data Content&quot;
+                                        &gt;&lt;/km-form-group&gt;                             
+                                    </code>   
+                                </div>                                                            
+                            </div>
+                        </div>
+                    </div>               
+                </div>
+            </div>        
+        </div> 
+
     </div>
 </template>
 
 <script setup>
-    import { onMounted, ref,shallowRef} from 'vue'
+    import { onMounted, ref,shallowRef, defineProps} from 'vue'
     import KmInputLstring from "./km-input-lstring.vue";
     import kmViewLinks from './link/km-view-links.vue';
     import kmAddLink from './link/km-add-link.vue';
     import linkEditor from './link/link-editor.vue';
+    import KmFormGroup from "./km-form-group.vue"
 
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
+    const kmFormGroupProps = defineProps({
+        name:{ type:String, default:"0" },
+        caption: { type:String, default:"Test Caption" },
+        isValidFn: { type:Function },
+        dataContent:{ type:String, default:"Test Data Content" }
+    })
 
     const linkEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
@@ -176,5 +210,4 @@
 </script>
 
 <style lang="scss" scoped>
-
 </style> 
