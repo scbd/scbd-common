@@ -13,7 +13,6 @@
         aria-describedby="basic-addon2"
         v-model="model[locale]"
         :dir="locale == 'ar' ? 'rtl' : 'ltr'"
-        @input="emitChange"
       />
 
       <div class="input-group-append">
