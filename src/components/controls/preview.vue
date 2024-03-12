@@ -170,16 +170,42 @@
             </div>        
         </div> 
 
-    </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Km lstring value
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6"> 
+                                <km-lstring-value :value="kmLstringProps.value" :locale="kmLstringProps.locale"></km-lstring-value>                                
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">                              
+                                    <code id="kmViewLinks">                             
+                                        &lt;km-lstring-value :value=&quot;kmLstringProps.value&quot; :locale=&quot;kmLstringProps.locale&quot;&gt;&lt;/km-lstring-value&gt;
+                                    </code>   
+                                </div>                                                            
+                            </div>
+                        </div>
+                    </div>               
+                </div>
+            </div>        
+        </div>
+
 </template>
 
 <script setup>
-    import { onMounted, onBeforeMount, ref, shallowRef, defineProps, inject, provide} from 'vue'
+    import { onMounted, onBeforeMount, ref, shallowRef, defineProps, inject, provide, reactive} from 'vue'
     import KmInputLstring from "./km-input-lstring.vue";
     import kmViewLinks from './link/km-view-links.vue';
     import kmAddLink from './link/km-add-link.vue';
     import linkEditor from './link/link-editor.vue';
     import KmFormGroup from "./km-form-group.vue"
+    import kmLstringValue from "./view/km-lstring-value.vue"
 
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
@@ -192,6 +218,10 @@
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
 
+const kmLstringProps = reactive({
+    value:"Test Value",
+    locale:"en"
+})
     const validationReview = {
         "identifier": "4DE6D968-FBB4-135A-3D23-DA52FB705939",
         "schema": "authority",
