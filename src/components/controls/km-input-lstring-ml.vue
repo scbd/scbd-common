@@ -13,23 +13,23 @@
         <div class="col-md-1">
           <button
             :disabled="binding.length === 1"
-            class="btn btn-danger btn-sm"
+            class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
             type="button"
             @click="removeItem(item, index)"
           >
-            <font-awesome-icon icon="fa-solid fa-trash" /> {{ t("remove") }}
+            <i class="bi bi-trash"></i> {{ t("remove") }}
           </button>
         </div>
       </div>
     </div>
 
     <button
-      class="btn btn-outline-secondary-btn-sm"
+      class="btn btn-outline-secondary btn-sm d-flex align-items-center justify-content-center"
       type="button"
       @click="addItem()"
       :disabled="hasEmpty"
     >
-      <font-awesome-icon icon="fa-solid fa-plus" /> {{ t("add") }}
+      <i class="bi bi-plus"></i> {{ t("add") }}
     </button>
   </div>
 </template>
