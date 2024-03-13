@@ -40,7 +40,6 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
 });
 
-const binding = ref(props.modelValue);
 
 const loadLanguages = () => {
   props.locales?.forEach((e) => {
