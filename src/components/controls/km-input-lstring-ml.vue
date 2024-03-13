@@ -1,6 +1,5 @@
 <template>
-  <div :id="id" class="km-input-lstring-ml mb-2">
-    {{ binding }}
+  <div :id="$attrs.id" class="km-input-lstring-ml scbd-controls mb-2">
     <div v-for="(item, index) in binding" :key="item">
       <div class="row">
         <div class="col-md-11">
@@ -41,7 +40,6 @@ import {
   onMounted,
   defineProps,
   defineEmits,
-  useAttrs,
 } from "vue";
 import { isEmpty } from "lodash";
 import KmInputLstring from "./km-input-lstring.vue";
@@ -54,6 +52,9 @@ const props = defineProps({
   locales: {
     type: Array,
     required: true,
+    validator:(value) => {
+      return value.every(locale => locale.length <= 3);
+    }
   },
   modelValue: {
     type: Array,
@@ -68,7 +69,6 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 const binding = ref([{ value: {} }]);
-const id = computed(() => useAttrs().id);
 const hasEmpty = computed(() => binding.value.some((e) => isEmpty(e.value)));
 function addItem() {
   binding.value.push({ value: {} });
