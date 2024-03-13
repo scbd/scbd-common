@@ -2,15 +2,16 @@
   <button type="button" class="btn btn-primary" @click="addLink()">
     <slot name="link-button-label">+ Add Link</slot>
   </button>  
-  <link-editor ref="linkEditorRef" @on-close="closed($event)">
+  <link-editor ref="linkEditorRef" @on-close="onLinkEditorClose">
     <template v-slot:modalTitle>
       <slot name="link-dialog-title"   >        
-        Editing link    
+        Edit link    
       </slot>
      </template>       
   </link-editor>
+
   <slot name="links-view">
-    <km-view-links v-model="links"   @on-delete = "remove($event)"   @on-edit = "edit($event)"></km-view-links>  
+    <km-view-links v-model="links"   @on-delete = "removeLink($event)"   @on-edit = "editLink($event)"></km-view-links>  
   </slot>
 </template>
 <script setup>
@@ -19,23 +20,23 @@
   import linkEditor  from './link-editor.vue';
 
   const linkEditorRef= ref(null); 
-  let editedLinkIndex = -1;
-  const links =ref([]);
+  let editedLinkIndex = -1; 
+  const links = defineModel({type:Array, required:true, default:[]});
 
     function addLink() {  
-        edit(-1);
+        editLink(-1);
     }      
 
-    function edit(index) {  
+    function editLink(index) {  
         editedLinkIndex = index;  
         linkEditorRef.value.show(links.value[index] ||{})     
     }
 
-    function remove(index) {  
+    function removeLink(index) {  
         links.value.splice(index, 1);   
     }
 
-    function closed(newValue) {    
+    function onLinkEditorClose(newValue) {    
         if(Object.keys(newValue).length ==0) {// mean cacnel => return              
             return;
         } 

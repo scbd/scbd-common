@@ -88,7 +88,7 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6">
-                                <km-add-link/>  
+                                <km-add-link  v-model="kmAddLinkModel"/>  
                             </div>
                             <div class="col-6">
                                 Example 1: default
@@ -100,8 +100,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">                             
-                                <km-add-link>
+                            <div class="col-6">
+                                Parent links :   {{ kmAddLinkModel }}                          
+                                <km-add-link v-model="kmAddLinkModel">
                                     <template #link-button-label>
                                         Add Websites
                                     </template>
