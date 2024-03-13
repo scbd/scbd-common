@@ -22,9 +22,9 @@
                                 </div>                                                            
                             </div>
                         </div>
-                    </div>               
+                    </div>  
                 </div>
-            </div>        
+            </div>
         </div>
         <div class="row">
             <div class="col-12">
@@ -49,12 +49,47 @@
                 </div>
             </div>        
         </div>       
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">KmInputLString</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ kmInputLStringModel }}
+                                <km-input-lstring
+                                    v-model="kmInputLStringModel"
+                                    :locales="locales"                                                    
+                                    >
+                                </km-input-lstring>
+                                <br/>
+                                <button class="btn btn-danger" @click="removeLocale">Remove locale</button>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                <code>
+                                    &lt;km-input-lstring
+                                        v-model=&quot;kmInputLStringModel&quot;
+                                        :locales=&quot;locales&quot;
+                                        &gt;
+                                    &lt;/km-input-lstring&gt;
+                                </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { onMounted, ref} from 'vue'
 import linkEditor from './link/link-editor.vue';
+import KmInputLstring from "./km-input-lstring.vue";
+const kmInputLStringModel = ref({});
+const locales = ref(["en", "fr", 'zh', 'ru']);
 import kmViewLinks from './link/km-view-links.vue';
 
 const linkEditorRef = ref();
@@ -91,6 +126,10 @@ const links =ref([
     ]);
   
 
+
+const removeLocale = () => {
+    locales.value.splice(1, 1);
+}
 </script>
 
 <style lang="scss" scoped>
