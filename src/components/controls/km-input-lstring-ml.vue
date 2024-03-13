@@ -6,7 +6,7 @@
           <km-input-lstring
             v-model="item.value"
             :locales="props.locales"
-            v-on:update:modelValue="emitChange"
+            @input="emitChange"
           ></km-input-lstring>
         </div>
         <div class="col-md-1">
