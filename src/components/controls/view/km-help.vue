@@ -8,7 +8,7 @@
 
     <div class="webui-popover-content">
         <slot name="content">
-            {{ popoverContent }}
+            {{ content }}
         </slot>
     </div>
 </template>
@@ -20,15 +20,16 @@ import $ from 'jquery'
 import {ref, useAttrs, useSlots, computed, onMounted, onBeforeUnmount } from 'vue'
 
 const helpAnchor = ref(null);
-const $attrs = useAttrs();
+const props = defineProps({
+    title: {type:String},
+    content: {type:String, required: true}
+})
 const slots  = useSlots();
-
-const popoverContent = computed(()=>$attrs.content);
 
 onMounted(()=>{    
     const settings = {
         trigger: 'hover',
-        title: $attrs.title || 'Online Reporting Tool - Help',
+        title: props.title || "Help",
         closeable: true,
         dismissible: true,
         padding: true,
@@ -40,8 +41,8 @@ onMounted(()=>{
         }
     };
 
-    if($attrs.container && $attrs.container != '')
-        settings.container = $attrs.container;
+    // if($attrs.container && $attrs.container != '')
+    //     settings.container = $attrs.container;
     
     $ (helpAnchor.value)
         .webuiPopover('destroy')

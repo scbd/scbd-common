@@ -152,7 +152,7 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6"> 
-                                <km-form-group :name="name" :caption="caption" :data-content="dataContent"
+                                <km-form-group name="test name" caption="test caption" help-content="Test Content" :is-valid="false"
                                     ></km-form-group>                              
                             </div>
                             <div class="col-6">
@@ -173,7 +173,7 @@
 </template>
 
 <script setup>
-    import { onMounted, ref,shallowRef, defineProps} from 'vue'
+    import { onMounted, ref, shallowRef, defineProps, inject} from 'vue'
     import KmInputLstring from "./km-input-lstring.vue";
     import kmViewLinks from './link/km-view-links.vue';
     import kmAddLink from './link/km-add-link.vue';
@@ -187,6 +187,15 @@
         caption: { type:String, default:"Test Caption" },
         isValidFn: { type:Function },
         dataContent:{ type:String, default:"Test Data Content" }
+    })
+
+    onMounted(()=>{
+        const onReviewErrorHandler = inject("onReviewError");
+        if(onReviewErrorHandler){
+            onReviewErrorHandler({
+                errors:[{property:"0"}]
+            })
+        }       
     })
 
     const linkEditorRef = shallowRef();
