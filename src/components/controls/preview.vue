@@ -228,7 +228,7 @@
 
 
     const showLinkEditor = ()=>{
-        linkEditorRef.value.show({url: 'https://api.cbd.int/api/2013', name: 'report.pdf', language: 'en'})
+        linkEditorRef.value.show({url: 'https://cnbd.int', name: 'sdf', language: 'es2'})
     }
     const onLinkEditorClose = (newVal)=>{
         console.log(newVal)
