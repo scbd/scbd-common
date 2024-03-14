@@ -11,11 +11,11 @@
                 <div class="modal-body">
                         <div class="alert alert-info">Please provide the URL of the website (e.g.
                             <a rel="noopener" translation-url target="_blank" href="http://www.cbd.int">https://www.cbd.int</a> )and the name of the website (e.g. "The Convention on Biological Diversity").
-                        </div>					
+                        </div>                  
                         <form>
                         <div class="mb-3" >
                             <label class="col-form-label" for="url">Url <span class="text-danger"> *</span></label><br/>
-                            <small class="help-block">Protocol is required (https:// or http://)</small>	               				
+                            <small class="help-block">Protocol is required (https:// or http://)</small>                                
                             <input class="form-control"  id ="url" v-model="link.url" type="url"  placeholder=" https://www." />
                             <p v-if="!isUrlValid" ><span class="text-danger"> Please provide valid URL</span></p>
                         </div>
@@ -50,28 +50,24 @@
     const modalOpen = ref(false) ;
     const link = ref({});     
   
-    const emit = defineEmits(['close']);
-
+    const emit = defineEmits(['onClose']);
     const isUrlValid  = computed(()=>{ return isValidHttpUrl(link.value.url)});
     const isLangValid = computed(()=>!!link.value?.language?.trim() && Object.keys(languages).includes(link.value.language));  
-
  
     const show= (linkToEdit)=>{  
         modalOpen.value = true;    
         const  { url, name, language } = linkToEdit  
         link.value = { url, name, language }; 
     }
-
     const close = () => {      
       modalOpen.value = false;  
-      emit("close");  
+      emit("onClose");  
     }  
-
     const save = () =>{  
       if (isUrlValid.value && isLangValid.value){   
         const newLink = { "url": link.value.url , "name": link.value.name , "language": link.value.language  };
-        modalOpen.value = false;   
-        emit("close", newLink);      
+        modalOpen.value = false;        
+        emit("onClose", newLink);      
       }
     }
     
@@ -84,12 +80,7 @@
         
         return false;
     }
-
     defineExpose({
         show
     })
   </script>
-  
-  
-
-  

@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <h3>CBD controls components</h3>
@@ -11,10 +12,10 @@
                         <div class="row">
                             <div class="col-6">
                                 <button class="btn btn-default" @click="showLinkEditor()">Show Link editor</button>
-                                <link-editor ref="linkEditorRef" @close="onLinkEditorClose"></link-editor>
+                                <link-editor ref="linkEditorRef" @on-close="onLinkEditorClose"></link-editor>
                             </div>
                             <div class="col-6">
-                                <div class="callout callout-warning">
+                                <div class="callout callout-warning">                                
                                     <code>                                    
                                         &lt;button class=&quot;btn btn-default&quot; @click=&quot;showLinkEditor()&quot;&gt;Show Link editor&lt;/button&gt;
                                         &lt;link-editor ref=&quot;linkEditorRef&quot; @close=&quot;onLinkEditorClose&quot;&gt;&lt;/link-editor&gt;                                 
@@ -81,90 +82,99 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row">       
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header font-weight-bold">Km input lstring multi line input</div>
-                    <div class="card-body">
+                    <div class="card-header">
+                        Add Link 
+                    </div>
+                    <div class="card-body"> 
                         <div class="row">
                             <div class="col-6">
-                                {{ kmInputLStringMlModel }}
-                                <km-input-lstring-ml
-                                    v-model="kmInputLStringMlModel"
-                                    :locales="locales"
-                                    >
-                                </km-input-lstring-ml>
+                                <km-add-link  v-model="kmAddLinkModel1"/>  
+                                Parent links :   {{ kmAddLinkModel1 }}   <br/>
                             </div>
                             <div class="col-6">
+                                Example 1: default
                                 <div class="callout callout-warning">
-                                    <code>
-                                            &lt;km-input-lstring-ml
-                                            v-model=&quot;kmInputLStringMlModel&quot;
-                                            :locales=&quot;locales&quot;
-                                            &gt;
-                                        &lt;/km-input-lstring-ml&gt;
-                                    </code>
-                                </div>
+                                    <code>                              
+                                        &lt;km-add-link/&gt;
+                                    </code> 
+                                </div>                                                                        
                             </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-6">                                                       
+                                <km-add-link v-model="kmAddLinkModel2">
+                                    <template #link-button-label>
+                                        Add Websites
+                                    </template>
+                                    <template #link-dialog-title>
+                                        My custom title
+                                    </template>                                  
+                                    <template #links-view>     
+                                        <p></p>                                  
+                                    </template>
+                                </km-add-link>
+                                Parent links :   {{ kmAddLinkModel2 }}   <br/>
+                            </div>
+                            <div class="col-6">  
+                                Example 2: customize button label, link editor title, hide link list                                 
+                                <div class="callout callout-warning">
+                                    <code>  
+                                        &lt;km-add-link&gt;
+                                            &lt;template #link-button-label&gt;
+                                                Add Websites
+                                            &lt;/template&gt;
+                                            &lt;template #link-dialog-title&gt;
+                                                my custom title
+                                            &lt;/template&gt;                                  
+                                            &lt;template #links-view&gt;  
+                                            &lt;p&gt; &lt;/p&gt;                                     
+                                            &lt;/template&gt;
+                                        &lt;/km-add-link&gt;    
+                                    </code> 
+                                </div>                                          
+                            </div>
+                        </div>
+                    </div>               
                 </div>
-            </div>
-        </div>
+            </div>    
+        </div> 
+
     </div>
 </template>
 
 <script setup>
-import { onMounted, ref} from 'vue'
-import linkEditor from './link/link-editor.vue';
-import KmInputLstring from "./km-input-lstring.vue";
-import KmInputLstringMl from "./km-input-lstring-ml.vue"
-const kmInputLStringModel = ref({});
-const locales = ref(["en", "fr"]);//, 'zh', 'ru'
-import kmViewLinks from './link/km-view-links.vue';
-const kmInputLStringMlModel = ref([{}]);
+    import { onMounted, ref,shallowRef} from 'vue'
+    import KmInputLstring from "./km-input-lstring.vue";
+    import kmViewLinks from './link/km-view-links.vue';
+    import kmAddLink from './link/km-add-link.vue';
+    import linkEditor from './link/link-editor.vue';
 
-const linkEditorRef = ref();
+    const kmInputLStringModel = ref({});
+    const locales = ref(["en", "fr", 'zh', 'ru']);
 
-const showLinkEditor = ()=>{
-    linkEditorRef.value.show({url: 'https://cnbd.int', name: 'sdf', language: 'es2'})
-}
-const onLinkEditorClose = (newVal)=>{
-    console.log(newVal)
-}
+    const linkEditorRef = shallowRef();
+    const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
+    const kmAddLinkModel2 = ref([ ]);
+    const links = ref([
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
 
+    const showLinkEditor = ()=>{
+        linkEditorRef.value.show({url: 'https://cnbd.int', name: 'sdf', language: 'es2'})
+    }
+    const onLinkEditorClose = (newVal)=>{
+        console.log(newVal)
+    }
 
-const links =ref([
-      {
-        "url": "https://www.google.com",
-        "name": "website 1",
-        "language": "en"
-      },
-      {
-        "url": "https://www.bing.com",
-        "name": "website 2",
-        "language": "en"
-      },
-      {
-        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614774/TEST.txt",
-        "name": "TEST.txt",
-        "language": "en"
-      },
-      {
-        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614775/TEST.txt",
-        "name": "TEST.txt",
-        "language": "ar"
-      }
-    ]);
-  
-
-
-const removeLocale = () => {
-    locales.value.splice(1, 1);
-}
+    const removeLocale = () => {
+        locales.value.splice(1, 1);
+    }
 </script>
 
 <style lang="scss" scoped>
 
 </style> 
-
