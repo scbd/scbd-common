@@ -50,7 +50,7 @@
                 </div>
             </div>        
         </div>       
-        <!-- <div class="row">
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">KmInputLString</div>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div> 
         <div class="row">       
             <div class="col-12">
                 <div class="card">
@@ -206,35 +206,35 @@
  
 
 <script setup>
-import { onMounted, ref,shallowRef} from 'vue'
-//import KmInputLstring from "./km-input-lstring.vue";
-import kmViewLinks from './link/km-view-links.vue';
-import kmAddLink from './link/km-add-link.vue';
-import kmAddFile from './link/km-add-file.vue';
-import linkEditor from './link/link-editor.vue';
-const kmInputLStringModel = ref({});
-const locales = ref(["en", "fr", 'zh', 'ru']);
+    import { onMounted, ref,shallowRef} from 'vue'
+    import KmInputLstring from "./km-input-lstring.vue";
+    import kmViewLinks from './link/km-view-links.vue';
+    import kmAddLink from './link/km-add-link.vue';
+    import kmAddFile from './link/km-add-file.vue';
+    import linkEditor from './link/link-editor.vue';
+    const kmInputLStringModel = ref({});
+    const locales = ref(["en", "fr", 'zh', 'ru']);
 
-const linkEditorRef = shallowRef();
-const FileEditorRef = shallowRef();
-const kmAddLinkModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
-const kmAddFileModel = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
-const links = ref([
-     { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
-     { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
-     { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
+    const linkEditorRef = shallowRef();
+    const FileEditorRef = shallowRef();
+    const kmAddLinkModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
+    const kmAddFileModel = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
+    const links = ref([
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
 
 
-const showLinkEditor = ()=>{
-    linkEditorRef.value.show({url: 'https://api.cbd.int/api/2013', name: 'report.pdf', language: 'en'})
-}
-const onLinkEditorClose = (newVal)=>{
-    console.log(newVal)
-}
+    const showLinkEditor = ()=>{
+        linkEditorRef.value.show({url: 'https://api.cbd.int/api/2013', name: 'report.pdf', language: 'en'})
+    }
+    const onLinkEditorClose = (newVal)=>{
+        console.log(newVal)
+    }
 
-const removeLocale = () => {
-    locales.value.splice(1, 1);
-}
+    const removeLocale = () => {
+        locales.value.splice(1, 1);
+    }
 </script>
 
 <style lang="scss" scoped>
