@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <h3>CBD controls components</h3>
@@ -80,6 +81,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">       
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -89,6 +92,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <km-add-link  v-model="kmAddLinkModel"/>  
+                                Parent links :   {{ kmAddLinkModel }}   <br/>
                             </div>
                             <div class="col-6">
                                 Example 1: default
@@ -100,8 +104,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
-                                Parent links :   {{ kmAddLinkModel }}                          
+                            <div class="col-6">                                                       
                                 <km-add-link v-model="kmAddLinkModel">
                                     <template #link-button-label>
                                         Add Websites
@@ -109,7 +112,8 @@
                                     <template #link-dialog-title>
                                         My custom title
                                     </template>                                  
-                                    <template #links-view>                                       
+                                    <template #links-view>     
+                                        <p></p>                                  
                                     </template>
                                 </km-add-link>
                             </div>
@@ -124,7 +128,8 @@
                                             &lt;template #link-dialog-title&gt;
                                                 my custom title
                                             &lt;/template&gt;                                  
-                                            &lt;template #links-view&gt;                                       
+                                            &lt;template #links-view&gt;  
+                                            &lt;p&gt; &lt;/p&gt;                                     
                                             &lt;/template&gt;
                                         &lt;/km-add-link&gt;    
                                     </code> 
@@ -134,10 +139,9 @@
                     </div>               
                 </div>
             </div>    
-        </div>        
+        </div> 
     </div>
 </template>
-
 
 <script setup>
 import { onMounted, ref} from 'vue'
