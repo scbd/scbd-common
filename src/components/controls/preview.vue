@@ -12,7 +12,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <button class="btn btn-default" @click="showLinkEditor()">Show Link editor</button>
-                                <link-editor ref="linkEditorRef" @onClose="onLinkEditorClose"></link-editor>
+                                <link-editor ref="linkEditorRef" @on-close="onLinkEditorClose"></link-editor>
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                                
@@ -155,6 +155,11 @@
 
     const linkEditorRef = shallowRef();
     const kmAddLinkModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
+
+    const links = ref([
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
 
     const showLinkEditor = ()=>{
         linkEditorRef.value.show({url: 'https://cnbd.int', name: 'sdf', language: 'es2'})
