@@ -9,7 +9,7 @@
                     </button>
                 </div>
                 <div class="modal-body">                    
-                        //TODO: upload file, uploading process bar, error msg , showing file.size
+                        
                         <div v-if="isAddingNewFile" >   
                             <div class="alert alert-danger" role="alert" v-if="isUploadingError" >
                                 <h4>An error has occured</h4>                              
@@ -53,7 +53,8 @@
     import { defineEmits, ref, computed } from "vue"; 
     import { languages } from '../../../data/language';
     
-    //TODO: use km-form-control when its available    
+    //TODO: use km-form-control when its available   
+    //TODO: upload file, uploading process bar, error msg , showing file.size 
     
     const modalOpen = ref(false) ;
     const isAddingNewFile = ref(false);
@@ -80,7 +81,7 @@
         emit("onClose", newLink);  
     }
     
-    //TODO: uploading file
+
   
     defineExpose({
         show
