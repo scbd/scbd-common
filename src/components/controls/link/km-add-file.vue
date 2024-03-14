@@ -1,6 +1,6 @@
 <template>
     <select-file-button  @files="receiveFile"> <slot name="file-button-label">+ Add File</slot></select-file-button> 
-    <file-upload-editor ref="fileEditorRef" @on-close="onFileUploadEditorClose($event)">
+    <file-upload-editor ref="fileEditorRef" @on-close="onFileUploadEditorClose">
         <template v-slot:modalTitle>
         <slot name="link-dialog-title"   >        
             Uploading file    
@@ -8,7 +8,7 @@
         </template>       
     </file-upload-editor>
     <slot name="links-view">
-        <km-view-links v-model="links"   @on-delete = "removeLink($event)"   @on-edit = "editLink($event)"></km-view-links>  
+        <km-view-links v-model="links"   @on-delete = "removeLink"   @on-edit = "editLink"></km-view-links>  
     </slot>
 </template>
 <script setup>
