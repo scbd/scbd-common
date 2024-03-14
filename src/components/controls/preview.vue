@@ -218,7 +218,7 @@ const locales = ref(["en", "fr", 'zh', 'ru']);
 const linkEditorRef = shallowRef();
 const FileEditorRef = shallowRef();
 const kmAddLinkModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
-const kmAddFileModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"} ]);
+const kmAddFileModel = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
 const links = ref([
      { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
      { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
