@@ -1,18 +1,18 @@
 <template>
-  <div :id="$attrs.id" class="km-input-lstring-ml scbd-controls mb-2">
+  <div :id="$attrs.id" class="scbd-controls km-input-lstring-ml" :class="$attrs.class">
     <div v-for="(item, index) in binding" :key="item">
       <div class="row">
         <div class="col-md-11">
           <km-input-lstring
             v-model="item.value"
             :locales="props.locales"
-            @input="emitChange"
+            @update:modelValue="emitChange"
           ></km-input-lstring>
         </div>
         <div class="col-md-1">
           <button
-            :disabled="binding.length === 1"
-            class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
+            :disabled="index == binding.length-1"
+            class="btn btn-danger btn-sm"
             type="button"
             @click="removeItem(item, index)"
           >
@@ -21,22 +21,12 @@
         </div>
       </div>
     </div>
-
-    <button
-      class="btn btn-outline-secondary btn-sm d-flex align-items-center justify-content-center"
-      type="button"
-      @click="addItem()"
-      :disabled="hasEmpty"
-    >
-      <i class="bi bi-plus"></i> {{ t("add") }}
-    </button>
   </div>
 </template>
 
 <script setup>
 import {
   ref,
-  computed,
   onMounted,
   defineProps,
   defineEmits,
@@ -53,7 +43,7 @@ const props = defineProps({
     type: Array,
     required: true,
     validator:(value) => {
-      return value.every(locale => locale.length <= 3);
+      return value.every(locale => locale.length <= 3); // we use ISO-2 but need support for ISO-3
     }
   },
   modelValue: {
@@ -69,7 +59,7 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 const binding = ref([{ value: {} }]);
-const hasEmpty = computed(() => binding.value.some((e) => isEmpty(e.value)));
+
 function addItem() {
   binding.value.push({ value: {} });
 }
@@ -80,10 +70,9 @@ function removeItem(item, index) {
 
 function emitChange(value) {
   const clean = removeEmpty(binding.value);
-  emit(
-    "update:modelValue",
-    clean?.map((e) => e.value)
-  );
+ 
+  emit("update:modelValue", clean?.map((e) => e.value));
+
   if (binding.value?.length) {
     if (!binding.value.some((e) => isEmpty(e.value))) {
       addItem();
