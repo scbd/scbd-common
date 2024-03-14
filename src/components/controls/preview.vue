@@ -81,6 +81,36 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header font-weight-bold">Km input lstring multi line input</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ kmInputLStringMlModel }}
+                                <km-input-lstring-ml
+                                    v-model="kmInputLStringMlModel"
+                                    :locales="locales"
+                                    >
+                                </km-input-lstring-ml>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                    <code>
+                                            &lt;km-input-lstring-ml
+                                            v-model=&quot;kmInputLStringMlModel&quot;
+                                            :locales=&quot;locales&quot;
+                                            &gt;
+                                        &lt;/km-input-lstring-ml&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -88,9 +118,11 @@
 import { onMounted, ref} from 'vue'
 import linkEditor from './link/link-editor.vue';
 import KmInputLstring from "./km-input-lstring.vue";
+import KmInputLstringMl from "./km-input-lstring-ml.vue"
 const kmInputLStringModel = ref({});
-const locales = ref(["en", "fr", 'zh', 'ru']);
+const locales = ref(["en", "fr"]);//, 'zh', 'ru'
 import kmViewLinks from './link/km-view-links.vue';
+const kmInputLStringMlModel = ref([{}]);
 
 const linkEditorRef = ref();
 

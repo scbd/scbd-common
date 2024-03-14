@@ -1,5 +1,5 @@
 <template>
-  <div :id="$attrs.id" class="scbd-controls km-input-lstring mb-2">
+  <div :id="$attrs.id" class="scbd-controls km-input-lstring" :class="$attrs.class">
     <slot></slot>
     <div
       class="input-group mb-1"
@@ -13,6 +13,7 @@
         aria-describedby="basic-addon2"
         v-model="model[locale]"
         :dir="locale == 'ar' ? 'rtl' : 'ltr'"
+        @input="$emit('update:modelValue', model)"
       />
 
       <div class="input-group-append">
@@ -32,14 +33,14 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, defineEmits, computed } from "vue";
+import { watch, onMounted } from "vue";
 import { without } from "lodash";
+
 const model = defineModel({type:Object, required: true, default:{}})
 const props = defineProps({
   locales: { type: Array, required: true },
   disabled: { type: Boolean, default: false },
 });
-
 
 const loadLanguages = () => {
   props.locales?.forEach((e) => {
