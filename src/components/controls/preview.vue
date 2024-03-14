@@ -12,7 +12,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <button class="btn btn-default" @click="showLinkEditor()">Show Link editor</button>
-                                <link-editor ref="linkEditorRef" @onClose="onLinkEditorClose"></link-editor>
+                                <link-editor ref="linkEditorRef" @on-close="onLinkEditorClose"></link-editor>
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                                
@@ -212,11 +212,13 @@
     import kmAddLink from './link/km-add-link.vue';
     import kmAddFile from './link/km-add-file.vue';
     import linkEditor from './link/link-editor.vue';
+
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
 
     const linkEditorRef = shallowRef();
     const FileEditorRef = shallowRef();
+    
     const kmAddLinkModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
     const kmAddFileModel = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
     const links = ref([
