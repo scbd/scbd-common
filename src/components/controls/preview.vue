@@ -91,8 +91,8 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6">
-                                <km-add-link  v-model="kmAddLinkModel"/>  
-                                Parent links :   {{ kmAddLinkModel }}   <br/>
+                                <km-add-link  v-model="kmAddLinkModel1"/>  
+                                Parent links :   {{ kmAddLinkModel1 }}   <br/>
                             </div>
                             <div class="col-6">
                                 Example 1: default
@@ -105,7 +105,7 @@
                         </div>
                         <div class="row">
                             <div class="col-6">                                                       
-                                <km-add-link v-model="kmAddLinkModel">
+                                <km-add-link v-model="kmAddLinkModel2">
                                     <template #link-button-label>
                                         Add Websites
                                     </template>
@@ -116,6 +116,7 @@
                                         <p></p>                                  
                                     </template>
                                 </km-add-link>
+                                Parent links :   {{ kmAddLinkModel2 }}   <br/>
                             </div>
                             <div class="col-6">  
                                 Example 2: customize button label, link editor title, hide link list                                 
@@ -155,8 +156,8 @@
     const locales = ref(["en", "fr", 'zh', 'ru']);
 
     const linkEditorRef = shallowRef();
-    const kmAddLinkModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
-
+    const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
+    const kmAddLinkModel2 = ref([ ]);
     const links = ref([
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
