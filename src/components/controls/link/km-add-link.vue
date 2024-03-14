@@ -16,10 +16,10 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'  
+  import { ref ,shallowRef} from 'vue'  
   import kmViewLinks from './km-view-links.vue';
   import linkEditor  from './link-editor.vue';
-  const linkEditorRef= ref(null); 
+  const linkEditorRef= shallowRef(null); 
   let editedLinkIndex = -1; 
   const links = defineModel({type:Array, required:true, default:[]});
     function addLink() {  

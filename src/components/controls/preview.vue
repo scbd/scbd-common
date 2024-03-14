@@ -144,7 +144,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref} from 'vue'
+import { onMounted, ref,shallowRef} from 'vue'
 import KmInputLstring from "./km-input-lstring.vue";
 import kmViewLinks from './link/km-view-links.vue';
 import kmAddLink from './link/km-add-link.vue';
@@ -152,7 +152,8 @@ import linkEditor from './link/link-editor.vue';
 const kmInputLStringModel = ref({});
 const locales = ref(["en", "fr", 'zh', 'ru']);
 
-const linkEditorRef = ref();
+const linkEditorRef = shallowRef();
+const kmAddLinkModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
 
 const showLinkEditor = ()=>{
     linkEditorRef.value.show({url: 'https://cnbd.int', name: 'sdf', language: 'es2'})
