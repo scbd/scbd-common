@@ -36,12 +36,12 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6"> 
-                                <km-view-links v-model="links"   @on-edit = "edit($event)"  @on-delete = "remove($event)"></km-view-links>                                
+                                <km-view-links v-model="links"   @on-edit = "edit()"  @on-delete = "remove()"></km-view-links>                                
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
                                     <code id="kmViewLinks">                             
-                                        &lt;km-view-links v-model=&quot;links&quot;    @on-edit  = &quot;edit($event)&quot;  @on-delete = &quot;remove($event)&quot;&gt;&lt;/km-view-links&gt;                         
+                                        &lt;km-view-links v-model=&quot;links&quot;    @on-edit  = &quot;edit()&quot;  @on-delete = &quot;remove()&quot;&gt;&lt;/km-view-links&gt;                         
                                     </code>   
                                 </div>                                                            
                             </div>
