@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <h3>CBD controls components</h3>
@@ -103,43 +102,44 @@
                                 </div>                                                                        
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">                                                       
-                                <km-add-link v-model="kmAddLinkModel">
-                                    <template #link-button-label>
-                                        Add Websites
-                                    </template>
-                                    <template #link-dialog-title>
-                                        My custom title
-                                    </template>                                  
-                                    <template #links-view>     
-                                        <p></p>                                  
-                                    </template>
-                                </km-add-link>
-                            </div>
-                            <div class="col-6">  
-                                Example 2: customize button label, link editor title, hide link list                                 
-                                <div class="callout callout-warning">
-                                    <code>  
-                                        &lt;km-add-link&gt;
-                                            &lt;template #link-button-label&gt;
-                                                Add Websites
-                                            &lt;/template&gt;
-                                            &lt;template #link-dialog-title&gt;
-                                                my custom title
-                                            &lt;/template&gt;                                  
-                                            &lt;template #links-view&gt;  
-                                            &lt;p&gt; &lt;/p&gt;                                     
-                                            &lt;/template&gt;
-                                        &lt;/km-add-link&gt;    
-                                    </code> 
-                                </div>                                          
-                            </div>
-                        </div>
+                
                     </div>               
                 </div>
             </div>    
         </div> 
+        <div class="row">
+                    <div class="col-6">                                                       
+                        <km-add-link v-model="kmAddLinkModel">
+                            <template #link-button-label>
+                                Add Websites
+                            </template>
+                            <template #link-dialog-title>
+                                My custom title
+                            </template>                                  
+                            <template #links-view>     
+                                <p></p>                                  
+                            </template>
+                        </km-add-link>
+                    </div>
+                    <div class="col-6">  
+                        Example 2: customize button label, link editor title, hide link list                                 
+                        <div class="callout callout-warning">
+                            <code>  
+                                &lt;km-add-link&gt;
+                                    &lt;template #link-button-label&gt;
+                                        Add Websites
+                                    &lt;/template&gt;
+                                    &lt;template #link-dialog-title&gt;
+                                        my custom title
+                                    &lt;/template&gt;                                  
+                                    &lt;template #links-view&gt;  
+                                    &lt;p&gt; &lt;/p&gt;                                     
+                                    &lt;/template&gt;
+                                &lt;/km-add-link&gt;    
+                            </code> 
+                        </div>                                          
+                    </div>
+        </div>
     </div>
 </template>
 
