@@ -36,7 +36,7 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6"> 
-                                <km-view-links v-model="links"   @on-edit = "edit($event)"  @on-delete = "remove($event)"></km-view-links>                                
+                                <km-view-links v-model="links"   @on-edit = "edit"  @on-delete = "remove($event)"></km-view-links>                                
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
@@ -116,6 +116,7 @@
                                         <p></p>                                  
                                     </template>
                                 </km-add-link>
+                                Parent links :   {{ kmAddLinkModel }}   <br/>
                             </div>
                             <div class="col-6">  
                                 Example 2: customize button label, link editor title, hide link list                                 
@@ -149,19 +150,53 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6">
-                                <km-add-file v-model="kmAddFileModel"/>  
+                                <km-add-file v-model="kmAddFileModel"/>                               
                                 Parent links :   {{ kmAddFileModel }}   <br/> 
                             </div>
                             <div class="col-6">
                                 Example 1: default
                                 <div class="callout callout-warning">
                                     <code>                              
-                                        &lt;km-add-file v-model=&quot;kmAddFileModel&quot; /&gt;
+                                        &lt;km-add-file v-model=&quot;kmAddFileModel&quot;/&gt;
                                     </code> 
                                 </div>                                                                        
                             </div>
-                        </div>
-                    </div>               
+                        </div>                       
+                        <div class="row">
+                            <div class="col-6">
+                                <km-add-file v-model="kmAddFileModel">                                                                  
+                                    <template #link-button-label>
+                                        Add File
+                                    </template>
+                                    <template #link-dialog-title>
+                                        My custom title
+                                    </template>                                  
+                                    <template #links-view>     
+                                        <p></p>                                  
+                                    </template> 
+                                </km-add-file> 
+                                Parent links :   {{ kmAddFileModel }}   <br/> 
+                            </div>
+                            <div class="col-6">
+                                Example 2: customize  editor title, hide link list  
+                                <div class="callout callout-warning">
+                                    <code>                              
+                                        &lt;km-add-file v-model=&quot;kmAddFileModel&quot;&gt;                                                                  
+                                            &lt;template #link-button-label&gt;
+                                                Add File
+                                            &lt;/template&gt;
+                                            &lt;template #link-dialog-title&gt;
+                                                My custom title
+                                            &lt;/template&gt;                                  
+                                            &lt;template #links-view&gt;     
+                                                &lt;p&gt;&lt;/p&gt;                                  
+                                            &lt;/template&gt; 
+                                        &lt;/km-add-file&gt; 
+                                    </code> 
+                                </div>                                                                        
+                            </div>    
+                        </div>                   
+                    </div>             
                 </div>
             </div>    
         </div>        
@@ -183,13 +218,15 @@ const locales = ref(["en", "fr", 'zh', 'ru']);
 const linkEditorRef = shallowRef();
 const FileEditorRef = shallowRef();
 const kmAddLinkModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
-const kmAddFileModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
-
-
+const kmAddFileModel = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"} ]);
+const links = ref([
+     { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
+     { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
+     { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
 
 
 const showLinkEditor = ()=>{
-    linkEditorRef.value.show({url: 'https://api.cbd.int/api/2013', name: 'report.pdf', language: 'en', tag:"Biodiversity"})
+    linkEditorRef.value.show({url: 'https://api.cbd.int/api/2013', name: 'report.pdf', language: 'en'})
 }
 const onLinkEditorClose = (newVal)=>{
     console.log(newVal)

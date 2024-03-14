@@ -8,19 +8,16 @@
                     <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body">                    
+                        //TODO: upload file, uploading process bar, error msg , showing file.size
                         <div v-if="isAddingNewFile" >   
                             <div class="alert alert-danger" role="alert" v-if="isUploadingError" >
                                 <h4>An error has occured</h4>                              
                             </div>                 
                             
                             <div >
-                                <label>Uploading <span >{{ link.name }}</span> </label>
-                                <!-- <label>Uploading <span >{{ link.name }}</span> (<span ng-bind="editor.progress.size/1024 | number:1"></span> kB)</label> -->
-                                <!-- <div class="progress progress-striped {{editor.progress.style}}">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"  style="width:{{editor.progress.percent}}%;"></div>
-                                </div> -->
-                                <div class="progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <label>Uploading <span >{{ link.name }}</span> </label>                              
+                                <div class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                         <div class="progress-bar" style="width: 100%">100%</div>
                                 </div>
                             </div>
@@ -71,7 +68,7 @@
         const  { url, name, language ,tag} = linkToEdit  
         link.value = { url, name, language, tag };    
         isAddingNewFile.value = isNew;  
-        newFile.value = file;
+        newFile.value = file;  
     }
     const close = () => {      
       modalOpen.value = false;  
@@ -82,24 +79,11 @@
         modalOpen.value = false;               
         emit("onClose", newLink);  
     }
-    // async uploadFile=()=> {
-    //   const file = file;
-    //   const formData = new FormData();
-    //   formData.append('file', file);
-    //   try {
-    //     const response = await axios.post('/api/upload', formData, {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data',
-    //       },
-    //     });
-    //     console.log('File uploaded successfully:', response.data);
-    //     // Handle the response from the server
-    //   } catch (error) {
-    //     console.error('Error uploading file:', error);
-    //   }
-    // }
+    
+    //TODO: uploading file
   
     defineExpose({
         show
     })
   </script>
+  

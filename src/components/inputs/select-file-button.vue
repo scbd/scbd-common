@@ -1,22 +1,22 @@
 <template>
-    <CButton
-      ref="self"
-      class="btn"
+    <button
+      ref="self"    
+      class="btn btn-primary"
       type="button"
       v-bind="$attrs"
       @click.prevent.stop="selectFile()"
     >
-      <slot name="default" />
-    </CButton>
+      <slot name="default" ></slot>
+    </button>
+  
+  
   </template>
   
   <script>
-  import {
-    CButton
-  } from '@coreui/vue';
+  //import {  CButton} from '@coreui/vue';
   export default {
     name: 'SelectFileButton',
-    components: { CButton },
+    // components: { CButton },
     props: {
       multiple: { type: Boolean, require: false, default: false },
       accept: { type: String, require: false, default: '*/*' }
@@ -44,11 +44,10 @@
       console.log(target);
   
       const files = [...target.files];
-      this.$emit('files', files);
+      this.$emit('files', files);   
     });
   
     thisElement.appendChild(fileInput);
     fileInput.click();
   }
   </script>
-  
