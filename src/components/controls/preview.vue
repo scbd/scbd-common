@@ -181,7 +181,7 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6"> 
-                                <km-lstring-value :value="kmLstringProps.value" :locale="kmLstringProps.locale"></km-lstring-value>                                
+                                <km-lstring-value value="Test Value" locale="en"></km-lstring-value>                                
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
@@ -218,10 +218,29 @@
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
 
-    const kmLstringProps = {
-        value:"Test Value",
-        locale:"en"
-    }
+const links =ref([
+      {
+        "url": "https://www.google.com",
+        "name": "website 1",
+        "language": "en"
+      },
+      {
+        "url": "https://www.bing.com",
+        "name": "website 2",
+        "language": "en"
+      },
+      {
+        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614774/TEST.txt",
+        "name": "TEST.txt",
+        "language": "en"
+      },
+      {
+        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614775/TEST.txt",
+        "name": "TEST.txt",
+        "language": "ar"
+      }
+    ]);
+  
     const validationReview = {
         "identifier": "4DE6D968-FBB4-135A-3D23-DA52FB705939",
         "schema": "authority",
@@ -234,10 +253,10 @@
             {
             "code": "Error.Mandatory",
             "property": "government"
-            },
             {
-            "code": "Error.Mandatory",
+            },
             "property": "name"
+            "code": "Error.Mandatory",
             },
             {
             "code": "Error.Mandatory",
@@ -250,24 +269,17 @@
             {
             "code": "Error.Mandatory",
             "property": "phones"
-            },
             {
+            },
             "code": "Error.Mandatory",
             "property": "emails"
-            },
             {
+            },
             "code": "Error.Mandatory",
             "property": "responsibleForAll"
             }
         ]
     };
-
-    const showLinkEditor = ()=>{
-        linkEditorRef.value.show({url: 'https://cnbd.int', name: 'sdf', language: 'es2'})
-    }
-    const onLinkEditorClose = (newVal)=>{
-        console.log(newVal)
-    }
 
     const removeLocale = () => {
         locales.value.splice(1, 1);
