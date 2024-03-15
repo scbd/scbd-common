@@ -159,8 +159,7 @@
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
                                     <code>
-                                        &lt;km-form-group :name=&quot;name&quot; :caption=&quot;caption&quot; data-content=&quot;Test Data Content&quot;
-                                        &gt;&lt;/km-form-group&gt;                             
+                                        &lt;km-form-group name=&quot;test name&quot; caption=&quot;test caption&quot; data-content=&quot;Test Content&quot;&gt;&lt;/km-form-group&gt;                             
                                     </code>   
                                 </div>                                                            
                             </div>
