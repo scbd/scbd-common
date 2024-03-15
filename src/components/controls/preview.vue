@@ -36,15 +36,13 @@
                                 <link-editor ref="linkEditorRef" @on-close="onLinkEditorClose"></link-editor>
                                 {{newLink}}
                             </div>
-                            <div class="col-6">
-                                <button type="button" class="btn btn-light " @click="copyToClipboard(`link-editor`)">Copy</button>
-                                     
-                                <div class="callout callout-warning">     
-                                                         
-                                    <code>                                    
-                                        {{codeExample["link-editor"]}}                                    
-                                    </code>   
-                                </div>                                                            
+                            <div class="col-6">                               
+                                <button type="button" class="btn btn-light float-end" @click="copyToClipboard(`link-editor`)"><i class="bi bi-copy"></i></button>                                
+                                <div class="callout callout-warning">
+                                    <code > 
+                                            {{convertToHtml(codeExample["link-editor"])}}                                        
+                                    </code> 
+                                </div> 
                             </div>
                         </div>
                     </div>  
@@ -404,14 +402,12 @@
                                 links : {{ kmLinkModel }}   <br/> 
                             </div>
                             <div class="col-6">  
-                                <button type="button" class="btn btn-light " @click="copyToClipboard(`km-link`)">Copy</button>
+                                <button type="button" class="btn btn-light float-end" @click="copyToClipboard(`km-link`)"><i class="bi bi-copy"></i></button>                                
                                 <div class="callout callout-warning">
-                                
                                     <code > 
-                                            {{codeExample["km-link"]}}                                        
+                                            {{convertToHtml(codeExample["km-link"])}}                                        
                                     </code> 
-                                </div>                                                                        
-                        </div>       
+                                </div>                                                                         
                             </div>
                     </div>             
                 </div>
