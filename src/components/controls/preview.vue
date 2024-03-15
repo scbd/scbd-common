@@ -189,14 +189,15 @@
         dataContent:{ type:String, default:"Test Data Content" }
     })
 
-    onMounted(()=>{
-        const onReviewErrorHandler = inject("onReviewError");
-        if(onReviewErrorHandler){
-            onReviewErrorHandler({
+onMounted(()=>{
+    const onReviewErrorHandler = inject("onReviewError");
+    
+    if(onReviewErrorHandler){
+        onReviewErrorHandler({
                 errors:[{property:"0"}]
             })
-        }       
-    })
+    }
+})
 
     const linkEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
