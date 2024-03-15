@@ -1,5 +1,5 @@
 <template>
-  <div id="km-value-ml">
+  <div :id="$attrs.id" class="scbd-controls">
     <div :class="`input-group input-lang-${locale}`">
       <div v-if="type === 'string'" class="form-control km-value km-value-ml-string" 
            :dir="direction(valueLstring, locale)" aria-describedby="basic-addon1">
@@ -26,7 +26,6 @@ const { value, locale, type } = defineProps({
   locale: { type: String, required: true },
   type: { type: String, default: 'string' },
 });
-
 
 const valueLocale = computed(() => lstringLocale(value, locale));
 const valueLstring = computed(() => lstring(value, locale));
