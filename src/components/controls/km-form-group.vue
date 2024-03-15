@@ -4,24 +4,24 @@
         :for="name" :name="name" :required="required ? true : null">
             {{caption}}             
         </label>
-        <km-help v-if="$attrs['data-content']" :title="$attrs['data-title']" :content="$attrs['data-content']" class="ms-1 me-1"></km-help>
+        <km-help v-if="helpContent" :title="helpTitle" :content="helpContent" class="ms-1 me-1"></km-help>
         <div>
             <slot></slot>
         </div>
-        <slot name="testName"></slot>
     </div>
 </template>
 
 <script setup>
-import { ref, provide, defineProps, useSlots } from 'vue'
+import { ref, provide, defineProps } from 'vue'
 import KmHelp  from './view/km-help.vue';   
-const slots = useSlots();
-console.log(slots);
+
 const props = defineProps({
     name      : { type:String, default:"" },
     caption   : { type:String, required: true },
     required  : { type:Boolean, default:false },
     isValid : { type:Function },
+    helpContent: { type: String, required: true },
+    helpTitle: { type:String }
 });
 
 const hasError = ref(false)

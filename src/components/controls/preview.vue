@@ -152,14 +152,15 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6"> 
-                                <km-form-group name="test name" caption="test caption" data-content="Test Content"
+                                <km-form-group name="test name" caption="test caption" help-content="Test Content"
+                                
                                     >
                                 </km-form-group>                              
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
                                     <code>
-                                        &lt;km-form-group name=&quot;test name&quot; caption=&quot;test caption&quot; data-content=&quot;Test Content&quot;&gt;&lt;/km-form-group&gt;                             
+                                        &lt;km-form-group name=&quot;test name&quot; caption=&quot;test caption&quot; help-content=&quot;Test Content&quot;&gt;&lt;/km-form-group&gt;                             
                                     </code>   
                                 </div>                                                            
                             </div>
