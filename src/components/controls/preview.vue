@@ -37,10 +37,12 @@
                                 {{newLink}}
                             </div>
                             <div class="col-6">
-                                <div class="callout callout-warning">                                
+                                <button type="button" class="btn btn-light " @click="copyToClipboard(`link-editor`)">Copy</button>
+                                     
+                                <div class="callout callout-warning">     
+                                                         
                                     <code>                                    
-                                        &lt;button class=&quot;btn btn-default&quot; @click=&quot;showLinkEditor()&quot;&gt;Show Link editor&lt;/button&gt;
-                                        &lt;link-editor ref=&quot;linkEditorRef&quot; @close=&quot;onLinkEditorClose&quot;&gt;&lt;/link-editor&gt;                                 
+                                        {{codeExample["link-editor"]}}                                    
                                     </code>   
                                 </div>                                                            
                             </div>
@@ -556,14 +558,15 @@
     };
 
     const codeExample = {
-        "km-link":"&lt;km-link v-model=&quot;kmlinkModel&quot;/&gt;"
+        "km-link":"&lt;km-link v-model=&quot;kmlinkModel&quot;/&gt;",
+        "link-editor":"&lt;button class=&quot;btn btn-default&quot; @click=&quot;showLinkEditor()&quot;&gt;Show Link editor&lt;/button&gt;&lt;link-editor ref=&quot;linkEditorRef&quot; @close=&quot;onLinkEditorClose&quot;&gt;&lt;/link-editor&gt; "
     }
+
 
     const copyToClipboard =(id)=>{
         const code = codeExample[id];
         navigator.clipboard.writeText(convertToHtml(code));
     }
-
 
     const convertToHtml=(escapedText)=> {           
         return escapedText.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g,`"`);
