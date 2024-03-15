@@ -186,7 +186,7 @@
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
                                     <code id="kmViewLinks">                             
-                                        &lt;km-lstring-value :value=&quot;kmLstringProps.value&quot; :locale=&quot;kmLstringProps.locale&quot;&gt;&lt;/km-lstring-value&gt;
+                                        &lt;km-lstring-value value=&quot;Test Value&quot; locale=&quot;en&quot;&gt;&lt;/km-lstring-value&gt;
                                     </code>   
                                 </div>                                                            
                             </div>
