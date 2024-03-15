@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { toRefs, ref, defineModel, provide } from 'vue'
+import { ref, provide, defineProps } from 'vue'
 import KmHelp  from './view/km-help.vue';   
 
 const props = defineProps({

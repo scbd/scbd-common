@@ -17,7 +17,7 @@
 import 'webui-popover';
 import 'webui-popover/dist/jquery.webui-popover.css'
 import $ from 'jquery'
-import {ref, useAttrs, useSlots, computed, onMounted, onBeforeUnmount } from 'vue'
+import {ref, useSlots, onMounted, onBeforeUnmount, defineProps } from 'vue'
 
 const helpAnchor = ref(null);
 const props = defineProps({
@@ -40,9 +40,6 @@ onMounted(()=>{
             hide: 200
         }
     };
-
-    // if($attrs.container && $attrs.container != '')
-    //     settings.container = $attrs.container;
     
     $ (helpAnchor.value)
         .webuiPopover('destroy')
