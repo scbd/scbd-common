@@ -152,8 +152,9 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6"> 
-                                <km-form-group name="test name" caption="test caption" help-content="Test Content" :is-valid="false"
-                                    ></km-form-group>                              
+                                <km-form-group name="test name" caption="test caption" data-content="Test Content"
+                                    >
+                                </km-form-group>                              
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
@@ -182,22 +183,16 @@
 
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
-    const kmFormGroupProps = defineProps({
-        name:{ type:String, default:"0" },
-        caption: { type:String, default:"Test Caption" },
-        isValidFn: { type:Function },
-        dataContent:{ type:String, default:"Test Data Content" }
-    })
 
-onMounted(()=>{
-    const onReviewErrorHandler = inject("onReviewError");
-    
-    if(onReviewErrorHandler){
-        onReviewErrorHandler({
-                errors:[{property:"0"}]
-            })
-    }
-})
+    onMounted(()=>{
+        const onReviewErrorHandler = inject("onReviewError");
+        
+        if(onReviewErrorHandler){
+            onReviewErrorHandler({
+                    errors:[{property:"0"}]
+                })
+        }
+    })
 
     const linkEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
