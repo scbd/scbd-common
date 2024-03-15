@@ -218,10 +218,10 @@
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
 
-const kmLstringProps = reactive({
-    value:"Test Value",
-    locale:"en"
-})
+    const kmLstringProps = {
+        value:"Test Value",
+        locale:"en"
+    }
     const validationReview = {
         "identifier": "4DE6D968-FBB4-135A-3D23-DA52FB705939",
         "schema": "authority",
