@@ -1,6 +1,6 @@
 <template>
     <button    
-      class="btn btn-primary"
+      class="scbd-common select-file-button btn btn-primary"
       type="button"
       v-bind="$attrs"
       @click.prevent.stop="selectFile()">  
@@ -9,15 +9,15 @@
 </template>
   
 <script setup>  
-  const emit = defineEmits(['onSelectFiles']);
+  const emit = defineEmits(['onFileSelected']);
   const props = defineProps({ 
     multiple: { type: Boolean, require: false, default: false },
     accept: { type: String, require: false, default: '*/*' }
   })  
   
   const selectFile = () =>{   
-    const fileInput = document.createElement('INPUT');
-  
+    const fileInput = document.createElement('input');
+   
     fileInput.type = 'file';
     fileInput.style.display = 'none';
   
@@ -26,10 +26,15 @@
   
     fileInput.addEventListener('click', ($event) => $event.stopPropagation());    
     fileInput.addEventListener('change', ({ target }) => { 
-      const files = [...target.files];  
-      emit('onSelectFiles', files);   
+      const files = [...target.files]; 
+      if (props.multiple)
+        emit('onFileSelected', files);   
+      else 
+        emit('onFileSelected', files[0]);   
+      
     }) 
+
     fileInput.click();   
-  }  
+  } 
  
-  </script>
+</script>

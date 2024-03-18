@@ -208,6 +208,13 @@
                                     <input name="government-input" class="form-control" />
                                 </km-form-group>    `}}</code>      
                                 </div>                                                            
+                                <select-file-button  multiple @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Multiple File</slot></select-file-button> 
+                                <br/>   
+                                <br/>
+                                <select-file-button  @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add File</slot></select-file-button>                              
+                                <div v-for="(item, index) in files" :key="index">
+                                           {{item.name}}     
+                                </div>                                
                             </div>
                         </div>
                     </div>               
@@ -420,6 +427,19 @@
             isValid
         });
     })
+    // for select-file-button
+    let files = ref([]);
+    const receiveFile = (receiveFiles) => {
+        if (receiveFiles instanceof Array) {
+            files.value = receiveFiles;   
+        }
+        else{
+        if (receiveFiles instanceof Object){
+         
+            files.value=[receiveFiles];   
+        }   }      
+
+    };
 </script>
 
 <style lang="scss" scoped>
