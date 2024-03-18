@@ -1,6 +1,7 @@
 <template>
-    <div :id="$attrs.id" class="form-group scbd-controls km-form-group mb-3" :class="{'has-error':hasError, 'has-help':content, 'mandatory':required}">
-        <label class="mb-1 control-label" v-if="caption" 
+    <div :id="$attrs.id" class="scbd-controls km-form-group form-group mb-3" 
+    :class="{'has-error':hasError(), 'has-help':helpContent, 'mandatory':required}">
+        <label class="mb-1 km-form-group-label" v-if="caption" 
         :for="name" :name="name" :required="required ? true : null">
             {{caption}}             
         </label>
@@ -12,7 +13,8 @@
 </template>
 
 <script setup>
-import { ref, provide, defineProps } from 'vue'
+import '../../assets/km.css'
+import { ref, provide, defineProps, inject, computed } from 'vue'
 import KmHelp  from './view/km-help.vue';   
 
 const props = defineProps({
@@ -24,17 +26,27 @@ const props = defineProps({
     helpTitle: { type:String }
 });
 
-const hasError = ref(false)
+let reviewError = inject('validationReview')
 
-const onReviewErrorHandler = (validationResponse)=>{
-    hasError.value = validationResponse?.errors?.find(e=>e.property == name) != undefined;            
+const hasError    = ()=>{
+    return props.name && props.required && reviewError?.isValid(props.name);
 }
 
-if(props.name && props.required){
-    provide("onReviewError", onReviewErrorHandler);
-}
 </script>
 
 <style scoped>
-
+    .km-form-group.mandatory{
+        border-left: 5px solid red;
+        padding-left: 10px;
+    }
+    .km-form-group label.required:after, .km-form-group label[required]:after {
+        color: #e32;
+        content: ' * ';
+    }
+    .km-form-group.has-help label.form-group{
+        display: unset;
+    }
+    .km-form-group .form-group{
+        font-weight: 500;
+    }
 </style>
