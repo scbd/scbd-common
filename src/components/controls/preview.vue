@@ -364,6 +364,22 @@
         }   }      
 
     };
+
+
+    // for multi-selector
+    import {computed} from 'vue'
+    import multiSelector from './multi-selector.vue'
+    import { languages } from '../../data/language';
+
+    const selectedLanguage= ref("en");
+    let options = computed(()=>{
+        const list=[];
+        for (const item in languages) {
+            list.push(item);            
+        }
+        return list;
+    });
+
 </script>
 
 <style lang="scss" scoped>
