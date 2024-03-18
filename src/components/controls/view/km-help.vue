@@ -8,7 +8,7 @@
 
     <div class="webui-popover-content">
         <slot name="content">
-            {{ content }}
+            <div v-html="content"></div>
         </slot>
     </div>
 </template>
@@ -51,16 +51,12 @@ onBeforeUnmount(()=>{
 })
 </script>
 
-<style lang="scss">
+<style>
     .show-pop{
         color: unset;
         text-decoration-style: dotted;
         border-bottom: 3px solid rgb(93, 136, 221);
         text-decoration-color: rgb(93 136 221);    
         text-decoration-thickness: 3px;
-    }
-    .webui-popover-content {
-        max-width: 800px;
-        max-height: 500px;
     }
 </style>
