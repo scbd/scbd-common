@@ -1,14 +1,14 @@
 <template>
-  <div :id="$attrs.id" class="scbd-controls">
+  <div :id="$attrs.id" class="scbd-controls km-form-group form-group">
     <div :class="`input-group input-lang-${locale}`">
       <div v-if="type === 'string'" class="form-control km-value km-value-ml-string" 
-           :dir="direction(valueLstring, locale)" aria-describedby="basic-addon1">
+           :dir="direction(valueLstring, locale)">
             {{ valueLstring }}
       </div>
       <div v-else-if="type === 'html'" class="form-control km-value km-value-ml-html ck-content" 
-           :dir="direction(valueLstring, locale)" aria-describedby="basic-addon1" v-html="valueLstring">
+           :dir="direction(valueLstring, locale)" v-html="valueLstring">
       </div>
-      <span class="input-group-text" id="basic-addon1" style="cursor: default">
+      <span class="input-group-text" style="cursor: default">
         <div data-toggle="tooltip" data-placement="top" :title="lstring(getTerm.title, locale)">
             <span class="d-inline-block" :tabindex="0">{{ valueLocale.toUpperCase() }}</span>
         </div>

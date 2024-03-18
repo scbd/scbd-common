@@ -186,7 +186,7 @@
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
                                     <code id="kmViewLinks">                             
-                                        &lt;km-lstring-value value=&quot;Test Value&quot; locale=&quot;en&quot;&gt;&lt;/km-lstring-value&gt;
+                                        {{`<km-lstring-value value="Test Value" locale="en"></km-lstring-value>`}}
                                     </code>   
                                 </div>                                                            
                             </div>
