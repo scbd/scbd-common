@@ -1,53 +1,37 @@
 <template>
-    <button
-      ref="self"    
+    <button    
       class="btn btn-primary"
       type="button"
       v-bind="$attrs"
-      @click.prevent.stop="selectFile()"
-    >
+      @click.prevent.stop="selectFile()">  
       <slot name="default" ></slot>
-    </button>
+    </button> 
+</template>
   
+<script setup>  
+  const emit = defineEmits(['files']);
+
+  const props = defineProps({ 
+    multiple: { type: Boolean, require: false, default: false },
+    accept: { type: String, require: false, default: '*/*' }
+  })  
   
-  </template>
-  
-  <script>
-  //import {  CButton} from '@coreui/vue';
-  export default {
-    name: 'SelectFileButton',
-    // components: { CButton },
-    props: {
-      multiple: { type: Boolean, require: false, default: false },
-      accept: { type: String, require: false, default: '*/*' }
-    },
-    emits: ['files'],
-    methods: {
-      selectFile
-    }
-  };
-  
-  function selectFile () {
-    const { multiple, accept } = this;
-    const thisElement = this.$refs.self;
-  
+  const selectFile = () =>{   
     const fileInput = document.createElement('INPUT');
   
     fileInput.type = 'file';
     fileInput.style.display = 'none';
   
-    if (multiple) fileInput.setAttribute('multiple', 'multiple');
-    if (accept && accept !== '*/*') fileInput.setAttribute('accept', accept);
+    if (props.multiple) fileInput.setAttribute('multiple', props.multiple);
+    if (props.accept && props.accept !== '*/*') fileInput.setAttribute('accept', props.accept);
   
-    fileInput.addEventListener('click', ($event) => $event.stopPropagation());
-    fileInput.addEventListener('change', ({ target }) => {
-      console.log(target);
-  
-      const files = [...target.files];
-      this.$emit('files', files);   
-    });
-  
-    thisElement.appendChild(fileInput);
-    fileInput.click();
-  }
+    fileInput.addEventListener('click', ($event) => $event.stopPropagation());    
+    fileInput.addEventListener('change', ({ target }) => { 
+      const files = [...target.files];  
+      emit('files', files);   
+    }) 
+
+    fileInput.click();   
+  }  
+ 
   </script>
