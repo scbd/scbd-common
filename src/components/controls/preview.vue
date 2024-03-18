@@ -152,16 +152,16 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6"> 
-                                <km-form-group name="test name" caption="test caption" help-content="Test Content"
-                                
-                                    >
+                                <km-form-group required name="government" caption="SCBD Control help" help-content="This is a preview of simple help, it also supports <h3>html</h3>">
+                                    <input name="government-input" class="form-control" />
                                 </km-form-group>                              
                             </div>
                             <div class="col-6">
-                                <div class="callout callout-warning">                              
-                                    <code>
-                                        &lt;km-form-group name=&quot;test name&quot; caption=&quot;test caption&quot; help-content=&quot;Test Content&quot;&gt;&lt;/km-form-group&gt;                             
-                                    </code>   
+                                <div class="callout callout-warning">  
+                                    <code>                      
+                                    {{` <km-form-group required name="government" caption="SCBD Control help" help-content="This is a preview of simple help, it also supports <h3>html</h3>">
+                                    <input name="government-input" class="form-control" />
+                                </km-form-group>    `}}</code>      
                                 </div>                                                            
                             </div>
                         </div>
@@ -174,7 +174,7 @@
 </template>
 
 <script setup>
-    import { onMounted, ref, shallowRef, defineProps, inject} from 'vue'
+    import { onMounted, onBeforeMount, ref, shallowRef, defineProps, inject, provide} from 'vue'
     import KmInputLstring from "./km-input-lstring.vue";
     import kmViewLinks from './link/km-view-links.vue';
     import kmAddLink from './link/km-add-link.vue';
@@ -184,16 +184,6 @@
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
 
-    onMounted(()=>{
-        const onReviewErrorHandler = inject("onReviewError");
-        
-        if(onReviewErrorHandler){
-            onReviewErrorHandler({
-                    errors:[{property:"0"}]
-                })
-        }
-    })
-
     const linkEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
     const kmAddLinkModel2 = ref([ ]);
@@ -201,6 +191,46 @@
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
+
+    const validationReview = {
+        "identifier": "4DE6D968-FBB4-135A-3D23-DA52FB705939",
+        "schema": "authority",
+        "locales": [
+            "en"
+        ],
+        "title": {},
+        "summary": {},
+        "errors": [
+            {
+            "code": "Error.Mandatory",
+            "property": "government"
+            },
+            {
+            "code": "Error.Mandatory",
+            "property": "name"
+            },
+            {
+            "code": "Error.Mandatory",
+            "property": "city"
+            },
+            {
+            "code": "Error.Mandatory",
+            "property": "country"
+            },
+            {
+            "code": "Error.Mandatory",
+            "property": "phones"
+            },
+            {
+            "code": "Error.Mandatory",
+            "property": "emails"
+            },
+            {
+            "code": "Error.Mandatory",
+            "property": "responsibleForAll"
+            }
+        ]
+    };
 
     const showLinkEditor = ()=>{
         linkEditorRef.value.show({url: 'https://cnbd.int', name: 'sdf', language: 'es2'})
@@ -212,6 +242,21 @@
     const removeLocale = () => {
         locales.value.splice(1, 1);
     }
+    
+    const isValid = (name)=>{
+        console.log(name)
+        return !!validationReview?.errors?.find(e=>e.property == name)
+    }
+
+
+    onMounted(()=>{
+        
+    })
+    onBeforeMount(()=>{
+        provide("validationReview", {
+            isValid
+        });
+    })
 </script>
 
 <style lang="scss" scoped>
