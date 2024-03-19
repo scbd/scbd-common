@@ -1,7 +1,7 @@
 <template>
   <div :id="$attrs.id" class="scbd-controls km-lstring-value">
     <div :class="`input-group input-lang-${locale}`">
-      <div v-if="type === 'string'" class="form-control km-value km-value-ml-string" 
+      <div v-if="type === 'string'" class="form-control km-value km-value-string" 
            :dir="direction(valueLstring, locale)">
             {{ valueLstring }}
       </div>
