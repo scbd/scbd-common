@@ -6,9 +6,10 @@
       @click.prevent.stop="selectFile()">  
       <slot name="default" ></slot>
     </button> 
+    {{accept}}
 </template>
   
-<script setup>  
+<script setup>
   const emit = defineEmits(['onFileSelected']);
   const props = defineProps({ 
     multiple: { type: Boolean, require: false, default: false },
@@ -36,5 +37,4 @@
 
     fileInput.click();   
   } 
- 
 </script>

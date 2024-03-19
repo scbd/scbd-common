@@ -116,7 +116,8 @@
                                 <select-file-button  @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Single File</slot></select-file-button>                              
                                 <div v-for="(item, index) in files" :key="index">
                                            {{item.name}}     
-                                </div>                                    
+                                </div>       
+                                <select-file-button  @on-file-selected="receiveFile" :accept="mimeTypeWhitelist"> <slot name="file-button-label">+ Add Single File</slot></select-file-button>                              
                             </div>
                             <div class="col-6">                              
                                 <div class="callout callout-warning">
@@ -139,6 +140,8 @@
   import dateSelector from "./dateSelector.vue";
   import { ref , computed} from "vue";
   import selectFileButton from './select-file-button.vue';
+  import { mimeTypeWhitelist } from "@/services/api/km-storage/KmDocuments";
+ 
 
   const isChecked = ref(true);
   //dateSelector
@@ -156,6 +159,9 @@
       }   }      
   };
   
+
+
+
 
 </script>
 <style lang="scss" scoped></style>
