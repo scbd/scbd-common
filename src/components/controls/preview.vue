@@ -294,7 +294,38 @@
                 </div>
             </div>
         </div>
-    </div> 
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Km Term</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ kmInitializeTerm }}
+                                <km-term
+                                    :value="kmTermModel" :locale="kmLocalesModel" @on-term-load="onTermLoad"                                           
+                                    >
+                                </km-term>
+                                <br/>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                <code>
+                                   {{`<km-term
+                                    :value="kmTermModel" :locale="kmLocalesModel" @on-term-load="onTermLoad"                                           
+                                    >
+                                </km-term>`}}
+                                </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </template>
 
 <script setup>
@@ -308,10 +339,20 @@
     import kmValueBool from "./view/km-value-bool.vue"
     import kmValue from "./view/km-value.vue"
     import kmLocales from "./view/km-locales.vue"
+    import kmTerm from "./view/km-term.vue"
 
+    const kmTermModel = {
+            identifier:"lang-zh"
+        }
     const kmLocalesModel = ref('zh');
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
+    const kmInitializeTerm = ref(null);
+
+    const onTermLoad = function(term){
+        kmInitializeTerm.value = term
+        // thesaurusStore.loadTerm(`lang-${term}`);
+    }
 
     const linkEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
