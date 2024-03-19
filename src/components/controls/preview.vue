@@ -217,31 +217,8 @@
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
-
-const links =ref([
-      {
-        "url": "https://www.google.com",
-        "name": "website 1",
-        "language": "en"
-      },
-      {
-        "url": "https://www.bing.com",
-        "name": "website 2",
-        "language": "en"
-      },
-      {
-        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614774/TEST.txt",
-        "name": "TEST.txt",
-        "language": "en"
-      },
-      {
-        "url": "/api/v2013/documents/DFF1283A-411A-75CF-B678-0A6EA5696070/attachments/614775/TEST.txt",
-        "name": "TEST.txt",
-        "language": "ar"
-      }
-    ]);
   
-    const validationReview = {
+     const validationReview = {
         "identifier": "4DE6D968-FBB4-135A-3D23-DA52FB705939",
         "schema": "authority",
         "locales": [
@@ -253,10 +230,10 @@ const links =ref([
             {
             "code": "Error.Mandatory",
             "property": "government"
-            {
             },
-            "property": "name"
+            {
             "code": "Error.Mandatory",
+            "property": "name"
             },
             {
             "code": "Error.Mandatory",
@@ -269,12 +246,12 @@ const links =ref([
             {
             "code": "Error.Mandatory",
             "property": "phones"
-            {
             },
+            {
             "code": "Error.Mandatory",
             "property": "emails"
-            {
             },
+            {
             "code": "Error.Mandatory",
             "property": "responsibleForAll"
             }

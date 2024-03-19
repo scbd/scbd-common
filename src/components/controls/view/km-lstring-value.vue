@@ -5,7 +5,7 @@
            :dir="direction(valueLstring, locale)">
             {{ valueLstring }}
       </div>
-      <div v-else-if="type === 'html'" class="form-control km-value km-value-ml-html ck-content" 
+      <div v-else-if="type === 'html'" class="form-control km-value km-value-lstring-html ck-content" 
            :dir="direction(valueLstring, locale)" v-html="valueLstring">
       </div>
       <span class="input-group-text" style="cursor: default">
