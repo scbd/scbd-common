@@ -2,7 +2,7 @@
     <button    
       class="scbd-common select-file-button btn btn-primary"
       type="button"
-      v-bind="$attrs"
+      :id="$attrs.id"
       @click.prevent.stop="selectFile()">  
       <slot name="default" ></slot>
     </button> 
