@@ -34,6 +34,7 @@
                             <div class="col-6">
                                 <button class="btn btn-default" @click="showLinkEditor()">Show Link editor</button>
                                 <link-editor ref="linkEditorRef" @on-close="onLinkEditorClose"></link-editor>
+                                {{newLink}}
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                                
@@ -332,6 +333,35 @@
         </div>
 
     </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        File UPload Editor
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6">
+                                <button class="btn btn-default" @click="showFileUploadEditor()">Show File Upload editor</button>
+                                <file-upload-editor ref="fileUploadEditorRef" @on-close="onFileUploadEditorClose"></file-upload-editor>
+                                {{newFile}}
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">                                
+                                    <code>      
+                                        &lt;button class=&quot;btn btn-default&quot; @click=&quot;showFileUploadEditor()&quot;&gt;Show File Upload editor&lt;/button&gt;
+                                        &lt;file-upload-editor ref=&quot;fileUploadEditorRef&quot; @on-close=&quot;onFileUploadEditorClose&quot;&gt;&lt;/file-upload-editor&gt;                              
+                                    </code>   
+                                </div>                                                            
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+
+    </div> 
 </template>
 <script setup>
     import { onMounted, onBeforeMount, ref, shallowRef, defineProps, inject, provide, reactive} from 'vue'
@@ -345,6 +375,7 @@
     import kmValue from "./view/km-value.vue"
     import kmLocales from "./view/km-locales.vue"
     import kmTerm from "./view/km-term.vue"
+    import fileUploadEditor from './link/file-upload-editor.vue';
 
     const kmTermModel = {
             identifier:"lang-zh"
@@ -360,6 +391,7 @@
     }
 
     const linkEditorRef = shallowRef();
+    const fileUploadEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
     const kmAddLinkModel2 = ref([ ]);
     const links = ref([
@@ -415,6 +447,26 @@
         console.log(name)
         return !!validationReview?.errors?.find(e=>e.property == name)
     }
+
+    // link Editor   
+    const newLink = ref({url: 'https://cbd.int', name: 'CDB website', language: 'es'}) 
+    const showLinkEditor = ()=>{
+        linkEditorRef.value.show(newLink.value)
+    }  
+    function onLinkEditorClose(newValue) {    
+        newLink.value = newValue;     
+    }
+
+    // file upload editor
+    const newFile = ref({url: 'https://api/cbd.int/api/2013', name: 'report.pdf', language: 'en', tag : "Biodiversity"}) 
+    const showFileUploadEditor=() =>{
+        fileUploadEditorRef.value.show(newFile.value)
+    }
+
+    function onFileUploadEditorClose(newValue) {    
+        newFile.value = newValue;     
+    }
+
 
 
     onMounted(()=>{
