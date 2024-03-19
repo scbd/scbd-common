@@ -194,7 +194,7 @@
             </div>        
         </div> 
 
-        </div>
+       
 
         <div class="row">
             <div class="col-12">
@@ -220,6 +220,32 @@
             </div>        
         </div>
 
+        
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Km Value
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6"> 
+                                <km-value value="Test Value"></km-value>                                
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">                              
+                                    <code id="kmViewLinks">                             
+                                        {{`<km-value value="Test Value"></km-value>`}}
+                                    </code>   
+                                </div>                                                            
+                            </div>
+                        </div>
+                    </div>               
+                </div>
+            </div>        
+        </div>   
+     </div> 
 </template>
 
 <script setup>
@@ -231,6 +257,7 @@
     import KmFormGroup from "./km-form-group.vue"
     import kmLstringValue from "./view/km-lstring-value.vue"
     import kmValueBool from "./view/km-value-bool.vue"
+    import kmValue from "./view/km-value.vue"
 
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
