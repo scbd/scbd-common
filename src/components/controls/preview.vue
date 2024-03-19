@@ -2,6 +2,28 @@
 <template>
     <div>
         <h3>CBD controls components</h3>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Available locales
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6">                                
+                                <div class="btn-group">
+                                    <button class="btn btn-danger" v-for="(locale, index) in locales" :key="locale" @click="removeLocale(index)">
+                                        <i class="bi bi-trash"></i> {{locale}}
+                                    </button>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+        
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -82,14 +104,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                {{ kmInputLStringModel }}
                                 <km-input-lstring
                                     v-model="kmInputLStringModel"
                                     :locales="locales"                                                    
                                     >
                                 </km-input-lstring>
                                 <br/>
-                                <button class="btn btn-danger" @click="removeLocale">Remove locale</button>
+                                
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">
@@ -245,7 +266,35 @@
                 </div>
             </div>        
         </div>   
-     </div> 
+     
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Km Locales</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ kmLocalesModel }}
+                                <km-locales
+                                    :locales="locales"        
+                                    v-model="kmLocalesModel"                                     
+                                    >
+                                </km-locales>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                <code>
+                                    {{`<km-locales :locales="locales" v-model="kmLocalesModel"></km-locales>`}}
+                                </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
 </template>
 
 <script setup>
@@ -258,7 +307,9 @@
     import kmLstringValue from "./view/km-lstring-value.vue"
     import kmValueBool from "./view/km-value-bool.vue"
     import kmValue from "./view/km-value.vue"
+    import kmLocales from "./view/km-locales.vue"
 
+    const kmLocalesModel = ref('zh');
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
 
@@ -310,8 +361,8 @@
         ]
     };
 
-    const removeLocale = () => {
-        locales.value.splice(1, 1);
+    const removeLocale = (index) => {
+        locales.value.splice(index, 1);
     }
     
     const isValid = (name)=>{
