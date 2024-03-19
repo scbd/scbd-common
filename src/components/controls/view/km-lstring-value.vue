@@ -1,5 +1,5 @@
 <template>
-  <div :id="$attrs.id" class="scbd-controls km-form-group form-group">
+  <div :id="$attrs.id" class="scbd-controls km-lstring-value">
     <div :class="`input-group input-lang-${locale}`">
       <div v-if="type === 'string'" class="form-control km-value km-value-ml-string" 
            :dir="direction(valueLstring, locale)">
@@ -19,7 +19,7 @@
 
 <script setup>
 import { computed, defineProps } from 'vue';
-import { direction, lstringLocale, lstring } from '../../../utils/index';
+import { direction, lstringLocale, lstring } from '../../../services/util/index';
 
 const { value, locale, type } = defineProps({
   value: { type: Object, required: true },
