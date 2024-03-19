@@ -1,7 +1,6 @@
 <template>
   <div>
     <h3>CBD input components</h3>
-
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -38,7 +37,6 @@
                                             </label>
                                         </div>
                                     </template>
-
                                     <script setup>
                                         const model = defineModel({
                                             type: Boolean,
@@ -51,7 +49,6 @@
                                             },
                                         });
                                     </script>
-
                                 </textarea
                 >
               </div>
@@ -60,7 +57,6 @@
         </div>
       </div>
     </div>
-
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -105,23 +101,64 @@
         </div>
       </div>
     </div>
-
+    <div class="row"> 
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Select File button
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6">
+                                <select-file-button  multiple @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Multiple Files</slot></select-file-button> 
+                                <br/>   
+                                <br/>
+                                <select-file-button  @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Single File</slot></select-file-button>                              
+                                <div v-for="(item, index) in files" :key="index">
+                                           {{item.name}}     
+                                </div>                                    
+                            </div>
+                            <div class="col-6">                              
+                                <div class="callout callout-warning">
+                                    <code>                              
+                                      &lt;select-file-button  multiple @on-file-selected=&quot;receiveFile&quot;&gt; &lt;slot name=&quot;file-button-label&quot;&gt;+ Add Multiple File&lt;/slot&gt;&lt;/select-file-button&gt; 
+                                      &lt;select-file-button  @on-file-selected=&quot;receiveFile&quot;&gt; &lt;slot name=&quot;file-button-label&quot;&gt;+ Add Single File&lt;/slot&gt;&lt;/select-file-button&gt;      
+                                    </code> 
+                                </div>                                                                        
+                            </div>
+                        </div>        
+                    </div>             
+                </div>
+            </div>    
+        </div>  
   </div>
 </template>
-
 <script setup>
-//Checkbox
-import checkbox from "./checkbox.vue";
-import dateSelector from "./dateSelector.vue";
-import { ref } from "vue";
+  //Checkbox
+  import checkbox from "./checkbox.vue";
+  import dateSelector from "./dateSelector.vue";
+  import { ref , computed} from "vue";
+  import selectFileButton from './select-file-button.vue';
 
-const isChecked = ref(true);
-//dateSelector
-const dateValue = ref("2024-02-06");
+  const isChecked = ref(true);
+  //dateSelector
+  const dateValue = ref("2024-02-06");
+  //for select-file-button example
+  let files = ref([]);
+  const receiveFile = (receiveFiles) => {
+      if (receiveFiles instanceof Array) {
+          files.value = receiveFiles;   
+      }
+      else{
+      if (receiveFiles instanceof Object){
+        
+          files.value=[receiveFiles];   
+      }   }      
+  };
+  
+
 </script>
-
 <style lang="scss" scoped></style>
-
 <!-- <div class="row">
     <div class="col-12">
         <div class="card">

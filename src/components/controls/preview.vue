@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <h3>CBD controls components</h3>
@@ -334,7 +333,6 @@
 
     </div>
 </template>
-
 <script setup>
     import { onMounted, onBeforeMount, ref, shallowRef, defineProps, inject, provide, reactive} from 'vue'
     import KmInputLstring from "./km-input-lstring.vue";
