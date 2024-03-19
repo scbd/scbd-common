@@ -61,12 +61,12 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-6"> 
-                                <km-value-bool :value="kmValueBoolProps.value" :locale="kmValueBoolProps.locale"></km-value-bool>                             
+                                <km-value-bool value="true" locale="en"></km-value-bool>                             
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">                              
                                     <code id="kmViewLinks">                             
-                                        &lt;km-value-bool :value=&quot;kmValueBoolProps.value&quot; :locale=&quot;kmValueBoolProps.locale&quot;&gt;&lt;/km-value-bool&gt;
+                                        {{`<km-value-bool value="true" locale="en"></km-value-bool>`}}
                                     </code>   
                                 </div>                                                            
                             </div>
@@ -230,14 +230,10 @@
     import linkEditor from './link/link-editor.vue';
     import KmFormGroup from "./km-form-group.vue"
     import kmLstringValue from "./view/km-lstring-value.vue"
-import kmValueBool from "./view/km-value-bool.vue"
+    import kmValueBool from "./view/km-value-bool.vue"
 
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
-const kmValueBoolProps = reactive({
-    value: true,
-    locale:"en"
-})
 
     const linkEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
