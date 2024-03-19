@@ -6,7 +6,6 @@
       @click.prevent.stop="selectFile()">  
       <slot name="default" ></slot>
     </button> 
-    {{accept}}
 </template>
   
 <script setup>

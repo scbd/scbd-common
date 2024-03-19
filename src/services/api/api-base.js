@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { isFunction } from 'lodash'
-import Vue from 'vue'
+import * as Vue from 'vue'
 
 let sitePrefixUrl = 'https://api.cbd.int';
 

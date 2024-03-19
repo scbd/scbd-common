@@ -109,21 +109,26 @@
                     </div>
                     <div class="card-body"> 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6">                              
                                 <select-file-button  multiple @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Multiple Files</slot></select-file-button> 
                                 <br/>   
-                                <br/>
-                                <select-file-button  @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Single File</slot></select-file-button>                              
+                                <br/>  
+                                <select-file-button  @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Single File</slot></select-file-button>     
+                                <br/>   
+                                <br/>                         
+                                <select-file-button  @on-file-selected="receiveFile" :accept="mimeTypeWhitelist"> <slot name="file-button-label">+ set accept file type</slot></select-file-button>                              
+                                <br/>   
+                                <br/>  
                                 <div v-for="(item, index) in files" :key="index">
-                                           {{item.name}}     
-                                </div>       
-                                <select-file-button  @on-file-selected="receiveFile" :accept="mimeTypeWhitelist"> <slot name="file-button-label">+ Add Single File</slot></select-file-button>                              
+                                    File name: {{item.name}}     
+                                </div>  
                             </div>
                             <div class="col-6">                              
                                 <div class="callout callout-warning">
                                     <code>                              
                                       &lt;select-file-button  multiple @on-file-selected=&quot;receiveFile&quot;&gt; &lt;slot name=&quot;file-button-label&quot;&gt;+ Add Multiple File&lt;/slot&gt;&lt;/select-file-button&gt; 
                                       &lt;select-file-button  @on-file-selected=&quot;receiveFile&quot;&gt; &lt;slot name=&quot;file-button-label&quot;&gt;+ Add Single File&lt;/slot&gt;&lt;/select-file-button&gt;      
+                                      &lt;select-file-button  @on-file-selected=&quot;receiveFile&quot; :accept=&quot;mimeTypeWhitelist&quot;&gt; &lt;slot name=&quot;file-button-label&quot;&gt;+ set accept file type&lt;/slot&gt;&lt;/select-file-button&gt;                             
                                     </code> 
                                 </div>                                                                        
                             </div>
@@ -159,7 +164,6 @@
       }   }      
   };
   
-
 
 
 
