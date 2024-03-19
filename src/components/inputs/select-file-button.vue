@@ -12,7 +12,7 @@
   const emit = defineEmits(['onFileSelected']);
   const props = defineProps({ 
     multiple: { type: Boolean, require: false, default: false },
-    accept: { type: String, require: false, default: '*/*' }
+    accept: { type: Array, require: false, default: ['*/*'] }
   })  
   
   const selectFile = () =>{   
@@ -22,7 +22,7 @@
     fileInput.style.display = 'none';
   
     if (props.multiple) fileInput.setAttribute('multiple', props.multiple);
-    if (props.accept && props.accept !== '*/*') fileInput.setAttribute('accept', props.accept);
+    if (props.accept && !props.accept?.includes('*/*')) fileInput.setAttribute('accept', props.accept?.join(', '));
   
     fileInput.addEventListener('click', ($event) => $event.stopPropagation());    
     fileInput.addEventListener('change', ({ target }) => { 
