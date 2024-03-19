@@ -330,15 +330,42 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
 
-    </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Km value term</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                            {{kmTermModel}} - {{kmLocalesModel}}
+                                <km-value-term
+                                    :value="kmTermModel" :locale="kmLocalesModel"                                          
+                                    >
+                                </km-value-term>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                <code>
+                                    {{` <km-value-term
+                                    :value="kmTermModel" :locale="kmLocalesModel"                                          
+                                    >
+                                    </km-value-term>`}}
+                                </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        File UPload Editor
+                        File Upload Editor
                     </div>
                     <div class="card-body"> 
                         <div class="row">
@@ -376,6 +403,7 @@
     import kmLocales from "./view/km-locales.vue"
     import kmTerm from "./view/km-term.vue"
     import fileUploadEditor from './link/file-upload-editor.vue';
+    import kmValueTerm from "./view/km-value-term.vue";
 
     const kmTermModel = {
             identifier:"lang-zh"
