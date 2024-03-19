@@ -50,6 +50,30 @@
                     </div>               
                 </div>
             </div>        
+        </div> 
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Km value bool
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6"> 
+                                <km-value-bool value="true" locale="en"></km-value-bool>                             
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">                              
+                                    <code id="kmViewLinks">                             
+                                        {{`<km-value-bool value="true" locale="en"></km-value-bool>`}}
+                                    </code>   
+                                </div>                                                            
+                            </div>
+                        </div>
+                    </div>               
+                </div>
+            </div>        
         </div>       
         <div class="row">
             <div class="col-12">
@@ -206,6 +230,7 @@
     import linkEditor from './link/link-editor.vue';
     import KmFormGroup from "./km-form-group.vue"
     import kmLstringValue from "./view/km-lstring-value.vue"
+    import kmValueBool from "./view/km-value-bool.vue"
 
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
