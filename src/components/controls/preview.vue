@@ -36,13 +36,12 @@
                                 <link-editor ref="linkEditorRef" @on-close="onLinkEditorClose"></link-editor>
                                 {{newLink}}
                             </div>
-                            <div class="col-6">
-                                <div class="callout callout-warning">                                
-                                    <code>                                    
-                                        &lt;button class=&quot;btn btn-default&quot; @click=&quot;showLinkEditor()&quot;&gt;Show Link editor&lt;/button&gt;
-                                        &lt;link-editor ref=&quot;linkEditorRef&quot; @close=&quot;onLinkEditorClose&quot;&gt;&lt;/link-editor&gt;                                 
-                                    </code>   
-                                </div>                                                            
+                            <div class="col-6">                               
+                                 <div class="callout callout-warning">
+                                    <code > 
+                                        "&lt;button class=&quot;btn btn-default&quot; @click=&quot;showLinkEditor()&quot;&gt;Show Link editor&lt;/button&gt;&lt;link-editor ref=&quot;linkEditorRef&quot; @close=&quot;onLinkEditorClose&quot;&gt;&lt;/link-editor&gt; "
+                                    </code> 
+                                </div> 
                             </div>
                         </div>
                     </div>  
@@ -138,7 +137,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <km-add-link  v-model="kmAddLinkModel1"/>  
-                                Parent links :   {{ kmAddLinkModel1 }}   <br/>
+                                links :   {{ kmAddLinkModel1 }}   <br/>
                             </div>
                             <div class="col-6">
                                 Example 1: default
@@ -162,7 +161,7 @@
                                         <p></p>                                  
                                     </template>
                                 </km-add-link>
-                                Parent links :   {{ kmAddLinkModel2 }}   <br/>
+                                links :   {{ kmAddLinkModel2 }}   <br/>
                             </div>
                             <div class="col-6">  
                                 Example 2: customize button label, link editor title, hide link list                                 
@@ -222,8 +221,6 @@
             </div>        
         </div> 
 
-       
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -246,9 +243,7 @@
                     </div>               
                 </div>
             </div>        
-        </div>
-
-        
+        </div>       
 
         <div class="row">
             <div class="col-12">
@@ -272,8 +267,7 @@
                     </div>               
                 </div>
             </div>        
-        </div>   
-     
+        </div>  
 
         <div class="row">
             <div class="col-12">
@@ -388,7 +382,33 @@
             </div>
         </div>
 
-    </div> 
+    
+        <div class="row"> 
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Km link
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6">
+                                <km-link v-model="kmLinkModel"/>                               
+                                links : {{ kmLinkModel }}   <br/> 
+                            </div>
+                            <div class="col-6">  
+                                <button type="button" class="btn btn-light float-end" @click="copyToClipboard(`km-link`)"><i class="bi bi-copy"></i></button>                                
+                                <div class="callout callout-warning">
+                                    <code > 
+                                            {{convertToHtml(codeExample["km-link"])}}                                        
+                                    </code> 
+                                </div>                                                                         
+                            </div>
+                    </div>             
+                </div>
+            </div>    
+        </div>        
+      </div>
+   </div>
 </template>
 <script setup>
     import { onMounted, onBeforeMount, ref, shallowRef, defineProps, inject, provide, reactive} from 'vue'
@@ -404,6 +424,8 @@
     import kmTerm from "./view/km-term.vue"
     import fileUploadEditor from './link/file-upload-editor.vue';
     import kmValueTerm from "./view/km-value-term.vue";
+    import kmAddFile from './link/km-add-file.vue';
+    import kmLink from './link/km-link.vue'
 
     const kmTermModel = {
             identifier:"lang-zh"
@@ -422,6 +444,13 @@
     const fileUploadEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
     const kmAddLinkModel2 = ref([ ]);
+    const kmAddFileModel1 = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
+    const kmAddFileModel2 = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
+    const kmLinkModel=ref([
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ,
+        { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} 
+    ]);
+
     const links = ref([
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
@@ -495,8 +524,6 @@
         newFile.value = newValue;     
     }
 
-
-
     onMounted(()=>{
         
     })
@@ -518,6 +545,20 @@
         }   }      
 
     };
+
+    const codeExample = {
+        "km-link":"&lt;km-link v-model=&quot;kmlinkModel&quot;/&gt;",
+    }
+
+
+    const copyToClipboard =(id)=>{
+        const code = codeExample[id];
+        navigator.clipboard.writeText(convertToHtml(code));
+    }
+
+    const convertToHtml=(escapedText)=> {           
+        return escapedText.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g,`"`);
+    }
 </script>
 
 <style lang="scss" scoped>
