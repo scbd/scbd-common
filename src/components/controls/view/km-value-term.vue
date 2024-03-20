@@ -1,7 +1,7 @@
 <template>
   <div :id="$attrs.id" class="scbd-controls km-value-term">
     <div :class="`input-group input-lang-${locale}`">
-      <div class="form-control km-value" :dir="direction(kmInitializeTerm?.title, locale)">
+      <div class="form-control km-value" :dir="direction(termValue?.title, locale)">
         <km-term :value="value" :locale="locale" @on-term-load="onTermLoad">
         </km-term>
       </div>
@@ -21,7 +21,7 @@ const props = defineProps({
 const termValue = ref(null);
 
 const onTermLoad = function(term){
-    kmInitializeTerm.value = { title: 'SCBD Term' }
+    termValue.value = { title: 'SCBD Term' }
     // thesaurusStore.loadTerm(`lang-${term}`);
 }
 </script>
