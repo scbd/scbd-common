@@ -18,7 +18,7 @@ const props = defineProps({
   value: { type: Object, required: true },
   locale: { type: String, required: true },
 });
-const kmInitializeTerm = ref(null);
+const termValue = ref(null);
 
 const onTermLoad = function(term){
     kmInitializeTerm.value = { title: 'SCBD Term' }
