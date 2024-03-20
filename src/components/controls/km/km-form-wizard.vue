@@ -1,5 +1,5 @@
 <template>
-  <div :id="$attrs.id" class="sbcd-controls km-nav-wizard">
+  <div :id="$attrs.id" class="sbcd-controls km-form-wizard">
     <div class="nav-header mb-2">
       <ul class="nav nav-pills nav-fill">
         <li
