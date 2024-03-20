@@ -214,6 +214,48 @@
             </template>
         </preview-component>
 
+
+        <preview-component card-header="Add File">
+            <template #left>
+                <km-add-file v-model="kmAddFileModel1" :multiple="false"/>                                
+                <br/>Parent links :   {{ kmAddFileModel1 }}   <br/> 
+            </template>
+            <template #right>
+                {{`<km-add-file v-model="kmAddFileModel1" :multiple="false"/>`}}
+            </template>
+        </preview-component>
+
+
+        <preview-component card-header="Add File">
+            <template #left>
+                <km-add-file v-model="kmAddFileModel2" >                                                                  
+                    <template #link-button-label>
+                        Add File
+                    </template>
+                    <template #link-dialog-title>
+                        My custom title
+                    </template>                                  
+                    <template #links-view>     
+                        <p></p>                                  
+                    </template> 
+                </km-add-file> 
+                Parent links :   {{ kmAddFileModel2 }}   <br/> 
+            </template>
+            <template #right>                
+                {{` <km-add-file v-model="kmAddFileModel2" >                                                                  
+                    <template #link-button-label>
+                        Add File
+                    </template>
+                    <template #link-dialog-title>
+                        My custom title
+                    </template>                                  
+                    <template #links-view>     
+                        <p></p>                                  
+                    </template> 
+                </km-add-file>`}}
+            </template>
+        </preview-component>
+
          <preview-component card-header="multi-selector">
             <template #left>
                 <multi-selector
@@ -233,22 +275,20 @@
                 <br/>selected: {{ selectedItem}} <br/>   
             </template>
             <template #right>
-                <code>
-                    &lt;multi-selector
-                            v-model=&quot;selectedItem&quot;       
-                            :options=&quot;options&quot;
-                            :label=&quot;label&quot;
-                            :value-key=&quot;valueKey&quot;
-                            :custom-label=&quot;customLabel&quot;
-                            :placeholder = &quot;placeholder&quot;
-                            :track-by = &quot;trackBy&quot;
-                            :multiple=&quot;multiple&quot;
-                            :disabled = &quot;disabled&quot;
-                            :open-direction=&quot;openDirection&quot; 
-                            :searchable=&quot;searchable&quot;   
-                            @on-search-change=&quot;onSearchChange&quot;&gt;                                   
-                        &lt;/multi-selector&gt; 
-                </code>
+                {{`<multi-selector
+                    v-model="selectedItem"       
+                    :options="options"
+                    :label="label"
+                    :value-key="valueKey"
+                    :custom-label="customLabel"
+                    :placeholder = "placeholder"
+                    :track-by = "trackBy"
+                    :multiple="multiple"
+                    :disabled = "disabled"
+                    :open-direction="openDirection" 
+                    :searchable="searchable"   
+                    @on-search-change="onSearchChange">                                   
+                </multi-selector> `}}
             </template>
         </preview-component> 
 
@@ -278,6 +318,7 @@
     import kmValueTerms from "./view/km-value-terms.vue";
     import previewComponent from "./preview-component.vue";
     import multiSelector from './multi-selector.vue'
+    import kmAddFile from './link/km-add-file.vue';
 
     const kmValueTermsModel = [
             {
@@ -309,6 +350,8 @@
     const fileUploadEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
     const kmAddLinkModel2 = ref([ ]);
+    const kmAddFileModel1 = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
+    const kmAddFileModel2 = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
     const links = ref([
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
@@ -383,7 +426,8 @@
         newFile.value = newValue;    
     }
 
-   
+
+
     onMounted(()=>{
         
     })
@@ -399,8 +443,7 @@
             files.value = receiveFiles;   
         }
         else{
-        if (receiveFiles instanceof Object){
-         
+        if (receiveFiles instanceof Object){         
             files.value=[receiveFiles];   
         }   }      
 
