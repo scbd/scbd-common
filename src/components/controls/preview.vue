@@ -2,7 +2,7 @@
     <div>
         <h3>CBD controls components</h3>
         
-        <div class="row">
+      <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -220,9 +220,7 @@
                     </div>               
                 </div>
             </div>        
-        </div> 
-
-       
+        </div>        
 
         <div class="row">
             <div class="col-12">
@@ -246,9 +244,7 @@
                     </div>               
                 </div>
             </div>        
-        </div>
-
-        
+        </div>        
 
         <div class="row">
             <div class="col-12">
@@ -272,8 +268,7 @@
                     </div>               
                 </div>
             </div>        
-        </div>   
-     
+        </div>      
 
         <div class="row">
             <div class="col-12">
@@ -364,6 +359,35 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <div class="card-header">Km value term</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                            {{kmTermModel}} - {{kmLocalesModel}}
+                                <km-value-term
+                                    :value="kmTermModel" :locale="kmLocalesModel"                                          
+                                    >
+                                </km-value-term>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                <code>
+                                    {{` <km-value-term
+                                    :value="kmTermModel" :locale="kmLocalesModel"                                          
+                                    >
+                                    </km-value-term>`}}
+                                </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
                     <div class="card-header">
                         File Upload Editor
                     </div>
@@ -386,7 +410,67 @@
                     </div>  
                 </div>
             </div>
-        </div>
+        </div> 
+        
+        <div class="row"> 
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Add File
+                    </div>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-6">                           
+                                <km-add-file v-model="kmAddFileModel1" :multiple="false"/>                                
+                                <br/>Parent links :   {{ kmAddFileModel1 }}   <br/> 
+                            </div>
+                            <div class="col-6">
+                                Example 1: default
+                                <div class="callout callout-warning">
+                                    <code>                              
+                                        &lt;km-add-file v-model=&quot;kmAddFileModel1&quot; :multiple=&quot;false&quot;/&gt;    
+                                    </code> 
+                                </div>                                                                        
+                            </div>
+                        </div>                       
+                        <div class="row">
+                            <div class="col-6">
+                                <km-add-file v-model="kmAddFileModel2" >                                                                  
+                                    <template #link-button-label>
+                                        Add File
+                                    </template>
+                                    <template #link-dialog-title>
+                                        My custom title
+                                    </template>                                  
+                                    <template #links-view>     
+                                        <p></p>                                  
+                                    </template> 
+                                </km-add-file> 
+                                Parent links :   {{ kmAddFileModel2 }}   <br/> 
+                            </div>
+                            <div class="col-6">
+                                Example 2: customize  editor title, hide link list  
+                                <div class="callout callout-warning">
+                                    <code>                              
+                                        &lt;km-add-file v-model=&quot;kmAddFileModel2&quot;&gt;                                                                  
+                                            &lt;template #link-button-label&gt;
+                                                Add File
+                                            &lt;/template&gt;
+                                            &lt;template #link-dialog-title&gt;
+                                                My custom title
+                                            &lt;/template&gt;                                  
+                                            &lt;template #links-view&gt;     
+                                                &lt;p&gt;&lt;/p&gt;                                  
+                                            &lt;/template&gt; 
+                                        &lt;/km-add-file&gt; 
+                                    </code> 
+                                </div>                                                                        
+                            </div>    
+                        </div>                   
+                    </div>             
+                </div>
+            </div>    
+        </div>     
 
     </div> 
 </template>
@@ -404,6 +488,8 @@
     import kmTerm from "./view/km-term.vue"
     import fileUploadEditor from './link/file-upload-editor.vue';
     import kmValueTerm from "./view/km-value-term.vue";
+    import kmAddFile from './link/km-add-file.vue';
+
 
     const kmTermModel = {
             identifier:"lang-zh"
@@ -422,6 +508,8 @@
     const fileUploadEditorRef = shallowRef();
     const kmAddLinkModel1 = ref([ { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ]);
     const kmAddLinkModel2 = ref([ ]);
+    const kmAddFileModel1 = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
+    const kmAddFileModel2 = ref([ { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} ]);
     const links = ref([
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
@@ -495,8 +583,6 @@
         newFile.value = newValue;     
     }
 
-
-
     onMounted(()=>{
         
     })
@@ -512,8 +598,7 @@
             files.value = receiveFiles;   
         }
         else{
-        if (receiveFiles instanceof Object){
-         
+        if (receiveFiles instanceof Object){         
             files.value=[receiveFiles];   
         }   }      
 
