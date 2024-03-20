@@ -1,7 +1,7 @@
 <template>
   <div :id="$attrs.id" class="scbd-controls km-value-term">
     <div :class="`input-group input-lang-${locale}`">
-      <div class="form-control km-value" :dir="direction(kmInitializeTerm && kmInitializeTerm.title, locale)">
+      <div class="form-control km-value" :dir="direction(kmInitializeTerm?.title, locale)">
         <km-term :value="value" :locale="locale" @on-term-load="onTermLoad">
         </km-term>
       </div>
