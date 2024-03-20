@@ -37,10 +37,9 @@
                                 {{newLink}}
                             </div>
                             <div class="col-6">                               
-                                <button type="button" class="btn btn-light float-end" @click="copyToClipboard(`link-editor`)"><i class="bi bi-copy"></i></button>                                
-                                <div class="callout callout-warning">
+                                 <div class="callout callout-warning">
                                     <code > 
-                                            {{convertToHtml(codeExample["link-editor"])}}                                        
+                                        "&lt;button class=&quot;btn btn-default&quot; @click=&quot;showLinkEditor()&quot;&gt;Show Link editor&lt;/button&gt;&lt;link-editor ref=&quot;linkEditorRef&quot; @close=&quot;onLinkEditorClose&quot;&gt;&lt;/link-editor&gt; "
                                     </code> 
                                 </div> 
                             </div>
@@ -222,8 +221,6 @@
             </div>        
         </div> 
 
-       
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -246,9 +243,7 @@
                     </div>               
                 </div>
             </div>        
-        </div>
-
-        
+        </div>       
 
         <div class="row">
             <div class="col-12">
@@ -272,8 +267,7 @@
                     </div>               
                 </div>
             </div>        
-        </div>   
-     
+        </div>  
 
         <div class="row">
             <div class="col-12">
@@ -388,7 +382,7 @@
             </div>
         </div>
 
-    </div> 
+    
         <div class="row"> 
             <div class="col-12">
                 <div class="card">
@@ -413,7 +407,8 @@
                 </div>
             </div>    
         </div>        
-    </div>
+      </div>
+   </div>
 </template>
 <script setup>
     import { onMounted, onBeforeMount, ref, shallowRef, defineProps, inject, provide, reactive} from 'vue'
@@ -529,8 +524,6 @@
         newFile.value = newValue;     
     }
 
-
-
     onMounted(()=>{
         
     })
@@ -555,7 +548,6 @@
 
     const codeExample = {
         "km-link":"&lt;km-link v-model=&quot;kmlinkModel&quot;/&gt;",
-        "link-editor":"&lt;button class=&quot;btn btn-default&quot; @click=&quot;showLinkEditor()&quot;&gt;Show Link editor&lt;/button&gt;&lt;link-editor ref=&quot;linkEditorRef&quot; @close=&quot;onLinkEditorClose&quot;&gt;&lt;/link-editor&gt; "
     }
 
 
