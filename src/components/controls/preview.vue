@@ -388,7 +388,33 @@
             </div>
         </div>
 
-    </div> 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Km value terms</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <km-value-terms
+                                    :value="kmValueTermsModel" :locale="kmLocalesModel"                                          
+                                    >
+                                </km-value-terms>
+                                <br/>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                <code>
+                                    {{`<km-value-terms :value="kmValueTermsModel" :locale="kmLocalesModel"></km-value-terms>`}}
+                                </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </template>
 <script setup>
     import { onMounted, onBeforeMount, ref, shallowRef, defineProps, inject, provide, reactive} from 'vue'
@@ -404,6 +430,18 @@
     import kmTerm from "./view/km-term.vue"
     import fileUploadEditor from './link/file-upload-editor.vue';
     import kmValueTerm from "./view/km-value-term.vue";
+    import kmValueTerms from "./view/km-value-terms.vue";
+    const kmValueTermsModel = [
+            {
+                identifier:"lang-ar"
+            },
+            {
+                identifier:"lang-zh"
+            },
+            {
+                identifier:"lang-ru"
+            },
+        ]
 
     const kmTermModel = {
             identifier:"lang-zh"
