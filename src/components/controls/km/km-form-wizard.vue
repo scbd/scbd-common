@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, computed, defineEmits, inject } from "vue";
+import { ref, onBeforeMount, computed, defineEmits, provide } from "vue";
 
 const tabs = ref([]);
 const emits = defineEmits(["onTabChange"]);
@@ -60,8 +60,9 @@ const totalTabs = computed(() => this.tabs.length);
 const currentTab = computed(() => this.tabs.find((e) => e.isActive));
 
 onBeforeMount(() => {
-  const receivedTabs = inject("addFormWizardTabKey");
-  tabs.value = receivedTabs;
+   provide("addFormWizardTabKey", (tab) => {
+    tabs.value.push(tab);
+  });
 });
 </script>
 
