@@ -4,10 +4,14 @@
             <tbody>
                 <tr  v-for="(item, index) in links" :key="index">  
                     <td  class="align-middle" >
-                        <span> {{languages[item.language]}}  </span>                         
+                        <span> {{languages[item.language]}}  </span>    
+                    </td>        
+                    <td  class="align-middle" >                                 
                         <a :href="item.url" >
                             {{item.name}} 
-                        </a>                    
+                        </a>
+                    </td>   
+                    <td  class="align-middle" >                                   
                         <span v-if="item.tag">
                             ({{ item.tag }})
                         </span>            
