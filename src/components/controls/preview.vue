@@ -255,6 +255,7 @@
             identifier:"lang-zh"
         }
     const kmLocalesModel = ref('zh');
+    import multiSelector from './multi-selector.vue'  
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
     const kmInitializeTerm = ref(null);
@@ -272,6 +273,7 @@
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"},
         { "url": "http://cbd.int", "name": "CBD website", "language": "en" ,tag:"Biodiversity"}]);
+<<<<<<<
   
      const validationReview = {
         "identifier": "4DE6D968-FBB4-135A-3D23-DA52FB705939",
@@ -324,6 +326,9 @@
 
     // link Editor   
     const newLink = ref({url: 'https://cbd.int', name: 'CDB website', language: 'es'}) 
+=======
+
+>>>>>>>
     const showLinkEditor = ()=>{
         linkEditorRef.value.show(newLink.value)
     }  
@@ -339,6 +344,8 @@
 
     function onFileUploadEditorClose(newValue) {    
         newFile.value = newValue;     
+    const removeLocale = () => {
+        locales.value.splice(1, 1);
     }
 
 
@@ -380,7 +387,27 @@
         return list;
     });
 
+    // for multi-selector            
+    const label = "language";
+    const placeholder = "please select one";
+    const trackBy = "name";
+    const valueKey = "name";
+    const multiple= true;
+    const openDirection = ""; 
+    const searchable="true";    
+    const disabled=false;   
+    const customLabel =(item)=>{
+        return item.name + '-' + item.language;
+    }     
+    const selectedItem= ref("");
+    const options= [
+        { name: 'Vue.js', language: 'JavaScript' },
+        { name: 'Rails', language: 'Ruby' },
+        { name: 'Sinatra', language: 'Ruby' },
+        { name: 'Laravel', language: 'PHP', $isDisabled: true },
+        { name: 'Phoenix', language: 'Elixir' }
+    ];
+   
 </script>
 
-<style lang="scss" scoped>
-</style> 
+<style  lang="scss" scoped ></style>
