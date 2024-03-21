@@ -15,20 +15,18 @@
     </div>
 </template>
 <script setup>
-    import _ from "lodash";
-    import { ref, shallowRef } from 'vue'  
+    import { shallowRef } from 'vue'  
     import kmViewLinks from './km-view-links.vue';
     import fileUploadEditor  from './file-upload-editor.vue';
     import selectFileButton from '../../inputs/select-file-button.vue'
+  
 
     const links = defineModel({type:Array, required:true, default:[]});
     const props = defineProps({multiple: { type: Boolean, require: false, default: false }});
 
     const fileEditorRef= shallowRef (null); 
     let editedLinkIndex = -1;
-    //let file = ref({});  
-
-
+    
     function addLink(file) {        
         editedLinkIndex = -1; 
         fileEditorRef.value.show({url:"",name:file.name, language:"en", tag:""}, true,file); 
@@ -56,10 +54,10 @@
         }       
     }
 
-    const files = ref([]);
-    const receiveFile = (receiveFiles) => { 
-        receiveFiles = _.flatten([receiveFiles]); // systematic array 
-
+ 
+    const receiveFile = (receiveFiles) => {  
+        receiveFiles = [receiveFiles];
+        receiveFiles = receiveFiles.flat();   
         //TODO: support multiple files   
         addLink(receiveFiles[0]);            
     };
