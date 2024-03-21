@@ -5,7 +5,7 @@
         <file-upload-editor ref="fileEditorRef" @on-close="onFileUploadEditorClose">
             <template v-slot:modalTitle>
             <slot name="link-dialog-title"   >        
-                Uploading file    
+     File upload   
             </slot>
             </template>       
         </file-upload-editor>
