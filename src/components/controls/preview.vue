@@ -215,6 +215,7 @@
         </preview-component>
 
 
+
         <preview-component card-header="Add File">
             <template #left>
                 <km-add-file v-model="kmAddFileModel1" :multiple="false"/>                                
@@ -256,6 +257,7 @@
             </template>
         </preview-component>
 
+
          <preview-component card-header="multi-selector">
             <template #left>
                 <multi-selector
@@ -275,6 +277,7 @@
                 <br/>selected: {{ selectedItem}} <br/>   
             </template>
             <template #right>
+
                 {{`<multi-selector
                     v-model="selectedItem"       
                     :options="options"
@@ -289,6 +292,7 @@
                     :searchable="searchable"   
                     @on-search-change="onSearchChange">                                   
                 </multi-selector> `}}
+
             </template>
         </preview-component> 
 
@@ -319,6 +323,7 @@
     import previewComponent from "./preview-component.vue";
     import multiSelector from './multi-selector.vue'
     import kmAddFile from './link/km-add-file.vue';
+
 
     const kmValueTermsModel = [
             {
@@ -426,8 +431,7 @@
         newFile.value = newValue;    
     }
 
-
-
+   
     onMounted(()=>{
         
     })
