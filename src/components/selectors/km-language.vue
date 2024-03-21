@@ -20,7 +20,7 @@
         </km-form-check-group>
     </km-form-group>
     <km-form-group name="otherLanguages" class="mt-2"  :caption="t('otherLanguage')" v-if="otherLanguageOption">
-        <km-select
+        <multi-select
             v-model="otherSelectedLanguages"
             label="title"
             track-by="code"
@@ -30,16 +30,16 @@
             :close-on-select="false"    
             :placeholder="t('otherLanguageOfRecord')"
             @update:modelValue="onChange">
-        </km-select>
+        </multi-select>
     </km-form-group>
 </template>
 
 <i18n src="@/i18n/dist/components/controls/edit/KmLanguages.json"></i18n>
 
 <script setup lang="ts">
-    import  KmFormCheckGroup from '../../components/controls/'
+    import  KmFormCheckGroup from '../../components/controls/km-form-check-group.vue'
     import  KmFormGroup  from '../../components/controls/km-form-group.vue'
-    import  KmFormCheckItem  from '../../components/controls'
+    import  KmFormCheckItem  from '../../components/controls/km-form-check-item.vue'
     import  multiSelect  from '../../components/controls/multi-selector.vue'
     import { ref , computed} from 'vue'
     import { sortBy } from '../../services/util'
@@ -50,8 +50,8 @@
     // import { useUserPreferencesStore }    from '@/stores/userPreferences';
     import { languages }            from '../../data/language'       
 
-    export const THESAURUS = {  
-        OTHER_LANGUAGES    : 'ISO639-2'  
+    const THESAURUS = {  
+        OTHER_LANGUAGES:'ISO639-2'  
     }
 
     const props = defineProps({
@@ -97,11 +97,10 @@
         if(otherSelectedLanguages.value?.length){
             otherLanguageOption.value = true;
             onOtherLanguage()
-        }
-        
+        }        
     }
 
-    function onChange(code:string){
+    function onChange(code){
         const languages = [...selectedLanguages.value||[], ...otherSelectedLanguages.value||[]];
         emit('update:modelValue', languages);
         userPreferencesStore.setPreferredEditLanguages(languages);
@@ -115,12 +114,9 @@
         return thesaurusStore.loadDomainTerms(THESAURUS.OTHER_LANGUAGES)
     }
 
-    function isUNLanguage(code:string){
+    function isUNLanguage(code){
         return formattedLanguages.value.find(un=>un.code == code)
     }
-
-
-
 
 </script>
 
