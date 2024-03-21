@@ -66,45 +66,45 @@ onBeforeMount(() => {
 </script>
 
 <style scoped>
-.km-nav-wizard ul.nav-pills > li {
+.km-form-wizard ul.nav-pills > li {
   position: relative;
   overflow: visible;
   border-right: 15px solid transparent;
   border-left: 15px solid transparent;
 }
 
-.km-nav-wizard ul.nav-pills > li + li {
+.km-form-wizard ul.nav-pills > li + li {
   margin-left: 0;
 }
 
-.km-nav-wizard ul.nav-pills > li:first-child {
+.km-form-wizard ul.nav-pills > li:first-child {
   border-left: 0;
 }
 
-.km-nav-wizard ul.nav-pills > li:first-child a {
+.km-form-wizard ul.nav-pills > li:first-child a {
   border-radius: 5px 0 0 5px;
 }
 
-.km-nav-wizard ul.nav-pills > li:last-child {
+.km-form-wizard ul.nav-pills > li:last-child {
   border-right: 0;
 }
 
-.km-nav-wizard ul.nav-pills > li:last-child a {
+.km-form-wizard ul.nav-pills > li:last-child a {
   border-radius: 0 5px 5px 0;
 }
 
-.km-nav-wizard ul.nav-pills > li a {
+.km-form-wizard ul.nav-pills > li a {
   border-radius: 0;
   background-color: #eee;
 }
 
-.km-nav-wizard ul.nav-pills > li:not(:last-child) a:after {
+.km-form-wizard ul.nav-pills > li:not(:last-child) a:after {
   right: -20px;
   border-color: transparent transparent transparent #eee;
 }
 
-.km-nav-wizard ul.nav-pills > li:not(:first-child) a:before,
-.km-nav-wizard ul.nav-pills > li:not(:last-child) a:after {
+.km-form-wizard ul.nav-pills > li:not(:first-child) a:before,
+.km-form-wizard ul.nav-pills > li:not(:last-child) a:after {
   position: absolute;
   content: "";
   top: 0;
@@ -115,33 +115,33 @@ onBeforeMount(() => {
   z-index: 150;
 }
 
-.km-nav-wizard ul.nav-pills > li:not(:first-child) a:before {
+.km-form-wizard ul.nav-pills > li:not(:first-child) a:before {
   left: -20px;
   border-color: #eee #eee #eee transparent;
 }
 
-.km-nav-wizard ul.nav-pills > li:hover:not(:last-child) a:after {
+.km-form-wizard ul.nav-pills > li:hover:not(:last-child) a:after {
   border-color: transparent transparent transparent #aaa;
 }
 
-.km-nav-wizard ul.nav-pills > li:hover:not(:first-child) a:before {
+.km-form-wizard ul.nav-pills > li:hover:not(:first-child) a:before {
   border-color: #aaa #aaa #aaa transparent;
 }
 
-.km-nav-wizard ul.nav-pills > li:hover a {
+.km-form-wizard ul.nav-pills > li:hover a {
   background-color: #aaa;
   color: #fff;
 }
 
-.km-nav-wizard ul.nav-pills > li.active:not(:last-child) a:after {
+.km-form-wizard ul.nav-pills > li.active:not(:last-child) a:after {
   border-color: transparent transparent transparent #428bca;
 }
 
-.km-nav-wizard ul.nav-pills > li.active:not(:first-child) a:before {
+.km-form-wizard ul.nav-pills > li.active:not(:first-child) a:before {
   border-color: #428bca #428bca #428bca transparent;
 }
 
-.km-nav-wizard ul.nav-pills > li.active a {
+.km-form-wizard ul.nav-pills > li.active a {
   background-color: #428bca;
   color: #fff;
 }
