@@ -214,7 +214,7 @@
             </template>
         </preview-component>
 
-         <preview-component card-header="Link editor">
+         <preview-component card-header="multi-selector">
             <template #left>
                 <multi-selector
                     v-model="selectedItem"       
