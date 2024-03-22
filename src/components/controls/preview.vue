@@ -414,6 +414,58 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Km Form Workflow</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <km-form-workflow :onPreSaveDraft="onPreSaveDraft" :onPostSaveDraft="onPostSaveDraft"
+                                :onPreRequest="onPreRequest" :onPostRequest="onPostRequest" :onPrePublish="onPrePublish"
+                                :onPostPublish="onPostPublish" :onError="onError" :onStepChange="onStepChange"
+                                :onReviewLanguageChange="onReviewLanguageChange" :onPreSaveDraftVersion="onPreSaveDraftVersion"
+                                :onPreClose="onPreClose" :onPostClose="onPostClose" :onPreRevert="onPreRevert"
+                                :onPostRevert="onPostRevert">
+                                    <template v-slot:introduction>
+                                        <form  class="mx-auto" style="width: 18rem;">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Password</label>
+                                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </template>
+                                    <template v-slot:submission>
+                                          <div class="card mx-auto my-2" style="width: 18rem;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Card title</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                <a href="#" class="card-link">Card link</a>
+                                                <a href="#" class="card-link">Another link</a>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </km-form-workflow>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                <code>
+                                    {{`<km-form-workflow></km-form-workflow>`}}
+                                </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 <script setup>
@@ -431,6 +483,8 @@
     import fileUploadEditor from './link/file-upload-editor.vue';
     import kmValueTerm from "./view/km-value-term.vue";
     import kmValueTerms from "./view/km-value-terms.vue";
+    import kmFormWorkflow from "./km/km-form-workflow.vue"
+
     const kmValueTermsModel = [
             {
                 identifier:"lang-ar"
@@ -533,7 +587,27 @@
         newFile.value = newValue;     
     }
 
+    function on(name){
+        return (document) => {
+            console.log(name, document);
+            return document;
+        }
+    }
 
+    const onPreSaveDraft = on("onPreSaveDraft")
+    const onPostSaveDraft = on("onPostSaveDraft")
+    const onPreRequest = on("onPreRequest")
+    const onPostRequest = on("onPostRequest")
+    const onPrePublish = on("onPrePublish")
+    const onPostPublish = on("onPostPublish")
+    const onError = on("onError")
+    const onStepChange = on("onStepChange")
+    const onReviewLanguageChange = on("onReviewLanguageChange")
+    const onPreSaveDraftVersion = on("onPreSaveDraftVersion")
+    const onPreClose = on("onPreClose")
+    const onPostClose = on("onPostClose")
+    const onPreRevert = on("onPreRevert")
+    const onPostRevert = on("onPostRevert")
 
     onMounted(()=>{
         

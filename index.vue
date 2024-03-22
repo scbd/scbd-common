@@ -66,6 +66,15 @@
         ],
         "isEmailVerified": true
       }
+    },
+  })
+  
+  provide("toast", {
+    success(message, options){
+      console.log(message, options);
+    },
+    error(message, options){
+      console.error(message, options);
     }
   })
   const notes = ref(["[Yuan Li | Feb 23, 2024 2:30:20 PM ] -first note","[Yuan Li|Feb 23, 2024 2:40:20 PM ] -second note"]) 
