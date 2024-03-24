@@ -24,7 +24,6 @@
         </div>
     </km-form-group>
 
-
     <km-form-group name="otherLanguages" class="mt-2"  :caption="t('otherLanguage')" v-if = "otherLanguageOption" >
         <multi-select
             v-model="otherSelectedLanguages"
@@ -57,8 +56,8 @@
     // import { useUserPreferencesStore }    from '@/stores/userPreferences';
     import { languages }            from '../../data/language'       
 
-    const THESAURUS = {  
-        OTHER_LANGUAGES:'ISO639-2'  
+    export const THESAURUS = {  
+        OTHER_LANGUAGES    : 'ISO639-2'  
     }
 
     const translations = {
@@ -126,10 +125,11 @@
         if(otherSelectedLanguages.value?.length){
             otherLanguageOption.value = true;
             onOtherLanguage()
-        }        
+        }
+        
     }
 
-    function onChange(code){
+    function onChange(code:string){
         const languages = [...selectedLanguages.value||[], ...otherSelectedLanguages.value||[]];
         emit('update:modelValue', languages);
         userPreferencesStore.setPreferredEditLanguages(languages);
@@ -143,9 +143,12 @@
         return thesaurusStore.loadDomainTerms(THESAURUS.OTHER_LANGUAGES)
     }
 
-    function isUNLanguage(code){
+    function isUNLanguage(code:string){
         return formattedLanguages.value.find(un=>un.code == code)
     }
+
+
+
 
 </script>
 
