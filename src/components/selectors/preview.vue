@@ -2,13 +2,11 @@
     <div>
         <h3>CBD selectors components</h3>
 
-
          <preview-component card-header="language selector">
             <template #left>
                 <km-language v-model="selectedItems"/> 
                 selected languages: {{ selectedItems }}        
-            </template>
-          
+            </template>          
             <template #right>
                 <code>
                     {{ ` <km-language v-model="selectedItems/>  ` }}

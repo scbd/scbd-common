@@ -15,11 +15,12 @@
     <km-form-group name="otherLanguageOption" class="mt-2"  caption="Would like to submit this information in any other language(s)?">                                    
     
         <div class="form-check">
-            <input type="radio" id="yes" :value="true" v-model="otherLanguageOption" />
-            <label for="yes">Yes</label>
-
-            <input type="radio" id="no" :value="false" v-model="otherLanguageOption" />
-            <label for="no">No</label>
+            <input  class="form-check-input" type="radio"  id="yes" :value="true" v-model="otherLanguageOption" />
+            <label  class="form-check-label" for="yes">Yes</label>
+        </div>
+        <div class="form-check">
+            <input  class="form-check-input" type="radio" id="no" :value="false" v-model="otherLanguageOption" />
+            <label  class="form-check-label" for="no">No</label>
         </div>
     </km-form-group>
 
@@ -35,9 +36,9 @@
             :close-on-select="false"    
             :placeholder="t('otherLanguageOfRecord')"
             @update:modelValue="onChange">
-        </multi-select>
-      
+        </multi-select>      
     </km-form-group>
+
 </template>
 
 <!-- <i18n src="@/i18n/dist/components/controls/edit/KmLanguages.json"></i18n> -->
@@ -95,10 +96,7 @@
    
     const selectedLanguages         = ref([]);
     const otherSelectedLanguages    = ref([]);
-
-    const otherLanguageOption       = ref(false);
-    
-
+    const otherLanguageOption       = ref(false);  
     const internalSelectedLanguages = ref([]); //all lanagues
   
     // const selectedLanguages      = computed(()=> internalSelectedLanguages.value.filter(l =>  isUNLanguage(l)))
@@ -114,7 +112,7 @@
                             .map(e=>{ 
                                 return { code : e.identifier.replace('lang-', ''), title : lstring(e.title)}
                             });
-       // return sortBy(otherLanguages, 'title')
+       //return sortBy(otherLanguages, 'title')     
        return otherLanguages;
     });
 
@@ -148,18 +146,6 @@
     function isUNLanguage(code){
         return formattedLanguages.value.find(un=>un.code == code)
     }
-
-
-    // test
-    const options= [
-        { code: 'Vue.js', title: 'JavaScript' },
-        { code: 'Rails', title: 'Ruby' },
-        { code: 'Sinatra', title: 'Ruby' },
-        { code: 'Laravel', title: 'PHP', $isDisabled: true },
-        { code: 'Phoenix', title: 'Elixir' }
-    ];
-
-
 
 </script>
 
