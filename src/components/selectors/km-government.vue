@@ -1,16 +1,18 @@
 <template>
-    <!-- TODO: add disabled -->
-    <multi-seletor
-        v-model="selectedGovernment.identifier"
-        class="validationClass"
-        label="name"
-        track-by="code"
-        value-key="code"
-        :placeholder="$attrs.placeholder || t('government')"
-        :options="countryList"
-        :disabled="!countryList "    
-        @update:modelValue="onChange" >
-    </multi-seletor>  
+    <!-- TODO: add disabled -->    
+    <div class="scbd-common km-government">
+        <multi-seletor
+            v-model="selectedGovernment.identifier"
+            class="validationClass"
+            label="name"
+            track-by="code"
+            value-key="code"
+            :placeholder="$attrs.placeholder || t('government')"
+            :options="countryList"
+            :disabled="!countryList "    
+            @update:modelValue="onChange" >
+        </multi-seletor>  
+    </div>
     <!-- :disabled="!countryList || !security.role.isAdministrator()"    -->
 </template>
 
