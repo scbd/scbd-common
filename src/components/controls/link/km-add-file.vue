@@ -1,6 +1,6 @@
 <template>    
     <div class="scbd-common km-add-file" >
-        <select-file-button  :multiple="props.multiple" @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Files</slot></select-file-button> 
+        <select-file-button  @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Files</slot></select-file-button> 
               
         <file-upload-editor ref="fileEditorRef" @on-close="onFileUploadEditorClose">
             <template v-slot:modalTitle>
@@ -55,11 +55,8 @@
     }
 
  
-    const receiveFile = (receiveFiles) => {  
-        receiveFiles = [receiveFiles];
-        receiveFiles = receiveFiles.flat();   
-        //TODO: support multiple files   
-        addLink(receiveFiles[0]);            
+    const receiveFile = (selectedFile) => {  
+         addLink(selectedFile);            
     };
 
 
