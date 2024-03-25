@@ -151,6 +151,19 @@
   </preview-component> 
 
   </div>
+
+  <preview-component card-header="multi checkbox">
+            <template #left>
+                <multi-checkbox v-model="selectedOptions" :options=options  /> 
+                selected : {{  selectedOptions}}        
+            </template>          
+            <template #right>
+                <code>
+                    {{ ` <multi-checkbox v-model="selectedOptions" :options=options  />  ` }}
+                </code>
+            </template>
+  </preview-component> 
+
 </template>
 
 <script setup> 
@@ -163,10 +176,10 @@
   import radio from "./radio.vue";
   import ckEditor from "./ck-editor/ck-editor.vue";
   import { allPluginsConfig } from './ck-editor/all-plugins-config.js';
+  import multiCheckbox from './multi-checkbox.vue'
 
   //checkbox  
   const isChecked = ref(false);
-
 
   //dateSelector
   const dateValue = ref("2024-02-06");
@@ -182,6 +195,13 @@
           files.value=[receiveFiles];   
       }   }      
   };
+
+  //for multi-selector
+  const options = [
+    {identifier:"cn", title:"中文"},
+    {identifier:"en", title:"english"}
+  ]
+  const selectedOptions = ref([]);
   
    // radio
    const radioValue1 = ref('true');
