@@ -13,11 +13,24 @@
                 </code>
             </template>
         </preview-component> 
+
+        <preview-component card-header="government selector">
+            <template #left>
+                <km-government v-model="selectedItems"/> 
+                selected government: {{ selectedItems }}        
+            </template>          
+            <template #right>
+                <code>
+                    {{ `<km-government v-model="selectedItems"/>  ` }}
+                </code>
+            </template>
+        </preview-component> 
     </div>
 </template>
 
 <script setup>
     import previewComponent from '../controls/preview-component.vue';
+    import kmGovernment from './km-government.vue'
     import kmLanguage from './km-language.vue'
     
     import { ref } from 'vue'
