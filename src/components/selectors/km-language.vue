@@ -1,40 +1,42 @@
 <template>
-    <multi-select
-        v-model="selectedLanguages"
-        label="title"
-        track-by="code"
-        value-key="code"
-        :options="formattedLanguages"  
-        :multiple="true"
-        :allow-empty="false"     
-        :placeholder="t('languageOfRecord')"
-        @update:modelValue="onChange">
-    </multi-select>   
- 
-    <km-form-group name="otherLanguageOption" class="mt-2"    caption="Would like to submit this information in any other language(s)?">    
-        <div class="form-check">
-            <input  class="form-check-input" type="radio"  id="yes" :value="true" v-model="otherLanguageOption" />
-            <label  class="form-check-label" for="yes">Yes</label>
-        </div>
-        <div class="form-check">
-            <input  class="form-check-input" type="radio" id="no" :value="false" v-model="otherLanguageOption" />
-            <label  class="form-check-label" for="no">No</label>
-        </div>
-    </km-form-group>
-
-    <km-form-group name="otherLanguages" class="mt-2"  :caption="t('otherLanguage')" v-if = "otherLanguageOption" >
+   <div class="scbd-common km-language">
         <multi-select
-            v-model="otherSelectedLanguages"
+            v-model="selectedLanguages"
             label="title"
             track-by="code"
             value-key="code"
-            :options="formattedOtherLanguages"
+            :options="formattedLanguages"  
             :multiple="true"
-            :close-on-select="false"    
-            :placeholder="t('otherLanguageOfRecord')"
+            :allow-empty="false"     
+            :placeholder="t('languageOfRecord')"
             @update:modelValue="onChange">
-        </multi-select>      
-    </km-form-group>
+        </multi-select>   
+    
+        <km-form-group name="otherLanguageOption" class="mt-2"    caption="Would like to submit this information in any other language(s)?">    
+            <div class="form-check">
+                <input  class="form-check-input" type="radio"  id="yes" :value="true" v-model="otherLanguageOption" />
+                <label  class="form-check-label" for="yes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input  class="form-check-input" type="radio" id="no" :value="false" v-model="otherLanguageOption" />
+                <label  class="form-check-label" for="no">No</label>
+            </div>
+        </km-form-group>
+
+        <km-form-group name="otherLanguages" class="mt-2"  :caption="t('otherLanguage')" v-if = "otherLanguageOption" >
+            <multi-select
+                v-model="otherSelectedLanguages"
+                label="title"
+                track-by="code"
+                value-key="code"
+                :options="formattedOtherLanguages"
+                :multiple="true"
+                :close-on-select="false"    
+                :placeholder="t('otherLanguageOfRecord')"
+                @update:modelValue="onChange">
+            </multi-select>      
+        </km-form-group>
+    </div>
 </template>
 
 <!--TODO:add i18m support -->
