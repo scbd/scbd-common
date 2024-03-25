@@ -138,17 +138,29 @@
             </div>    
         </div>  
   </div>
+
+  <preview-component card-header="multi checkbox">
+            <template #left>
+                <multi-checkbox v-model="selectedOptions" :options=options  /> 
+                selected : {{  selectedOptions}}        
+            </template>          
+            <template #right>
+                <code>
+                    {{ ` <multi-checkbox v-model="selectedOptions" :options=options  />  ` }}
+                </code>
+            </template>
+  </preview-component> 
+
 </template>
 <script setup>
-  //Checkbox
-  import checkbox from "./checkbox.vue";
+  import checkbox from './checkbox.vue';
   import dateSelector from "./dateSelector.vue";
   import { ref , computed} from "vue";
   import selectFileButton from './select-file-button.vue';
   import { mimeTypeWhitelist } from "@/services/api/km-storage/KmDocuments";
- 
+  import multiCheckbox from './multi-checkbox.vue'
+  import previewComponent from '../controls/preview-component.vue';
 
-  const isChecked = ref(true);
   //dateSelector
   const dateValue = ref("2024-02-06");
   //for select-file-button example
@@ -163,10 +175,14 @@
           files.value=[receiveFiles];   
       }   }      
   };
+
+  //for multi-selector
+  const options = [
+    {identifier:"cn", title:"中文"},
+    {identifier:"en", title:"english"}
+  ]
+  const selectedOptions = ref([]);
   
-
-
-
 </script>
 <style lang="scss" scoped></style>
 <!-- <div class="row">
