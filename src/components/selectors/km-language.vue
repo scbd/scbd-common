@@ -39,24 +39,20 @@
     </div>
 </template>
 
-<!--TODO:add i18m support -->
-<!-- <i18n src="@/i18n/dist/components/controls/edit/KmLanguages.json"></i18n> -->
+
 
 <script setup >
     import  KmFormGroup  from '../../components/controls/km-form-group.vue'
-   import  multiSelect  from '../../components/controls/multi-selector.vue'
-    import { ref , computed} from 'vue'
-    //import { sortBy } from '../../services/util'
-    //import { useSecurity} from '../../composables/security'
-    import { lstring } from '@/services/filters/lstring'
-    
-    // import { useThesaurusStore }    from '@/stores/thesaurus';
-    // import { useUserPreferencesStore }    from '@/stores/userPreferences';
+    import  multiSelect  from '../../components/controls/multi-selector.vue'
+    import { ref , computed, onMounted, defineEmits, defineModel} from 'vue'
+    import { sortBy } from '../../services/util'
+    import { THESAURUS} from '../../services/util/constants';
+    import { useI18n} from '../../services/composables/i18n';
+    import { lstring } from '@/services/filters/lstring'    
+    import { useThesaurus }    from '@/services/composables/thesaurus';  
     import { languages }            from '../../data/language'       
-    //TODO: add i18n support
-    const THESAURUS = {  
-        OTHER_LANGUAGES:'ISO639-2'  
-    }
+     
+    //TODO:add i18m support 
     const translations = {
         en: {
         "languageOfRecord": "Language(s) of record",
@@ -68,77 +64,62 @@
         "no":"No"
         }
     }
-    const props = defineProps({
-        modelValue: {
-            type    : [ Object ],
-            required: true,
-            default() {
-                return [];
-            },
-        }
-    });
-    const emit  = defineEmits(['update:modelValue']);
-    //TODO: add following variable
-    //const security                  = useSecurity();
-    // const thesaurusStore            = useThesaurusStore ();
-    // const userPreferencesStore      = useUserPreferencesStore();
-    // const {t, locale }              = useI18n();
-    const locale = 'en'
-    //const t = (val)=>val;
-    const t = ( key ) => translations.en[key] || key
-    const thesaurusStore          = { getDomainTerms : (item)=>{return []}, loadDomainTerms : (item)=>{return []}}  
-    const userPreferencesStore     = { setPreferredEditLanguages : (va)=>{}}  
+    const model = defineModel({ type: Array,required: true, default: []});  
+    const emit  = defineEmits(['update:modelValue']);    
+    const {t, locale }              = useI18n();   
    
-    const selectedLanguages         = ref([]);
-    const otherSelectedLanguages    = ref([]);
+   
     const otherLanguageOption       = ref(false);  
-    const internalSelectedLanguages = ref([]); //all lanagues
+    const internalSelectedLanguages = ref([]); //all languages
+
+    const thesaurusService          = useThesaurus();
   
     // const selectedLanguages      = computed(()=> internalSelectedLanguages.value.filter(l =>  isUNLanguage(l)))
     // const otherSelectedLanguages = computed(()=> internalSelectedLanguages.value.filter(l => !isUNLanguage(l)))
+      
+    const selectedLanguages      = ref([])
+    const otherSelectedLanguages = ref([])
    
-    //const formattedLanguages      = computed(()=>[languages].map(e=>{ return { code : e[0], title : e[1]}}));
     const formattedLanguages      = computed(()=> Object.entries(languages).map(([code, title]) => ({ code, title })));
     
     const formattedOtherLanguages = computed(()=>{
-        let otherLanguages = thesaurusStore.getDomainTerms(THESAURUS.OTHER_LANGUAGES)||[]
+        let otherLanguages = thesaurusService.getDomainTerms(THESAURUS.OTHER_LANGUAGES)||[]
         otherLanguages = otherLanguages
                             .filter(e=>!isUNLanguage(e.identifier.replace('lang-', '')))
                             .map(e=>{ 
                                 return { code : e.identifier.replace('lang-', ''), title : lstring(e.title)}
-                            });
-       
-       //TODO: add sortby
-       //return sortBy(otherLanguages, 'title');     
-       return otherLanguages;
+                            });       
+     
+       return sortBy(otherLanguages, 'title');         
     });
-    const onMounted=()=>{
-        let editLanguages = props.modelValue;
-  
-         
-        selectedLanguages.value = editLanguages?.filter(e=>isUNLanguage(e));
-        otherSelectedLanguages.value = editLanguages?.filter(e=>!isUNLanguage(e));
+
+    onMounted(() => {
+        internalSelectedLanguages.value = model.value;       
     
-        if(otherSelectedLanguages.value?.length){
-            otherLanguageOption.value = true;
-            onOtherLanguage()
-        }        
-    }
+        // if(otherSelectedLanguages.value?.length){
+        //     otherLanguageOption.value = true;
+        //     onOtherLanguage()
+        // }        
+    }) 
+
     function onChange(code){
         const languages = [...selectedLanguages.value||[], ...otherSelectedLanguages.value||[]];
         emit('update:modelValue', languages);
-        userPreferencesStore.setPreferredEditLanguages(languages);
+        //userPreferencesStore.setPreferredEditLanguages(languages);
     }
+
     function onOtherLanguage(){
         if(!otherLanguageOption.value){
             otherSelectedLanguages.value = [];
             onChange('');
         }
-        return thesaurusStore.loadDomainTerms(THESAURUS.OTHER_LANGUAGES)
+        return thesaurusService.loadDomainTerms(THESAURUS.OTHER_LANGUAGES)
     }
+
     function isUNLanguage(code){
         return formattedLanguages.value.find(un=>un.code == code)
     }
+
 </script>
 
 <style scoped>
