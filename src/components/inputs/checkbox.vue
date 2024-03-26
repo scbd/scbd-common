@@ -1,8 +1,8 @@
 <template>
 
     <div class="form-check">
-        <input  v-model="model" @input="(event) => $emit('update:checked', event.target.checked)" type="checkbox" 
-        :checked="checked" :id="fieldId" class="form-check-input" />
+        <input  v-model="model" @input="(event) => $emit('update:modelValue', event.target.checked)" type="checkbox" 
+        :checked="model" :id="fieldId" class="form-check-input" />
         <label :for="fieldId" class="form-check-label">            
             <slot>
                 {{ label }}
@@ -21,7 +21,7 @@
         fieldId: { type: String,  required: true, },
         checked: { type: Boolean   }
     })
-    const emit  = defineEmits(['update:checked']);    
+    const emit  = defineEmits(['update:modelValue']);    
 
 </script>
   
