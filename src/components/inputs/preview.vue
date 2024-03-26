@@ -111,7 +111,7 @@
   
 
   //checkbox  
-  const isChecked = ref(true);
+  const isChecked = ref(false);
   const onCheckboxChecked = (newValue) => {
     isChecked.value = newValue;    
   }
