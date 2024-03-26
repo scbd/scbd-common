@@ -414,6 +414,29 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Km Validation Errors</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <km-validation-errors :reports="kmValidationErrorProps"
+                                @onJumpTo="onJumpTo"></km-validation-errors>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                <code>
+                                    {{` <km-validation-errors :reports="kmValidationErrorProps"></km-validation-errors>`}}
+                                </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 <script setup>
@@ -431,6 +454,7 @@
     import fileUploadEditor from './link/file-upload-editor.vue';
     import kmValueTerm from "./view/km-value-term.vue";
     import kmValueTerms from "./view/km-value-terms.vue";
+    import kmValidationErrors from "./km/km-validation-errors.vue"
     const kmValueTermsModel = [
             {
                 identifier:"lang-ar"
@@ -504,6 +528,26 @@
             }
         ]
     };
+    const kmValidationErrorProps = {
+        errors:[
+            {
+                parameters:"Error parameter",
+                properties:[
+                    {
+                        property:"name",
+                    },
+                    {
+                        property:"email",
+                    }
+                ],
+                property:"Error Property",
+                code:"Error.Mandatory"
+            }
+        ],
+        isSaving: false,
+        isAnalyzing:false,
+        hideErrors:false
+    }
 
     const removeLocale = (index) => {
         locales.value.splice(index, 1);
@@ -533,7 +577,9 @@
         newFile.value = newValue;     
     }
 
-
+    function onJumpTo(field){
+        console.log(field);
+    }
 
     onMounted(()=>{
         
