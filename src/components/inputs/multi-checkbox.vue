@@ -1,12 +1,12 @@
 <template>
-    <div class="scbd-common multi-checkbox flex flex-col items-start justify-center w-64 border-2 p-8 rounded-lg">
+    <div class="km-multi-checkbox flex flex-col items-start justify-center w-64 border-2 p-8 rounded-lg">
         <checkbox :field-id="option[optionValueField] + makeSmallUid()" v-for="option in options" :key="option"
             :checked="modelValue && modelValue.find(e=>e[optionValueField] == option[optionValueField])"
-            @update:checked="check(option[optionValueField], $event)"> 
+            @update:modelValue="check(option[optionValueField], $event)"> 
             {{ lstring(option[optionTitleField]) }}
-    </checkbox>
+        </checkbox>
     </div>
-</template>
+  </template>
   
 <script setup>
     import checkbox from "./checkbox.vue";  
@@ -42,8 +42,8 @@
       }
     });  
     
-    const check = (optionId, checked) => {
-        let updatedValue = [...props.modelValue||[]];
+    const check = (optionId, checked) => {    
+        let updatedValue = [...model.value||[]];
         if (checked) {
             updatedValue.push({[props.optionValueField] : optionId});
         } else {
