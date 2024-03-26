@@ -16,7 +16,7 @@
 
         <preview-component card-header="government selector">
             <template #left>
-                <km-government v-model="selectedItems"/> 
+                <km-government v-model="selectedItems"/>        
                 selected government: {{ selectedItems }}        
             </template>          
             <template #right>
