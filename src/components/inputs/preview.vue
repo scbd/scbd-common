@@ -1,62 +1,22 @@
 <template>
   <div>
     <h3>CBD input components</h3>
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">Checkbox</div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-6">
-                <checkbox v-model="isChecked">
-                  <template #label>
-                    <!-- Content for the label slot -->
-                    This is the label slot
-                  </template>
-                </checkbox>
-              </div>
-              <div class="col-4">
-                <strong>sample code</strong>
-                <textarea rows="10" cols="80" class="bg-purple text-white">
  
-                                    <template>
-                                        <div class="form-check">
-                                            <input
-                                                type="checkbox"
-                                                v-model="model"
-                                                :id="$attrs.id"
-                                                :required="$attrs.required"
-                                                :disabled="$attrs.disabled"
-                                                :class="$attrs.class"
-                                                class="form-check-input"
-                                            />
-                                            <label :for="$attrs.id" class="form-check-label">
-                                                <slot name="label">{{
-                    label
-                  }}</slot>
-                                            </label>
-                                        </div>
-                                    </template>
-                                    <script setup>
-                                        const model = defineModel({
-                                            type: Boolean,
-                                            required: true,
-                                        });
-                                        const props = defineProps({
-                                            label: {
-                                            type: String,
-                                            required: true,
-                                            },
-                                        });
-                                    </script>
-                                </textarea
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <preview-component card-header="checkbox">
+            <template #left>
+                <checkbox :checked="isChecked" @update:checked="onCheckboxChecked($event)" >
+                  English
+                </checkbox> 
+                value: {{ isChecked }}        
+            </template>          
+            <template #right>
+                <code>
+                    {{ `<checkbox :checked="isChecked" @update:checked="onCheckboxChecked($event)" >
+                          English
+                        </checkbox>  ` }}
+                </code>
+            </template>
+        </preview-component> 
 
     <preview-component card-header="Date Selector">
             <template #left>
@@ -172,7 +132,7 @@
   </div>
 </template>
 <script setup>
-  //Checkbox
+ 
   import checkbox from "./checkbox.vue";
   import dateSelector from "./dateSelector.vue";
   import { ref , computed} from "vue";
@@ -181,7 +141,14 @@
   import previewComponent from "../controls/preview-component.vue";
   import radio from "./radio.vue"
 
+  //checkbox  
   const isChecked = ref(true);
+  const onCheckboxChecked = (newValue) => {
+    isChecked.value = newValue;    
+  }
+
+
+
   //dateSelector
   const dateValue = ref("2024-02-06");
   //for select-file-button example
