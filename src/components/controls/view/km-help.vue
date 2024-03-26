@@ -14,9 +14,9 @@
 </template>
 
 <script setup>
-import 'webui-popover';
-import 'webui-popover/dist/jquery.webui-popover.css'
-import $ from 'jquery'
+//import 'webui-popover';
+//import 'webui-popover/dist/jquery.webui-popover.css'
+//import $ from 'jquery'
 import {ref, useSlots, onMounted, onBeforeUnmount, defineProps } from 'vue'
 
 const helpAnchor = ref(null);
