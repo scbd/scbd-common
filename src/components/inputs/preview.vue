@@ -4,15 +4,15 @@
  
     <preview-component card-header="checkbox">
             <template #left>
-                <checkbox v-model="isChecked"  @update:modelValue ="onCheckboxChecked($event)" >
-                  English
+                <checkbox v-model="isChecked"  >
+                  This is the label slot
                 </checkbox> 
                 value: {{ isChecked }}        
             </template>          
             <template #right>
                 <code>
-                    {{ `<checkbox :checked="isChecked" @update:checked="onCheckboxChecked($event)" >
-                          English
+                    {{ `<checkbox :checked="isChecked" " >
+                           This is the label slot
                         </checkbox>  ` }}
                 </code>
             </template>
@@ -142,7 +142,7 @@
   import radio from "./radio.vue"
 
   //checkbox  
-  const isChecked = ref(true);
+  const isChecked = ref(false);
 
 
   //dateSelector
