@@ -7,25 +7,29 @@
     >
       <i class="bi bi-gear"></i> {{ t("analyzingDocument") }}
     </div>
-    <div v-if="reports && reports.isSaving" class="alert alert-info" role="alert">
+    <div
+      v-if="reports && reports.isSaving"
+      class="alert alert-info"
+      role="alert"
+    >
       <i class="bi bi-gear"></i> {{ t("savingDocument") }}
     </div>
     <div
-      v-if="reports && !reports.isAnalyzing && !reports.isSaving && !reports.errors"
+      v-if="
+        reports && !reports.isAnalyzing && !reports.isSaving && !reports.errors
+      "
       class="alert alert-success"
       role="alert"
     >
       {{ t("valid") }}
     </div>
+    {{ reports }} --- {{ internalReports }}
     <div v-if="reports && !reports.isAnalyzing && !reports.isSaving">
       <div
-        v-if="
-          !hideErrors && reports && reports.errors && reports.errors.length
-        "
+        v-if="!hideErrors && reports && reports.errors && reports.errors.length"
         class="alert alert-warning"
         role="alert"
       >
-      
         <button
           type="button"
           @click="onButtonClose"
@@ -88,15 +92,21 @@
 </template>
 
 <script setup>
-import { toRefs, useAttrs, defineEmits, defineProps, ref } from "vue";
+import { useAttrs, defineEmits, defineProps, ref, computed } from "vue";
 import $ from "jquery";
 
 const props = defineProps({
   reports: { type: Object, required: true },
 });
 const $emits = defineEmits(["onJumpTo"]);
-const { reports } = toRefs(props);
-const hideErrors = ref(reports.value.hideErrors)
+const hideErrors = computed({
+  get() {
+    return props.reports.hideErrors;
+  },
+  set(newValue) {
+    props.reports.hideErrors = newValue;
+  },
+});
 const container = useAttrs().container ?? "body,html";
 
 function t(lang) {
@@ -115,8 +125,8 @@ function getTranslation(error) {
   return error?.code;
 }
 
-function onButtonClose(){
-    hideErrors.value = true
+function onButtonClose() {
+  hideErrors.value = !hideErrors.value;
 }
 
 function jumpTo(event, field) {

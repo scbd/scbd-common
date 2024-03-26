@@ -423,6 +423,9 @@
                             <div class="col-6">
                                 <km-validation-errors :reports="kmValidationErrorProps"
                                 @onJumpTo="onJumpTo"></km-validation-errors>
+                                <form name='editForm'>
+                                    <label for="name">Given Name</label>
+                                </form>
                             </div>
                             <div class="col-6">
                                 <div class="callout callout-warning">
@@ -528,7 +531,7 @@
             }
         ]
     };
-    const kmValidationErrorProps = {
+    const kmValidationErrorProps = ref({
         errors:[
             {
                 parameters:"Error parameter",
@@ -547,7 +550,7 @@
         isSaving: false,
         isAnalyzing:false,
         hideErrors:false
-    }
+    })
 
     const removeLocale = (index) => {
         locales.value.splice(index, 1);
@@ -578,7 +581,7 @@
     }
 
     function onJumpTo(field){
-        console.log(field);
+        alert(`Should jump to "${field}"`)
     }
 
     onMounted(()=>{
