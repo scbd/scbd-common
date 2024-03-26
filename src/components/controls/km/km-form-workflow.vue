@@ -1,5 +1,8 @@
 <template>
-  <div :class="{ 'dim-section': isBusy }" class="scbd-controls km-form-workflow">
+  <div
+    :class="{ 'dim-section': isBusy }"
+    class="scbd-controls km-form-workflow"
+  >
     <div
       class="container mb-3"
       v-if="
@@ -35,8 +38,8 @@
         <!-- TODO: need to add km-validation-errors -->
       </div>
     </div>
-    <km-form-wizard @on-tab-change="onChangeCurrentTab" ref="formWizard">
-      <div>
+    <div>
+      <km-form-wizard @on-tab-change="onChangeCurrentTab" ref="formWizard">
         <km-form-wizard-tab-content
           :title="workflowTabs.introduction.title"
           :is-active="activeTab === workflowTabs.introduction.index"
@@ -49,8 +52,8 @@
         >
           <slot name="submission"></slot>
         </km-form-wizard-tab-content>
-      </div>
-    </km-form-wizard>
+      </km-form-wizard>
+    </div>
     <div
       class="container mt-3"
       v-if="
@@ -90,7 +93,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, toRefs, useAttrs } from "vue";
+import { ref, computed, onMounted, toRefs, useAttrs, inject } from "vue";
 import KmFormWizardTabContent from "./km-form-wizard-tab-content.vue";
 import KmFormWizard from "./km-form-wizard.vue";
 import { useToast } from "../../../services/composables/useToast";
@@ -112,20 +115,20 @@ const definedProps = defineProps({
   tab: { type: String },
   // validationReport            : { type:Object,   required:true  },
   document: { type: Object, required: true },
-  onPreClose: { type: Function, required: false },
-  onPostClose: { type: Function, required: false },
-  onPreRevert: { type: Function, required: false },
-  onPostRevert: { type: Function, required: false },
-  onPreSaveDraft: { type: Function, required: false },
-  onPostSaveDraft: { type: Function, required: false },
-  onPreRequest: { type: Function, required: false },
-  onPostRequest: { type: Function, required: false },
-  onPrePublish: { type: Function, required: false },
-  onPostPublish: { type: Function, required: false },
-  onError: { type: Function, required: false },
-  onStepChange: { type: Function, required: false },
-  onReviewLanguageChange: { type: Function, required: false },
-  onPreSaveDraftVersion: { type: Function, required: false },
+  // onPreClose: { type: Function, required: false },
+  // onPostClose: { type: Function, required: false },
+  // onPreRevert: { type: Function, required: false },
+  // onPostRevert: { type: Function, required: false },
+  // onPreSaveDraft: { type: Function, required: false },
+  // onPostSaveDraft: { type: Function, required: false },
+  // onPreRequest: { type: Function, required: false },
+  // onPostRequest: { type: Function, required: false },
+  // onPrePublish: { type: Function, required: false },
+  // onPostPublish: { type: Function, required: false },
+  // onError: { type: Function, required: false },
+  // onStepChange: { type: Function, required: false },
+  // onReviewLanguageChange: { type: Function, required: false },
+  // onPreSaveDraftVersion: { type: Function, required: false },
 });
 let { focusedTab, tab, ...props } = toRefs(definedProps);
 
@@ -134,14 +137,22 @@ function t(lang) {
 }
 
 const activeTab = ref(focusedTab.value);
-const onChangeCurrentTab = (index) => {
-  activeTab.value = index;
-};
-
 let originalDocument = null;
 const container = useAttrs().container ?? "body,html";
 const validationReport = ref({});
 const formWizard = ref(null);
+let workflowFunctions;
+
+const onChangeCurrentTab = (index) => {
+  activeTab.value = index;
+  if (
+    [workflowTabs.review.index, workflowTabs.publish.index].includes(
+      activeTab.value
+    )
+  ) {
+    onReviewDocument(true);
+  }
+};
 
 async function onReviewDocument(tabChanged) {
   if (!tabChanged && activeTab.value == workflowTabs.review.index) return;
@@ -156,7 +167,9 @@ async function onReviewDocument(tabChanged) {
     validationReport.value = { ...validationResponse };
     // $scope.tab = "review";
   } else validationReport.value = {};
-  // $eventBus.emit("onReviewError", validationResponse);
+
+  if (workflowFunctions?.onPostReviewDocument)
+    await workflowFunctions.onPostReviewDocument(document, validationReport);
 }
 
 async function onSaveDraft() {
@@ -165,8 +178,8 @@ async function onSaveDraft() {
     let document = props.document;
 
     // onPreSaveDraft
-    if (definedProps.onPreSaveDraft)
-      document = await definedProps.onPreSaveDraft(document);
+    if (workflowFunctions?.onPreSaveDraft)
+      document.value = await workflowFunctions.onPreSaveDraft(document);
 
     // save document
     // const documentSaveResponse = await EditFormUtility.saveDraft(
@@ -175,8 +188,8 @@ async function onSaveDraft() {
     originalDocument = { ...document.value };
 
     // onPostSaveDraft
-    if (definedProps.onPostSaveDraft)
-      await definedProps.onPostSaveDraft({
+    if (workflowFunctions.onPostSaveDraft)
+      await workflowFunctions.onPostSaveDraft({
         ...documentSaveResponse,
         body: { ...originalDocument },
       });
@@ -192,10 +205,15 @@ async function onSaveDraft() {
 async function onClose() {
   let redirectTo = undefined;
 
-  if (definedProps.onPreClose)
-    redirectTo = await definedProps.onPreClose(originalDocument);
+  if (workflowFunctions.onPreClose)
+    redirectTo = await workflowFunctions.onPreClose(originalDocument);
 
-  if (redirectTo.value) await useNavigateAppTo(redirectTo.value);
+  //  uses NUXT composables
+  // if(redirectTo)
+  //     await useNavigateAppTo(redirectTo)
+
+  if (workflowFunctions.onPostClose)
+    await workflowFunctions.onPostClose(originalDocument);
 }
 
 async function validate(document) {
@@ -232,7 +250,7 @@ function articleQuery() {
   const document = props.document.value();
   // const realmConfStore = useRealmConfStore();
   // const realmConf = realmConfStore.realmConf;
-  // const ag = [];
+  const ag = [];
   // ag.push({
   //   $match: {
   //     adminTags: {
@@ -262,6 +280,7 @@ const isBusy = computed(
 onMounted(() => {
   // Add any necessary logic here
   // formWizard.value?.selectTab(focusedTab.value ?? 0);
+  workflowFunctions = inject("kmWorkflowFunctions");
 });
 
 //TODO: need to do VUE-Router

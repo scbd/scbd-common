@@ -421,12 +421,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <km-form-workflow :onPreSaveDraft="onPreSaveDraft" :onPostSaveDraft="onPostSaveDraft"
-                                :onPreRequest="onPreRequest" :onPostRequest="onPostRequest" :onPrePublish="onPrePublish"
-                                :onPostPublish="onPostPublish" :onError="onError" :onStepChange="onStepChange"
-                                :onReviewLanguageChange="onReviewLanguageChange" :onPreSaveDraftVersion="onPreSaveDraftVersion"
-                                :onPreClose="onPreClose" :onPostClose="onPostClose" :onPreRevert="onPreRevert"
-                                :onPostRevert="onPostRevert">
+                                <km-form-workflow :document="document">
                                     <template v-slot:introduction>
                                         <form  class="mx-auto" style="width: 18rem;">
                                             <div class="form-group">
@@ -456,7 +451,7 @@
                             <div class="col-6">
                                 <div class="callout callout-warning">
                                 <code>
-                                    {{`<km-form-workflow></km-form-workflow>`}}
+                                    {{`<km-form-workflow :document="document"></km-form-workflow>`}}
                                 </code>
                                 </div>
                             </div>
@@ -596,18 +591,17 @@
 
     const onPreSaveDraft = on("onPreSaveDraft")
     const onPostSaveDraft = on("onPostSaveDraft")
-    const onPreRequest = on("onPreRequest")
-    const onPostRequest = on("onPostRequest")
-    const onPrePublish = on("onPrePublish")
-    const onPostPublish = on("onPostPublish")
-    const onError = on("onError")
-    const onStepChange = on("onStepChange")
-    const onReviewLanguageChange = on("onReviewLanguageChange")
-    const onPreSaveDraftVersion = on("onPreSaveDraftVersion")
     const onPreClose = on("onPreClose")
     const onPostClose = on("onPostClose")
-    const onPreRevert = on("onPreRevert")
-    const onPostRevert = on("onPostRevert")
+    const onPostReviewDocument = on("onPostReviewDocument")
+
+    provide('kmWorkflowFunctions', {
+        onPreSaveDraft,
+        onPostSaveDraft,
+        onPreClose,
+        onPostClose,
+        onPostReviewDocument
+    });
 
     onMounted(()=>{
         
@@ -630,6 +624,36 @@
         }   }      
 
     };
+
+    const document = {
+        "header": {
+            "identifier": "6650045045045",
+            "schema": "resource",
+            "languages": [
+                "fr"
+            ]
+        },
+        "title": {
+            "fr": "Etude sur le niveau de compréhension des groupes cibles sur les enjeux du Protocole de Nagoya"
+        },
+        "resourceTypes": [
+            {
+                "identifier": "6E27B530-7639-4091-AF58-9D61A77B4A28"
+            },
+            {
+                "identifier": "E9E9E585-3537-4291-8EEC-FF9547721ABD"
+            },
+            {
+                "identifier": "26F19E49-FEDA-4F8D-B7B3-55CA8C54E5F0"
+            },
+            {
+                "identifier": "0D9E6F15-E250-4DE4-805C-2EB43B5177F5"
+            },
+            {
+                "identifier": "0B94638A-13D5-4F67-B494-585A80ACDAB9"
+            }
+        ]
+    }
 </script>
 
 <style lang="scss" scoped>
