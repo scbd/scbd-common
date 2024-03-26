@@ -1,6 +1,6 @@
 <template>
     <div class="scbd-common multi-checkbox flex flex-col items-start justify-center w-64 border-2 p-8 rounded-lg">
-        <checkbox :field-id="option[optionValueField] + makeUid()" v-for="option in options" :key="option"
+        <checkbox :field-id="option[optionValueField] + makeSmallUid()" v-for="option in options" :key="option"
             :checked="modelValue && modelValue.find(e=>e[optionValueField] == option[optionValueField])"
             @update:checked="check(option[optionValueField], $event)"> 
             {{ lstring(option[optionTitleField]) }}
@@ -10,8 +10,8 @@
   
 <script setup>
     import checkbox from "./checkbox.vue";  
-    import { makeUid }   from '@/services/util/index'
-    import { defineEmits , defineProps , computed} from "vue";
+    import { makeSmallUid }   from '@/services/util/index'
+    import { defineEmits , defineProps } from "vue";
     import { lstring } from '@/services/filters/lstring'
 
 
@@ -49,8 +49,7 @@
         } else {
             updatedValue.splice(updatedValue.indexOf({[props.optionValueField] :optionId}), 1);
         }
-        emit("update:modelValue", updatedValue);
-        console.log(updatedValue)
+        emit("update:modelValue", updatedValue);     
     }; 
 
 </script>
