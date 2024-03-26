@@ -1,5 +1,8 @@
-//function for UI releted ID assignment, due to one in 10^15 probability of duplication
-export const makeUid = () => {
-    const key = Math.random().toString(36).substr(2)
-    return 'uid-' + key
+export const makeSmallUid = () => {
+    const key = (S4() + S4()).toUpperCase();
+    return 'uid-' + key;
+}
+
+export function S4() {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 }
