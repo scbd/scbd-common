@@ -212,9 +212,7 @@
             <template #right>
                 {{`<km-value-terms :value="kmValueTermsModel" :locale="kmLocalesModel"></km-value-terms>`}}
             </template>
-        </preview-component>
-
-
+        </preview-component>        
 
         <preview-component card-header="Add File">
             <template #left>
@@ -296,6 +294,48 @@
             </template>
         </preview-component> 
 
+        <preview-component card-header="Km Form Wizard Tab Content">
+            <template #left>
+                <km-form-wizard @on-tab-change="onChangeCurrentTab">
+                    <!-- Tab 1 -->
+                    <km-form-wizard-tab-content :isActive="activeTab === 0" title="Tab 1">
+                        <form  class="mx-auto" style="width: 18rem;">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </km-form-wizard-tab-content>
+                    
+                    <!-- End of Tab 1 -->
+                    <!-- Tab 2 -->
+                    <km-form-wizard-tab-content  :isActive="activeTab === 1" title="Tab 2">
+                        <div class="card mx-auto my-2" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+                    </km-form-wizard-tab-content>
+                    
+                    <!-- End of Tab 2 -->
+                </km-form-wizard>
+            </template>
+            <template #right>
+                {{`
+                    <km-form-wizard-tab-content :isActive="activeTab === 0" title="Tab 1"></km-form-wizard-tab-content>
+                `}}
+            </template>
+        </preview-component>
+
         <!-- <preview-component card-header="Link editor">
             <template #left></template>
             <template #right>
@@ -306,7 +346,7 @@
     </div>
 </template>
 <script setup>
-    import { onMounted, onBeforeMount, ref, shallowRef, defineProps, inject, provide, reactive} from 'vue'
+    import { onBeforeMount, ref, shallowRef, defineProps, inject, provide, reactive, onMounted} from 'vue'
     import KmInputLstring from "./km-input-lstring.vue";
     import kmViewLinks from './link/km-view-links.vue';
     import kmAddLink from './link/km-add-link.vue';
@@ -323,7 +363,8 @@
     import previewComponent from "./preview-component.vue";
     import multiSelector from './multi-selector.vue'
     import kmAddFile from './link/km-add-file.vue';
-
+    import kmFormWizard from "./km/km-form-wizard.vue"
+    import kmFormWizardTabContent from "./km/km-form-wizard-tab-content.vue"
 
     const kmValueTermsModel = [
             {
@@ -345,6 +386,7 @@
     const kmInputLStringModel = ref({});
     const locales = ref(["en", "fr", 'zh', 'ru']);
     const kmInitializeTerm = ref(null);
+    const activeTab = ref(0)
 
     const onTermLoad = function(term){
         kmInitializeTerm.value = term
@@ -429,6 +471,10 @@
 
     function onFileUploadEditorClose(newValue) {    
         newFile.value = newValue;    
+    }
+
+    const onChangeCurrentTab = (index) => {
+        activeTab.value = index;
     }
 
    
