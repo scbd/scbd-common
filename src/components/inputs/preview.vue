@@ -201,7 +201,9 @@
     {identifier:"cn", title:"中文"},
     {identifier:"en", title:"english"}
   ]
-  const selectedOptions = ref([]);
+  const selectedOptions = ref([
+    {"en":true}
+  ]);
   
    // radio
    const radioValue1 = ref('true');
