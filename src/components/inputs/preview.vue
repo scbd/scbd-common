@@ -181,7 +181,9 @@
     {identifier:"cn", title:"中文"},
     {identifier:"en", title:"english"}
   ]
-  const selectedOptions = ref([]);
+  const selectedOptions = ref([
+    {"en":true}
+  ]);
   
 </script>
 <style lang="scss" scoped></style>
