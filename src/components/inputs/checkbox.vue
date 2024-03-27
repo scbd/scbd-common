@@ -1,31 +1,16 @@
 <template>
-    <div class="scbd-common checkbox form-check">
-        <input  
-            type="checkbox" 
-            v-model="model"
-            :id="fieldId"  
-            :checked="checked" 
+    <div class="scbd-common checkbox form-check">   
+        <input type="checkbox"  :id="$attrs.id"  v-model="model" :value="$attrs.value"
             :required="$attrs.required"
             :disabled="$attrs.disabled"
-            :class="$attrs.class"        
-             class="form-check-input" />
-        <label :for="fieldId" class="form-check-label">            
-            <slot>
-                {{ label }}
-            </slot> 
-        </label>
+            :class="$attrs.class"
+            class="form-check-input"/>
+        <label :for="$attrs.id" class="form-check-label">
+            <slot name="label">{{ label }}</slot>
+        </label> 
     </div>
 </template>
-  
 <script setup>
-    import { defineModel, defineProps} from 'vue';
-    const model = defineModel({ type: Boolean,required: true, default: false});  
-    const props = defineProps({
-        label: String, 
-        fieldId: { type: String,  required: true, },
-        checked: { type: Boolean   }
-    })
- 
+    const model = defineModel({ type: Boolean,required: true });
+    const props = defineProps({ label: { type: String,  required: true }});
 </script>
-  
-<style></style>
