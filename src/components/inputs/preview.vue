@@ -196,13 +196,13 @@
       }   }      
   };
 
-  //for multi-selector
+  //for multi-checkbox
   const options = [
     {identifier:"cn", title:"中文"},
     {identifier:"en", title:"english"}
   ]
   const selectedOptions = ref([
-    {"en":true}
+    {identifier:"en"}
   ]);
   
    // radio
