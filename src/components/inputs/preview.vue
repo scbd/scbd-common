@@ -4,19 +4,25 @@
  
     <preview-component card-header="checkbox">
             <template #left>
-                <checkbox v-model="isChecked"  >
-                  This is the label slot
-                </checkbox> 
+              <checkbox v-model="isChecked">
+                  <template #label>
+                    <!-- Content for the label slot -->
+                    This is the label slot
+                  </template>
+                </checkbox>
                 value: {{ isChecked }}        
             </template>          
             <template #right>
                 <code>
-                    {{ `<checkbox :checked="isChecked" " >
-                           This is the label slot
-                        </checkbox>  ` }}
+                    {{ ` <checkbox v-model="isChecked">
+                          <template #label>
+                            <!-- Content for the label slot -->
+                            This is the label slot
+                          </template>
+                        </checkbox> ` }}
                 </code>
             </template>
-        </preview-component> 
+    </preview-component> 
 
     <preview-component card-header="Date Selector">
             <template #left>
