@@ -14,6 +14,7 @@
                     This is the label slot
                   </template>
                 </checkbox>
+                selected:{{ isChecked }}
               </div>
               <div class="col-4">
                 <strong>sample code</strong>
@@ -161,6 +162,8 @@
   import multiCheckbox from './multi-checkbox.vue'
   import previewComponent from '../controls/preview-component.vue';
 
+  //checkbox
+  const isChecked= ref(false);
   //dateSelector
   const dateValue = ref("2024-02-06");
   //for select-file-button example
@@ -176,13 +179,13 @@
       }   }      
   };
 
-  //for multi-selector
+  //for multi-checkbox
   const options = [
     {identifier:"cn", title:"中文"},
     {identifier:"en", title:"english"}
   ]
   const selectedOptions = ref([
-    {"en":true}
+    {identifier:"en"}
   ]);
   
 </script>
