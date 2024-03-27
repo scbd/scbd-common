@@ -420,11 +420,12 @@
                     <div class="card-header">Km Validation Errors</div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 wrapper-class">
                                 <km-validation-errors :reports="kmValidationErrorProps"
                                 @onJumpTo="onJumpTo"></km-validation-errors>
                                 <form name='editForm'>
-                                    <label for="name">Given Name</label>
+                                    <label for="name">Given Name</label><br/>
+                                    <label for="email">Email</label>
                                 </form>
                             </div>
                             <div class="col-6">
@@ -458,6 +459,8 @@
     import kmValueTerm from "./view/km-value-term.vue";
     import kmValueTerms from "./view/km-value-terms.vue";
     import kmValidationErrors from "./km/km-validation-errors.vue"
+    import {scrollToElement} from "@/services/util"
+    import $ from "jquery";
     const kmValueTermsModel = [
             {
                 identifier:"lang-ar"
@@ -581,7 +584,7 @@
     }
 
     function onJumpTo(field){
-        alert(`Should jump to "${field}"`)
+        scrollToElement(field,".wrapper-class")
     }
 
     onMounted(()=>{
@@ -591,6 +594,15 @@
         provide("validationReview", {
             isValid
         });
+
+        provide("getLabel",(field) => {
+             var qLabel = $(".wrapper-class").find(
+                "form[name='editForm'] label[for='" + field + "']:first"
+                );
+            if (qLabel.length > 0) return qLabel.first().text();
+
+            return field;
+        })
     })
     // for select-file-button
     let files = ref([]);

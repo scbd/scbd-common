@@ -92,7 +92,7 @@
 </template>
 
 <script setup>
-import { useAttrs, defineEmits, defineProps, ref, computed } from "vue";
+import { useAttrs, defineEmits, defineProps, ref, computed, onBeforeMount, inject } from "vue";
 import $ from "jquery";
 
 const props = defineProps({
@@ -108,6 +108,7 @@ const hideErrors = computed({
   },
 });
 const container = useAttrs().container ?? "body,html";
+let getLabel;
 
 function t(lang) {
   return lang;
@@ -135,14 +136,10 @@ function jumpTo(event, field) {
   $emits("onJumpTo", field);
 }
 
-function getLabel(field) {
-  var qLabel = $(container).find(
-    "form[name='editForm'] label[for='" + field + "']:first"
-  );
-  if (qLabel.length > 0) return qLabel.text();
+onBeforeMount(() => {
+  getLabel = inject("getLabel");
+})
 
-  return field;
-}
 </script>
 
 <style scoped></style>
