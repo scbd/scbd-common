@@ -104,6 +104,40 @@
                 </div>
             </div>    
         </div>  
+
+        <preview-component card-header="radio">
+            <template #left>
+              <radio v-model="radioValue" value ="true">
+                  <template #label>
+                    <!-- Content for the label slot -->
+                    Yes
+                  </template>
+                </radio>
+                <radio v-model="radioValue" value="false">
+                  <template #label>
+                    <!-- Content for the label slot -->
+                    No
+                  </template>
+                </radio>
+                value: {{ radioValue }}        
+            </template>          
+            <template #right>
+                <code>
+                    {{ ` <radio v-model="radioValue" value ="true">
+                          <template #label>
+                            <!-- Content for the label slot -->
+                            Yes
+                          </template>
+                        </radio>
+                        <radio v-model="radioValue" value="false">
+                          <template #label>
+                            <!-- Content for the label slot -->
+                            No
+                          </template>
+                        </radio>` }}
+                </code>
+            </template>
+    </preview-component> 
   </div>
 </template>
 <script setup>
@@ -114,6 +148,7 @@
   import selectFileButton from './select-file-button.vue';
   import { mimeTypeWhitelist } from "@/services/api/km-storage/KmDocuments";
   import previewComponent from "../controls/preview-component.vue";
+  import radio from "./radio.vue"
 
   const isChecked = ref(true);
   //dateSelector
@@ -131,7 +166,8 @@
       }   }      
   };
   
-
+   // radio
+   const radioValue = ref('true');
 
 
 </script>
