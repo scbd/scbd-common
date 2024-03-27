@@ -57,50 +57,17 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">Date Selector</div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-6">
-                <date-selector class="test" v-model="dateValue"></date-selector>
+
+    <preview-component card-header="Date Selector">
+            <template #left>
+              <date-selector class="test" v-model="dateValue"></date-selector>
                 <div>Selected value : {{ dateValue }}</div>
-              </div>
-              <div class="col-4">
-                <strong>Date selector sample code</strong>
-                <textarea rows="10" cols="80" class="bg-purple text-white">
- 
-                                <template>    
-                                    <input    
-                                        v-model="model"
-                                        :class="$attrs.class"
-                                        :id="$attrs.id"
-                                        :required="$attrs.required" 
-                                        :placeholder="$attrs.placeholder"
-                                        :disabled="$attrs.disabled"
-                                        :type="type" /> 
-                                </template>
-                                <script setup>
-                                    const model = defineModel();    
-                                    const props = defineProps({
-                                        type:{
-                                            type:String,
-                                            default:"date",
-                                            validator(value) { 
-                                                return ['date', 'month'].includes(value)
-                                            }
-                                        }   
-                                    });
-                                </script>
-                                </textarea
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </template>
+            <template #right>
+                {{` <date-selector class="test" v-model="dateValue"></date-selector>`}}
+            </template>
+    </preview-component>
+
     <div class="row"> 
             <div class="col-12">
                 <div class="card">
@@ -146,7 +113,7 @@
   import { ref , computed} from "vue";
   import selectFileButton from './select-file-button.vue';
   import { mimeTypeWhitelist } from "@/services/api/km-storage/KmDocuments";
- 
+  import previewComponent from "../controls/preview-component.vue";
 
   const isChecked = ref(true);
   //dateSelector
