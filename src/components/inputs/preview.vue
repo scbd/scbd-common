@@ -119,6 +119,7 @@
                     No
                   </template>
                 </radio>
+                <br/>
                 value: {{ radioValue }}        
             </template>          
             <template #right>
