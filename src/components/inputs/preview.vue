@@ -154,12 +154,19 @@
 
   <preview-component card-header="multi checkbox">
             <template #left>
-                <multi-checkbox v-model="selectedOptions" :options=options  /> 
-                selected : {{  selectedOptions}}        
+                Example 1:
+                <multi-checkbox v-model="selectedOptions1" :options=options :inline="true" /> 
+                selected : {{  selectedOptions1}}   
+                <br/><br/>
+                Example 2:
+                <multi-checkbox v-model="selectedOptions2" :options=options :inline="false" /> 
+                selected : {{  selectedOptions2}}        
+  
             </template>          
             <template #right>
                 <code>
-                    {{ ` <multi-checkbox v-model="selectedOptions" :options=options  />  ` }}
+                    {{ ` <multi-checkbox v-model="selectedOptions1" :options=options :inline="true" /> 
+                         <multi-checkbox v-model="selectedOptions2" :options=options :inline="false" /> ` }}
                 </code>
             </template>
   </preview-component> 
@@ -198,12 +205,11 @@
 
   //for multi-checkbox
   const options = [
-    {identifier:"cn", title:"中文"},
+    {identifier:"cn", title:"Chinese"},
     {identifier:"en", title:"english"}
   ]
-  const selectedOptions = ref([
-    {identifier:"en"}
-  ]);
+  const selectedOptions1 = ref([ {identifier:"en"} ]);
+  const selectedOptions2 = ref([ {identifier:"cn"} ]);
   
    // radio
    const radioValue1 = ref('true');
