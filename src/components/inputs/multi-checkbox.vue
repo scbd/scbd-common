@@ -1,7 +1,8 @@
 <template>
     <div class="km-multi-checkbox flex flex-col items-start justify-center w-64 border-2 p-8 rounded-lg">     
         <checkbox :id="option[props.optionValueField] + makeSmallUid()" v-for="option in options" :key="option"  v-model="model"
-            :value = "{[props.optionValueField] :option[props.optionValueField]}"                 
+            :value = "{[props.optionValueField] :option[props.optionValueField]}"  
+            :inline="inline"               
             :label = "lstring(option[props.optionTitleField])"            
         />  
     </div>
@@ -28,7 +29,8 @@
             },
         },
         optionValueField: { type:String, default:'identifier'},
-        optionTitleField: { type:String, default:'title' }
+        optionTitleField: { type:String, default:'title' },
+        inline: { type:Boolean, default:false }
     });  
 </script>
   
