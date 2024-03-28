@@ -10,7 +10,7 @@
                     This is the label slot
                   </template>
                 </checkbox>
-                value: {{ isChecked }}        
+                <br/>value: {{ isChecked }}        
             </template>          
             <template #right>
                 <code>
