@@ -37,7 +37,7 @@
 <script setup >  
 import VueMultiselect from 'vue-multiselect';
 import { asArray } from   '../../services/util/index.js';
-import { isEqual } from 'lodash';
+import { isEqual, compact } from 'lodash';
 
 import {computed, ref, defineProps, defineEmits, onMounted,defineModel} from 'vue'
 const emit = defineEmits(['update:model-value', "on-select","on-remove","on-search-change","on-open", "on-close", "on-add-tag","on-value-change"]);
@@ -77,13 +77,15 @@ const fetchOptions=()=>{
 }   
 let selectItems = computed({  
     get() {
-      return asArray(props.modelValue).map((value) => {
+      const selected = asArray(props.modelValue).map((value) => {
         return props.options?.find((option) => {
           const customSelectedItem =props.customSelectedItem(option[props.valueKey], option);
           
           return isEqual(customSelectedItem, value);
         })
       });
+
+      return compact(selected)
     },
     set(events) {
       let ids = asArray(events).map((event) => props.customSelectedItem(event[props.valueKey], event));     
