@@ -255,6 +255,17 @@
             </template>
         </preview-component>
 
+        <preview-component card-header="km-link">
+            <template #left>
+                <km-link v-model="kmLinkModel"></km-link>
+                  links : {{ kmLinkModel }}   <br/> 
+            </template>
+            <template #right>
+                <code>
+                    {{ ` <km-link v-model="kmLinkModel"> </km-link>` }}
+                </code>
+            </template>
+        </preview-component> 
 
          <preview-component card-header="multi-selector">
             <template #left>
@@ -404,6 +415,7 @@
     import spinner from "./spinner.vue";
     import spinnerModal from './spinner-modal.vue';
     import kmInputRichLstring from "./km/km-input-rich-lstring.vue";
+    import kmLink from './link/km-link.vue'
 
     const kmValueTermsModel = [
             {
@@ -562,6 +574,11 @@
 
     // km-input-rich-lstring
     const richLstringModel = ref({});
+    //for km-link component
+    const kmLinkModel=ref([
+        { "url": "http://cbd.int", "name": "CBD website", "language": "en" } ,
+        { "url": "http://api.cbd.int/api/2013", "name": "report.pdf", "language": "en" ,tag:"Biodiversity"} 
+    ]);
    
 </script>
 
