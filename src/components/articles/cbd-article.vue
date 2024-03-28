@@ -35,7 +35,7 @@
 
 import axios from 'axios';
 import ArticlesApi from '../../services/api/articles';
-import {lstring } from '../../services/filters/lstring'
+import { lstring } from '../../services/util'
 import cbdAddNewArticle from './cbd-add-new-article.vue';
 import cbdArticleCoverImage from './cbd-article-cover-image.vue';
 

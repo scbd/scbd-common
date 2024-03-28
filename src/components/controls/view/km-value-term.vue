@@ -11,7 +11,7 @@
 
 <script setup>
 import { ref, defineProps } from 'vue';
-import { direction } from "../../../services/util/index"
+import { direction } from "../../../services/util"
 import KmTerm from './km-term.vue';
 
 const props = defineProps({

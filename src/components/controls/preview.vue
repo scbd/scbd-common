@@ -348,23 +348,14 @@
 <script setup>
     import { onBeforeMount, ref, shallowRef, defineProps, inject, provide, reactive, onMounted} from 'vue'
     import KmInputLstring from "./km-input-lstring.vue";
-    import kmViewLinks from './link/km-view-links.vue';
-    import kmAddLink from './link/km-add-link.vue';
-    import linkEditor from './link/link-editor.vue';
     import KmFormGroup from "./km-form-group.vue"
-    import kmLstringValue from "./view/km-lstring-value.vue"
-    import kmValueBool from "./view/km-value-bool.vue"
-    import kmValue from "./view/km-value.vue"
-    import kmLocales from "./view/km-locales.vue"
-    import kmTerm from "./view/km-term.vue"
-    import fileUploadEditor from './link/file-upload-editor.vue';
-    import kmValueTerm from "./view/km-value-term.vue";
-    import kmValueTerms from "./view/km-value-terms.vue";
     import previewComponent from "./preview-component.vue";
     import multiSelector from './multi-selector.vue'
-    import kmAddFile from './link/km-add-file.vue';
-    import kmFormWizard from "./km/km-form-wizard.vue"
-    import kmFormWizardTabContent from "./km/km-form-wizard-tab-content.vue"
+    import { kmValueTerms, kmValueTerm, kmTerm, kmLocales,
+    kmValue, kmValueBool, kmLstringValue } from "./view";
+    import { kmAddFile, fileUploadEditor, linkEditor, kmAddLink,
+        kmViewLinks  } from './link';
+    import { kmFormWizardTabContent, kmFormWizard } from "./km"
 
     const kmValueTermsModel = [
             {

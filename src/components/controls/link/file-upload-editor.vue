@@ -48,7 +48,7 @@
             </div>        
         </div>
     </div>     
-  </template>
+</template>
   
   <script setup >
     import { defineEmits, ref, computed } from "vue"; 

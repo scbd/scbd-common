@@ -36,7 +36,7 @@
 
 <script setup >  
 import VueMultiselect from 'vue-multiselect';
-import { asArray } from   '../../services/util/index.js';
+import { asArray } from   '../../services/util';
 import { isEqual } from 'lodash';
 
 import {computed, ref, defineProps, defineEmits, onMounted,defineModel} from 'vue'

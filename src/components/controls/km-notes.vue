@@ -25,8 +25,8 @@
 
 <script setup>
     import { ref, computed } from 'vue'
-    import {useUser} from '../../services/composables/useAuth'
-    import {format} from '../../services/filters/datetime'
+    import {useUser} from '../../services/composables'
+    import {format} from '../../services/filters'
 
     const model = defineModel({type:String, required:true});
 

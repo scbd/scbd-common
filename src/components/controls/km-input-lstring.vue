@@ -12,7 +12,7 @@
         class="form-control"
         aria-describedby="basic-addon2"
         v-model="model[locale]"
-        :dir="locale == 'ar' ? 'rtl' : 'ltr'"
+        :dir="direction"
         @input="$emit('update:modelValue', model)"
       />
 
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { watch, onMounted } from "vue";
+import { watch, onMounted, computed } from "vue";
 import { without } from "lodash";
 
 const model = defineModel({type:Object, required: true, default:{}})
@@ -41,6 +41,7 @@ const props = defineProps({
   locales: { type: Array, required: true },
   disabled: { type: Boolean, default: false },
 });
+const direction = computed(() => props.locale == 'ar' ? 'rtl' : 'ltr')
 
 const loadLanguages = () => {
   props.locales?.forEach((e) => {

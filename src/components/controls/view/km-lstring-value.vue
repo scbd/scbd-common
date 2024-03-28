@@ -19,7 +19,7 @@
 
 <script setup>
 import { computed, defineProps } from 'vue';
-import { direction, lstringLocale, lstring } from '../../../services/util/index';
+import { direction, lstringLocale, lstring } from '../../../services/util';
 
 const { value, locale, type } = defineProps({
   value: { type: Object, required: true },

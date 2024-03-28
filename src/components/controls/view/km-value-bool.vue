@@ -14,7 +14,7 @@
 
 <script setup>
 import { defineProps } from 'vue';
-import { direction } from "../../../services/util/index"
+import { direction } from "../../../services/util"
 
 const props = defineProps({
   value: { type: Boolean, required: true },

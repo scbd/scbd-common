@@ -8,7 +8,7 @@
 
 <script setup>
 import { defineProps, defineEmits, ref } from 'vue';
-import { lstring } from "../../../services/util/index";
+import { lstring } from "../../../services/util";
 
 const emit = defineEmits(['onTermLoad']);
 const props = defineProps({

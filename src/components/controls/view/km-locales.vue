@@ -11,7 +11,7 @@
 
 <script setup>
   import { defineProps, ref, watch } from 'vue';
-  import { lstring } from "../../../services/util/index"
+  import { lstring } from "../../../services/util"
 
   const model = defineModel({type:String, required: true})
   const props = defineProps({  

@@ -9,7 +9,7 @@
 </template>
  
 <script setup>
-    import { cssEscape } from '../../services/util/css.escape';
+    import { cssEscape } from '../../services/util';
     const { coverImage } = defineProps({
         coverImage: {
             type: Object,

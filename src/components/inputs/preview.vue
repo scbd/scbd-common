@@ -17,46 +17,42 @@
               </div>
               <div class="col-4">
                 <strong>sample code</strong>
-                <textarea rows="10" cols="80" class="bg-purple text-white">
- 
-                                    <template>
-                                        <div class="form-check">
-                                            <input
-                                                type="checkbox"
-                                                v-model="model"
-                                                :id="$attrs.id"
-                                                :required="$attrs.required"
-                                                :disabled="$attrs.disabled"
-                                                :class="$attrs.class"
-                                                class="form-check-input"
-                                            />
-                                            <label :for="$attrs.id" class="form-check-label">
-                                                <slot name="label">{{
-                    label
-                  }}</slot>
-                                            </label>
-                                        </div>
-                                    </template>
-                                    <script setup>
-                                        const model = defineModel({
-                                            type: Boolean,
-                                            required: true,
-                                        });
-                                        const props = defineProps({
-                                            label: {
-                                            type: String,
-                                            required: true,
-                                            },
-                                        });
-                                    </script>
-                                </textarea
-                >
-              </div>
+                <textarea rows="10" cols="80" class="bg-purple text-white"> 
+                  <template>
+                      <div class="form-check">
+                          <input
+                              type="checkbox"
+                              v-model="model"
+                              :id="$attrs.id"
+                              :required="$attrs.required"
+                              :disabled="$attrs.disabled"
+                              :class="$attrs.class"
+                              class="form-check-input"
+                          />
+                          <label :for="$attrs.id" class="form-check-label">
+                              <slot name="label"></slot>
+                          </label>
+                      </div>
+                  </template>
+                  <script setup>
+                      const model = defineModel({
+                          type: Boolean,
+                          required: true,
+                      });
+                      const props = defineProps({
+                          label: {
+                          type: String,
+                          required: true,
+                          },
+                      });
+                  </script>
+              </textarea>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
     <preview-component card-header="Date Selector">
             <template #left>
