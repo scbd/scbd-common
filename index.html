@@ -14,6 +14,7 @@
     <title>Dev App</title>
   </head>
   <body class="bg-light">
+    Hello
     <div id="app"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>    
@@ -22,7 +23,9 @@
 
 <script type="module">
   import { createApp } from 'vue'
-  import App from './index.vue'
+  // import App from './index.vue'
+  import App from './dist/preview'
+  console.log(App)
   const app = createApp(App);
   app.mount('#app');
 </script>

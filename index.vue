@@ -1,6 +1,7 @@
 <template>
     <ScbdHeader></ScbdHeader>
     <div class="container">
+      Hillo
         <div class="preview">
           <ul class="nav nav-tabs mt-3" id="myTab" role="tablist" >
             <li class="nav-item" v-for="(_, tab) in tabs" :key="tab">
@@ -10,7 +11,9 @@
             </li>
           </ul>
           <div class="tab-content" id="myTabContent">
+            {{ tabs }} HEllo
             <div class="tab-pane bg-white" :class="{  'fade show active': currentTab === tab }" :id="tab" role="tab" :aria-labelledby="tab+'-tab'" v-for="(_, tab) in tabs" :key="tab">
+              {{ tabs[currentTab] }}
               <component :is="tabs[currentTab]" class="p-3"></component>
             </div>
           </div>        

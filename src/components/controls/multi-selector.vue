@@ -36,6 +36,7 @@
 
 <script setup >  
 import VueMultiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.css'
 import { asArray } from   '../../services/util/index.js';
 import { isEqual, compact } from 'lodash';
 
@@ -94,4 +95,3 @@ let selectItems = computed({
   }
 ); 
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>

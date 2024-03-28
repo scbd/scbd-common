@@ -33,7 +33,7 @@ import {
 } from "vue";
 import { isEmpty } from "lodash";
 import KmInputLstring from "./km-input-lstring.vue";
-import { removeEmpty } from "../../utils/helpers.js";
+import { removeEmpty } from "@/services/utils/helpers.js";
 
 function t(str) {
   return str;

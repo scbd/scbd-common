@@ -4,6 +4,7 @@ import vue   from 'rollup-plugin-vue'
 import glob  from "glob";
 import { getBabelOutputPlugin } from '@rollup/plugin-babel';
 import alias                    from '@rollup/plugin-alias';
+import dynamicImportVariables   from '@rollup/plugin-dynamic-import-vars';
 import scss from 'rollup-plugin-scss';
 
 import { camelCase } from 'lodash'
@@ -23,17 +24,25 @@ const outputFormatExtensions = {
   'cjs' : packageType!='module' ? '.js' : '.cjs',
 }
 const plugins = [ vue(), scss() ];
+const isPreview = process.argv.includes('--preview');
 
 export default async function(){
-  return [
+  let configs = [
     ...glob.sync('src/index.js'                ).map(c=>bundle(c, outputDir, o=>"index")),
     ...glob.sync('src/components/**/*.{js,vue}').map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.(js|vue)$/i, "$1"))),
     ...glob.sync('src/services/**/*.js'        ).map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.js$/i,       "$1"))),
     ...glob.sync('src/assets/**/*.css'        ).map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.css$/i,       "$1"))),
   ];
+  if(isPreview)
+    configs = [
+      ...glob.sync('./index.vue').map(c=>bundle(c, outputDir, o=>"preview", true)),
+      ...configs
+    ]
+    
+  return configs
 }
 
-function bundle(input, outDir, getFilename ) {
+function bundle(input, outDir, getFilename, inlineDynamicImports ) {
   let ext        = path.extname (input);
   let filename   = path.basename(input, ext);
 
@@ -50,17 +59,22 @@ function bundle(input, outDir, getFilename ) {
   const filePath = path.join(outDir, filename);
 
   const output = [{ 
+    
     sourcemap,
     format : "esm",
     file: `${filePath}${outputFormatExtensions['esm']}`,
+    inlineDynamicImports,
   }, { 
     sourcemap,
     exports: 'auto',
     format : "cjs",
     file: `${filePath}${outputFormatExtensions['cjs']}`,
-  }, { 
+    inlineDynamicImports,
+  }, 
+  { 
     sourcemap,
     format : "umd",
+    inlineDynamicImports,
     name: pascalCase(`${packageName}_${subPackageName}`.replace(/[^a-z0-9]/ig, "_")),
     file: `${filePath}${outputFormatExtensions['umd']}`,
     plugins: [
@@ -70,7 +84,8 @@ function bundle(input, outDir, getFilename ) {
       getBabelOutputPlugin({
         presets: [['@babel/preset-env', { targets: "> 0.25%, not dead"}]],
         allowAllFormats: true
-      })
+      }),
+      // dynamicImportVariables({ include:`${filePath}/**/*.js` }),
     ]
   }]
 
