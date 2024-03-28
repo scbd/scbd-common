@@ -17,7 +17,7 @@
                             <label class="col-form-label" for="url">Url <span class="text-danger"> *</span></label><br/>
                             <small class="help-block">Protocol is required (https:// or http://)</small>                                
                             <input class="form-control"  id ="url" v-model="link.url" type="url"  placeholder=" https://www." />
-                            <p v-if="!isUrlValid" ><span class="text-danger"> Please provide valid URL</span></p>
+                            <p v-if=" checkValidation &&  !isUrlValid"  ><span class="text-danger"> Please provide valid URL</span></p>
                         </div>
                         <div class="mb-3" >
                             <label for="name" class="col-form-label" >Name</label>
@@ -28,7 +28,7 @@
                                 <select class="form-select"  name="language" id="language" v-model="link.language"> 
                                 <option v-for="(language, key) in languages" :value="key" :key="key">{{ language }}</option> 
                             </select>
-                            <p v-if="!isLangValid" ><span class="text-danger"> Please select Language </span></p>
+                            <p v-if="checkValidation && !isLangValid"  ><span class="text-danger"> Please select Language </span></p>
                         </div>
                         </form>
                 </div>
@@ -53,17 +53,21 @@
     const emit = defineEmits(['onClose']);
     const isUrlValid  = computed(()=>{ return isValidHttpUrl(link.value.url)});
     const isLangValid = computed(()=>!!link.value?.language?.trim() && Object.keys(languages).includes(link.value.language));  
+    const checkValidation = ref(false);
  
     const show= (linkToEdit)=>{  
+        checkValidation.value=false; 
         modalOpen.value = true;    
         const  { url, name, language } = linkToEdit  
         link.value = { url, name, language }; 
     }
     const close = () => {      
       modalOpen.value = false;  
+      checkValidation.value=false; 
       emit("onClose");  
     }  
     const save = () =>{  
+      checkValidation.value=true; 
       if (isUrlValid.value && isLangValid.value){   
         const newLink = { "url": link.value.url , "name": link.value.name , "language": link.value.language  };
         modalOpen.value = false;        
