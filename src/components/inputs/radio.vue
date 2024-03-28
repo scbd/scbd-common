@@ -1,5 +1,5 @@
 <template>
-    <div class="scbd-common radio  form-check form-check-inline">   
+    <div class="scbd-common radio  form-check " :class="{'form-check-inline' : $attrs.inline}">   
         <input  type="radio" :id="$attrs.id"  v-model="model" :value="$attrs.value"
             :required="$attrs.required"
             :disabled="$attrs.disabled"
