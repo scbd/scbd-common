@@ -305,7 +305,7 @@ export class KmAttachmentsApi extends ApiBase
     if(!isValid(file)) throw Error(`invalid value for file`);  
 
     const filename = file.name
-    const sMimeType = file.type || "application/octet-stream";     
+    let  sMimeType = file.type || "application/octet-stream";     
 
     if (filename && sMimeType == "application/octet-stream") {
         var sExt = "";
