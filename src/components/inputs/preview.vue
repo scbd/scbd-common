@@ -104,6 +104,71 @@
                 </div>
             </div>    
         </div>  
+
+        <preview-component card-header="radio">
+            <template #left>
+              Example 1 :<br/>
+              <radio v-model="radioValue1" value ="true" :inline="false">
+                <template #label>
+                  <!-- Content for the label slot -->
+                  Yes
+                </template>
+              </radio>
+              <radio v-model="radioValue1" value="false" :inline="false">
+                <template #label>
+                  <!-- Content for the label slot -->
+                  No
+                </template>
+              </radio>            
+                value: {{ radioValue1 }}   
+
+                <br/><br/>Example 2 :<br/>
+
+              <radio v-model="radioValue2" value ="true" :inline="true">
+                  <template #label>
+                    <!-- Content for the label slot -->
+                    Yes
+                  </template>
+              </radio>
+              <radio v-model="radioValue2" value="false" :inline="true">
+                  <template #label>
+                    <!-- Content for the label slot -->
+                    No
+                  </template>
+              </radio>
+                <br/>
+                value: {{ radioValue2 }}    
+              
+   
+            </template>          
+            <template #right>
+                <code>
+                    {{ `  
+                       <radio v-model="radioValue1" value ="true" :inline="false">
+                        <template #label>                      
+                          Yes
+                        </template>
+                      </radio>
+                      <radio v-model="radioValue1" value="false" :inline="false">
+                        <template #label>                    
+                          No
+                        </template>
+                      </radio>               
+
+                      <radio v-model="radioValue2" value ="true" :inline="true">
+                          <template #label>                       
+                            Yes
+                          </template>
+                      </radio>
+                      <radio v-model="radioValue2" value="false" :inline="true">
+                          <template #label>                     
+                            No
+                          </template>
+                      </radio>
+                   ` }}
+                </code>
+            </template>
+    </preview-component> 
   </div>
 </template>
 <script setup>
@@ -114,6 +179,7 @@
   import selectFileButton from './select-file-button.vue';
   import { mimeTypeWhitelist } from "@/services/api/km-storage/KmDocuments";
   import previewComponent from "../controls/preview-component.vue";
+  import radio from "./radio.vue"
 
   const isChecked = ref(true);
   //dateSelector
@@ -131,7 +197,9 @@
       }   }      
   };
   
-
+   // radio
+   const radioValue1 = ref('true');
+   const radioValue2 = ref('true');
 
 
 </script>
