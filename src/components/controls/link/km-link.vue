@@ -1,7 +1,8 @@
 <template>
-    <km-add-link  v-model="kmAddLinkModel.value"/>  
-    <km-add-file  v-model="kmAddFileModel.value"/>  
-
+    <div  class="scbd-common km-link">
+        <km-add-link  v-model="kmAddLinkModel.value"></km-add-link>
+        <km-add-file  v-model="kmAddFileModel.value"></km-add-file>  
+    </div>
 </template>
 <script setup>
    import { ref, computed } from 'vue'
