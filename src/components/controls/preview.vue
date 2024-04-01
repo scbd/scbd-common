@@ -134,6 +134,17 @@
             </template>
         </preview-component> 
 
+        <preview-component card-header="Km lstring Ml">
+            <template #left>
+                <km-input-lstring-ml v-model="kmInputLStringModel" 
+                :locales="locales"></km-input-lstring-ml> 
+            </template>
+            <template #right>
+                {{` <km-input-lstring-ml v-model="kmInputLStringModel" 
+                :locales="locales"></km-input-lstring-ml> `}}
+            </template>
+        </preview-component> 
+
         <preview-component card-header="Km Value">
             <template #left>
                 <km-value value="Test Value"></km-value>  
@@ -365,6 +376,7 @@
     import kmAddFile from './link/km-add-file.vue';
     import kmFormWizard from "./km/km-form-wizard.vue"
     import kmFormWizardTabContent from "./km/km-form-wizard-tab-content.vue"
+    import kmInputLstringMl from "./km-input-lstring-ml.vue"
 
     const kmValueTermsModel = [
             {
