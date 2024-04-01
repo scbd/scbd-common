@@ -33,11 +33,11 @@ import {
 } from "vue";
 import { isEmpty } from "lodash";
 import KmInputLstring from "./km-input-lstring.vue";
-import { removeEmpty } from "../../utils/helpers.js";
+import { removeEmpty } from "../../services/util";
+import { useI18n } from "../../services/composables/i18n"
+import messages from "../../app-text/components/controls/km-input-lstring-ml.json"
+const { t } = useI18n(messages);
 
-function t(str) {
-  return str;
-}
 const props = defineProps({
   locales: {
     type: Array,

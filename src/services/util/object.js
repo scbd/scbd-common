@@ -1,4 +1,4 @@
-
+import _ from 'lodash';
 
 export const  isPlainObject = (o) => {
   return Object.prototype.toString.call(o) === '[object Object]' && o?.constructor?.name === 'Object';
@@ -35,3 +35,21 @@ export const unique = (array) => {
   return Array.from(new Set(array.map((el)=>{ if(isPlainObject(el)) return JSON.stringify(el); else return el}))).map(JSON.parse)
 }
 
+export const removeEmpty = (obj)=> {
+
+  return function remove(current) {
+    _.forOwn(current, function (value, key) {
+      if (_.isUndefined(value) || _.isNull(value) || _.isNaN(value) ||
+        (_.isString(value) && _.isEmpty(value)) ||
+        (_.isObject(value) && _.isEmpty(remove(value)))) {
+
+        delete current[key];
+      }
+    });
+
+    if (_.isArray(current)) _.pull(current, undefined);
+
+    return current;
+
+  }(_.cloneDeep(obj));
+}
