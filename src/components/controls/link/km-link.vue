@@ -1,9 +1,9 @@
 <template>
     <div  class="scbd-common km-link">
-        <button type="button" class="btn btn-primary" @click="addLink()">
+        <button type="button" class="btn btn-primary m-2" @click="addLink()">
             <slot name="link-button-label">+ Add Link</slot>
         </button>  
-        <select-file-button  @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Files</slot></select-file-button> 
+        <select-file-button class="m-2" @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Files</slot></select-file-button> 
              
        <file-upload-editor ref="fileEditorRef" @on-close="onFileUploadEditorClose">
             <template v-slot:modalTitle>
