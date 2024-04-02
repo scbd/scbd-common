@@ -29,7 +29,7 @@
     
     function addLink(file) {        
         editedLinkIndex = -1; 
-        fileEditorRef.value.show({url:"",name:file.name, language:"en", tag:""}, true,file); 
+        fileEditorRef.value.show({url:"http://api.cbd.int/api/2013",name:file.name, language:"en", tag:""}, true,file); 
     }      
     function editLink(index) {         
         editedLinkIndex = index;  
