@@ -330,7 +330,7 @@
   
   </script>
 
-  <style>  
+  <style scope>  
     .ck.ck-balloon-panel.ck-balloon-panel_visible {
         /* stylelint-disable-line */
         z-index: 10000 !important;
