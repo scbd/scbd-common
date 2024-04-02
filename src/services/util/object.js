@@ -34,23 +34,3 @@ export const deleteFalsyKey = (obj) => {
 export const unique = (array) => {
   return Array.from(new Set(array.map((el)=>{ if(isPlainObject(el)) return JSON.stringify(el); else return el}))).map(JSON.parse)
 }
-
-export const scrollToElement = (querySelector, container)=>{
-  container = container || 'body,html'
-  const qLabel = $(container).find(querySelector);
-  const qBody  = $(container);
-
-  var scrollNum = qLabel.offset().top
-
-  if(container!= 'body,html'){
-      //its a dialog calculate scrollTop
-      var dialogContainer = $(container)
-      scrollNum = scrollNum - dialogContainer.offset().top + dialogContainer.scrollTop();
-  }
-  else
-      scrollNum -= 130; //forms 
-
-  qBody.stop().animate({
-      scrollTop: scrollNum
-  }, 'slow');
-}

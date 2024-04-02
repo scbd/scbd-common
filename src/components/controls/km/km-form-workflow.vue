@@ -240,7 +240,7 @@ async function onJumpTo(field) {
 
   setTimeout(() => {
     scrollToElement(
-      "form[name='editForm'] label[for='" + field + "']:first",
+      field,
       container
     );
   }, 200);
