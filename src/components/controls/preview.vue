@@ -533,6 +533,9 @@
         { name: 'Laravel', language: 'PHP', $isDisabled: true },
         { name: 'Phoenix', language: 'Elixir' }
     ];
+
+    // for km-ck-editor
+    const ckText= ref("");
    
 </script>
 

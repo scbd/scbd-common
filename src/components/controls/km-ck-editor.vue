@@ -8,52 +8,55 @@
               :message="t('uploadingFile')"></km-spinner>
       </overlay-loading>
    -->
-          <ckeditor
-            tag-name="textarea"
-            v-model="binding"
-            :editor="editor"
-            :config="editorConfig"
-            :tagName="tagName"
-            :disabled="disabled"        
-            @ready="onEditorReady"
-            @focus="onEditorFocus"
-            @blur="onEditorBlur"
-            @input="onEditorInput"
-            @destroy="onEditorDestroy"
-          ></ckeditor>
+      <ckeditor
+          tag-name="textarea"
+          v-model="binding"
+          :editor="editor"
+          :config="editorConfig"
+          :tagName="tagName"
+          :disabled="$attrs.disabled"      
+          @ready="onEditorReady"
+          @focus="onEditorFocus"
+          @blur="onEditorBlur"
+          @input="onEditorInput"
+          @destroy="onEditorDestroy"
+        ></ckeditor>
       </div>
       <p style="border: 1px solid #eee; border-top: none">
         {{ t('attachmentMessage') }}
         <span class="float-end" id="wordCountSec" style="padding-right: 5px">
-          <strong>{{ t('wordCount') }}: {{ wordCount }}</strong></span
-        >
+          <strong>{{ t('wordCount') }}: {{ wordCount }}</strong></span>
       </p>
       <p style="border: 1px solid #eee; border-top: none" v-if="uploadErrors.length">
-          <CAlert class="m-2" color="danger" dismissible @close="() => { uploadErrors = [] }">
+          <!-- <CAlert class="m-2" color="danger" dismissible @close="() => { uploadErrors = [] }">
               {{ t('uploadError') }} 
               <ul><li v-for="error in uploadErrors" :key="error">{{ error.file }}</li></ul>
-          </CAlert>
-      </p>
+          </CAlert> -->  
+            {{ t('uploadError') }} 
+            <ul><li v-for="error in uploadErrors" :key="error">{{ error.file }}</li></ul>
+        </p>
     </div>
   </template>
 
+  <script setup> 
+    import  "@ckeditor/ckeditor5-build-classic/build/ckeditor.js";
+    import  "@ckeditor/ckeditor5-vue/dist/ckeditor.js";
+    import CKEditor   from '@ckeditor/ckeditor5-vue';
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';   
+    import { useI18n} from '../../services/composables/i18n.js'
+    import { computed, onMounted, ref , defineComponent} from 'vue';
+    import { useLogger } from '../../services/util/index.js';
 
-  <i18n src="@/i18n/dist/components/controls/edit/KmCkEditor.json"></i18n>
-
-  <script setup>  
-    import '@/libs/ckeditor/build/ckeditor.js'//'@ckeditor/ckeditor5-build-classic'
-    import CKEditor     from '@ckeditor/ckeditor5-vue';
     //   import OverlayLoading from 'vue3-loading-overlay';
     //   import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
     //   import KmSpinner from '../KmSpinner.vue';
-    //   import { useI18n } from 'vue-i18n';
-    import { useI18n} from '../../services/composables/i18n';
 
+
+    const ckeditor = defineComponent(CKEditor.component);  
     const model = defineModel({type:String, required:true,default:''});
     const emit = defineEmits(['update:modelValue','onEditorReady', 'onEditorFocus', 'onEditorBlur', 'onEditorInput', 'onFileUpload', 'onEditorDestroy']);
     const props = defineProps(      
-        {tagName: { type: String, required: false,default: 'div'}},
-        {disabled: {type: Boolean, required: false }},
+        {tagName: { type: String, required: false,default: 'div'}},     
         {uploadUrl: { type: String, required: false}},
         {locale: { type: String, required: false, default: 'en' }},
         {config: { type: Object, required: false,default: function () {}}},
@@ -62,22 +65,24 @@
     
     const {t, locale }   = useI18n();      
     const wordCount= 0;
-    const editor= window.ClassicEditor;
-    const isUploadingFile=false;
-    const editorConfig = undefined;
+    const editor= ClassicEditor;
+    const isUploadingFile= ref(false);
+    const editorConfig = ref(Object);
     const uploadErrors = [];
 
+    import KmStorageApi from '../../services/api/km-storage/KmStorage.js';
+    const api= new KmStorageApi({});
+
     const  binding  = computed({       
-        get()      {  return modelValue;  },        
+        get()      {  return model.value;  },        
         set(value) {  emit('update:modelValue', value);  }
     })      
   
     onMounted(() => {
-        editorConfig = {...this.getEditorConfig(), ...this.config }  
+        editorConfig.value = {...getEditorConfig(), ...props.config }  
     })
      
-    const onEditorReady=(ed)  =>{ 
-        const self = this;          
+    const onEditorReady=(ed)  =>{             
         class UploadAdapter {
           constructor(loader) {
             this.loader = loader;
@@ -86,21 +91,20 @@
             const loader = this.loader;
             return this.loader.file.then(function(file){
               
-              self.isUploadingFile = true;
-              return self.$api.kmStorage.attachments.uploadTempFile(self.identifier, file, file.name)
-                  .then(function(success) {
-                      //required by ckeditor
+              isUploadingFile.value = true;  
+              return api.attachments.uploadTempFile(props.identifier, file, file.name)   
+                  .then(function(success) {                 
                       success.urls = { "default": success.url }
                       loader.uploaded = success;
                       return success;
                   })
-                  .catch(function(error) {
-                      self.uploadErrors.push({file:file.name })
-                      useLogger().error(error);
+                  .catch(function(error) {                   
+                      uploadErrors.push({file:file.name })  
+                      useLogger().error(error);                     
                       throw error;
                   })
                   .finally(()=>{
-                      self.isUploadingFile = false;
+                      isUploadingFile.value = false;  
                   });
             })
           }
@@ -119,30 +123,30 @@
   
         ed.editing.view.document.on('drop', async function (eventInfo, data) {
           if(data.dataTransfer){
-              self.isUploadingFile = true;
+              isUploadingFile.value = true;   
   
               const fileUploads = data.dataTransfer.files.map(function(file, i){
                   const formData = new FormData();
                   const fileType = file.type.substring( 0, 5 );
-                  const mimeType = self.$api.kmStorage.attachments.getMimeType(file);
+                  const mimeType = api.attachments.getMimeType(file);   
   
                   if(fileType == "image")
                       return;
-                  if (self.$api.kmStorage.attachments.mimeTypeWhitelist().indexOf(mimeType) < 0) {
+                  if (api.attachments.mimeTypeWhitelist().indexOf(mimeType) < 0) {   
                       alert("File type not supported: " + mimeType + "(" + file.name + ")");
                       return;
                   }
   
                   formData.append('file', file);
-                  return self.$api.kmStorage.attachments.uploadTempFile(self.identifier, file, file.name)
+                  return api.attachments.uploadTempFile(props.identifier, file, file.name)   
                       .then(function(success) {
                           const viewFragment = ed.data.processor.toView('<span class="me-2">&nbsp;<a rel="noopener noreferrer" target="_blank" href="'+success.url+'">'+success.filename+ '</a>&nbsp;</span>' );
                           const modelFragment = ed.data.toModel(viewFragment);
                           ed.model.insertContent( modelFragment);
-                          self.onFileUpload({file:success});
+                          onFileUpload({file:success});   
                       })
                       .catch(e=>{
-                          self.uploadErrors.push({file:file.name })
+                          uploadErrors.push({file:file.name })   
                           useLogger().error(e)
                       })
               });
@@ -152,11 +156,11 @@
               }
               catch(e){
                   useLogger().error(e)
-              }
+                }
               finally{
-                  self.isUploadingFile = false
-              };
-          }
+                  isUploadingFile.value = false   
+                };
+            }
         })
   
         ed.model.document.on('change:data', function (eventInfo, data) {
@@ -167,7 +171,7 @@
           // console.log((eventInfo, name, value, oldValue))
           //TODO: check why url is not in event args
             if(value.url){
-                self.onFileUpload({file:value})
+                onFileUpload({file:value})    
             }
         }  
         emit('onEditorReady', ed);      
@@ -196,10 +200,9 @@
         emit('onFileUpload', params);
     }
 
-    const getEditorConfig=()=>{
-          const self = this;
+    const getEditorConfig=()=>{     
           return {        
-              language: { ui: this.locale, content: this.locale },          
+              language: { ui: locale, content: locale },          
               toolbar:{ 
                   items: ['heading', 'fontSize', 'fontColor', '|', 'bold', 'italic','link', '|',
                         'indent', 'outdent', 'alignment', '|', 'bulletedList','numberedList','blockQuote', '|',
@@ -257,7 +260,7 @@
               wordCount: {
                 onUpdate: function(stats){
                     // console.log(stats)
-                    self.wordCount = stats.words
+                    wordCount = stats.words;
                 },
               },
               mediaEmbed: {
