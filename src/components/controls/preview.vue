@@ -336,6 +336,18 @@
             </template>
         </preview-component>
 
+
+         <preview-component card-header="Spinner">
+            <template #left>
+                <spinner></spinner>
+            </template>
+            <template #right>
+                <code>
+                    {{ `<spinner></spinner>` }}
+                </code>
+            </template>
+        </preview-component> 
+
         <!-- <preview-component card-header="Link editor">
             <template #left></template>
             <template #right>
@@ -363,8 +375,9 @@
     import previewComponent from "./preview-component.vue";
     import multiSelector from './multi-selector.vue'
     import kmAddFile from './link/km-add-file.vue';
-    import kmFormWizard from "./km/km-form-wizard.vue"
-    import kmFormWizardTabContent from "./km/km-form-wizard-tab-content.vue"
+    import kmFormWizard from "./km/km-form-wizard.vue";
+    import kmFormWizardTabContent from "./km/km-form-wizard-tab-content.vue";
+    import spinner from "./spinner.vue";
 
     const kmValueTermsModel = [
             {
