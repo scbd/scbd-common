@@ -135,6 +135,21 @@
                 </code>
             </template>
     </preview-component> 
+
+
+    <preview-component card-header="km-ck-editor">
+      <template #left>
+          <ck-editor v-model = "ckText" >
+          </ck-editor>  
+          {{ ckText }} 
+      </template>
+      <template #right>
+          <code>
+              {{ `   <ck-editor v-model = "ckText" ></ck-editor>` }}
+          </code>
+      </template>
+  </preview-component> 
+
   </div>
 </template>
 <script setup>
@@ -145,7 +160,8 @@
   import selectFileButton from './select-file-button.vue';
   import { mimeTypeWhitelist } from "@/services/api/km-storage/KmDocuments";
   import previewComponent from "../controls/preview-component.vue";
-  import radio from "./radio.vue"
+  import radio from "./radio.vue";
+  import ckEditor from "./ck-editor/ck-editor.vue";
 
   //checkbox  
   const isChecked = ref(false);
@@ -169,6 +185,10 @@
    // radio
    const radioValue1 = ref('true');
    const radioValue2 = ref('true');
+
+
+  // for km-ck-editor
+  const ckText= ref("");
 
 
 </script>
