@@ -4,7 +4,7 @@
             <slot name="link-button-label">+ Add Link</slot>
         </button>  
        
-        <select-file-button class="m-2" @on-file-selected="receiveFile" v-if ="props.allowFiles"> 
+        <select-file-button class="m-2" @on-file-selected="receiveFile"  :accept = "props.mineTypes"  v-if ="props.allowFiles"> 
             <slot name="file-button-label">
                 + Add Files
             </slot>
@@ -40,8 +40,8 @@
 
     const props = defineProps({
         allowLinks: { type: Boolean, require: false, default: true },
-        allowFiles: { type: Boolean, require: false, default: true }
-     
+        allowFiles: { type: Boolean, require: false, default: true },
+        mineTypes: { type: Array, require: false, default: ['*/*'] }
     });
 
 
