@@ -215,4 +215,3 @@
         z-index: 10000 !important;
     }
   </style>
-  ./all-plugins-config.js
