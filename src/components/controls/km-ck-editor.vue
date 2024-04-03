@@ -32,8 +32,10 @@
               {{ t('uploadError') }} 
               <ul><li v-for="error in uploadErrors" :key="error">{{ error.file }}</li></ul>
           </CAlert> -->  
+          <div class="alert alert-danger" role="alert">
             {{ t('uploadError') }} 
             <ul><li v-for="error in uploadErrors" :key="error">{{ error.file }}</li></ul>
+          </div>
         </p>
     </div>
   </template>
