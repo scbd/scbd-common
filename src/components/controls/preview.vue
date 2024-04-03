@@ -339,7 +339,7 @@
 
          <preview-component card-header="Spinner">
             <template #left>
-                <spinner></spinner>
+                <spinner variant="spinner-grow spinner-grow-sm">New loading</spinner>
             </template>
             <template #right>
                 <code>
