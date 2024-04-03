@@ -1,7 +1,5 @@
-export const config= (locale)=>{
-    return {
-        language: { ui: locale, content: locale },
-        toolbar: {
+export const allPluginsConfig= {  
+     toolbar: {
             items: ['heading', 'fontSize', 'fontColor', '|', 'bold', 'italic', 'link', '|',
             'indent', 'outdent', 'alignment', '|', 'bulletedList', 'numberedList', 'blockQuote', '|',
             'highlight', 'insertTable', '|', 'imageInsert', 'mediaEmbed', '|', 'horizontalLine', '|',
@@ -52,11 +50,6 @@ export const config= (locale)=>{
             { mode: 'manual', label: 'Downloadable', attributes: { download: 'download', }, },
             { mode: 'manual', label: 'Open in a new tab', attributes: { target: '_blank', rel: 'noopener noreferrer', }, },
             ],
-        },
-        wordCount: {
-            onUpdate: function (stats) {
-                wordCount.value = stats.words;
-            },
         },
         mediaEmbed: {
             previewsInData: false,
@@ -118,6 +111,5 @@ export const config= (locale)=>{
                 },
             },
             ],
-        }  
-    }
+        }      
 }

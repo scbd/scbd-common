@@ -43,7 +43,6 @@
     import { useI18n} from '../../../services/composables/i18n.js'
     import { computed, onMounted, ref , defineComponent} from 'vue';
     import { useLogger } from '../../../services/util/index.js';
-    import { config } from './config'
     import KmStorageApi from '../../../services/api/km-storage/KmStorage.js';
 
     //   import OverlayLoading from 'vue3-loading-overlay';
@@ -52,13 +51,14 @@
     
     const model    = defineModel({type:String, required:true, default:''});
 
-    const props = defineProps(      
-        {tagName  : { type: String, required: false,default: 'div'}},     
-        {uploadUrl: { type: String, required: false}},
-        {config   : { type: Object, required: false,default: function () {}}},
-        {identifier: { type: String, required: true} }  
-    );    
+    const props = defineProps( {     
+        tagName  : { type: String, required: false,default: 'div'},     
+        uploadUrl: { type: String, required: false},
+        config   : { type: Object, required: true},
+        identifier: { type: String, required: true}  
+    });    
 
+ 
     const emit     = defineEmits(['update:modelValue', 'onFileUpload', 'onEditorDestroy']);
 
     const api          = new KmStorageApi({});
@@ -195,8 +195,15 @@
     }
 
     const editorConfig = computed(()=>{     
-          return { ...config(locale), ...props.config }
-          
+          return {
+            ...props.config,  
+            language: { ui: locale, content: locale },
+            wordCount: {
+                onUpdate: function (stats) {
+                    wordCount.value = stats.words;
+                },
+            }
+        }          
     })
  
   
@@ -208,4 +215,4 @@
         z-index: 10000 !important;
     }
   </style>
-  
+  ./all-plugins-config.js
