@@ -1,28 +1,32 @@
 <template>
     <div  class="scbd-common km-link">
-        <button type="button" class="btn btn-primary m-2" @click="addLink()">
+        <button type="button" class="btn btn-primary m-2" @click="addLink()" v-if ="props.allowLinks">
             <slot name="link-button-label">+ Add Link</slot>
         </button>  
-        <select-file-button class="m-2" @on-file-selected="receiveFile"> <slot name="file-button-label">+ Add Files</slot></select-file-button> 
-             
-       <file-upload-editor ref="fileEditorRef" @on-close="onFileUploadEditorClose">
-            <template v-slot:modalTitle>
-            <slot name="link-dialog-title"   >        
-                File Upload   
+       
+        <select-file-button class="m-2" @on-file-selected="receiveFile" v-if ="props.allowFiles"> 
+            <slot name="file-button-label">
+                + Add Files
             </slot>
+        </select-file-button>    
+             
+       <file-upload-editor ref="fileEditorRef" @on-close="onFileUploadEditorClose"  v-if ="props.allowFiles">
+            <template v-slot:modalTitle>
+                <slot name="link-dialog-title"   >        
+                    File Upload   
+                </slot>
             </template>       
         </file-upload-editor>
 
-        <link-editor ref="linkEditorRef" @on-close="onLinkEditorClose">       
-        <template v-slot:modalTitle>
-            <slot name="link-dialog-title"   >        
-            Edit link    
-            </slot>
-        </template>       
+        <link-editor ref="linkEditorRef" @on-close="onLinkEditorClose" v-if ="props.allowLinks">       
+            <template v-slot:modalTitle>
+                <slot name="link-dialog-title"   >        
+                Edit link    
+                </slot>
+            </template>       
         </link-editor>
     
-      <km-view-links v-model="links"   @on-delete ="removeLink($event)"   @on-edit = "editLink($event)"></km-view-links>  
-    
+        <km-view-links v-model="links"   @on-delete ="removeLink($event)"   @on-edit = "editLink($event)"  v-if ="props.allowLinks || props.allowFiles " ></km-view-links>      
     </div>
 </template>
 <script setup>
@@ -30,9 +34,17 @@
     import kmViewLinks from './km-view-links.vue';
     import linkEditor  from './link-editor.vue';
     import fileUploadEditor  from './file-upload-editor.vue';
-    import selectFileButton from '../../inputs/select-file-button.vue'
+    import selectFileButton from '../../inputs/select-file-button.vue';
 
     const links = defineModel({type:Array, required:true, default:[]});
+
+    const props = defineProps({
+        allowLinks: { type: Boolean, require: false, default: true },
+        allowFiles: { type: Boolean, require: false, default: true }
+     
+    });
+
+
     const linkEditorRef= shallowRef(null); 
     let editedLinkIndex = -1;   
     const fileEditorRef= shallowRef (null); 
@@ -84,7 +96,7 @@
     }      
  
     function onFileUploadEditorClose(newValue) {  
-        if(!newValue) {// mean cacnel => return  
+        if(!newValue) {// mean cancel => return  
             return;
         } 
         else{   
