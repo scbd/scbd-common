@@ -359,6 +359,16 @@
             </template>
         </preview-component> 
 
+
+         <preview-component card-header="km input rich lstring">
+            <template #left>
+                <km-input-rich-lstring :locales="locales"></km-input-rich-lstring>
+            </template>
+            <template #right>
+                <code></code>
+            </template>
+        </preview-component> -
+
         <!-- <preview-component card-header="Link editor">
             <template #left></template>
             <template #right>
@@ -390,6 +400,7 @@
     import kmFormWizardTabContent from "./km/km-form-wizard-tab-content.vue";
     import spinner from "./spinner.vue";
     import spinnerModal from './spinner-modal.vue';
+    import kmInputRichLstring from "./km/km-input-rich-lstring.vue";
 
     const kmValueTermsModel = [
             {
