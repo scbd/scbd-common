@@ -42,4 +42,7 @@ const getTerm = computed(() => {
 </script>
 
 <style scoped>
+.form-control{
+  height: auto;
+}
 </style>
