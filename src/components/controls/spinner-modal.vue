@@ -7,9 +7,7 @@
             </div>
             <div class="modal-body">
                 <slot>
-                    <spinner> </spinner>
-                    <span v-if="message">{{ message }}</span>
-                    <span v-if="!message">{{t('loading')}}...</span>
+                    <spinner :message="message || t('loading')"> </spinner>        
                 </slot>
             </div>         
           </div>
