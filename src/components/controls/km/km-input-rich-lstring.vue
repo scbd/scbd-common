@@ -1,23 +1,24 @@
 <template>
-    <div :id="`km-rich-lstring-${uid}`"> 
-      <ul class="nav nav-tabs">      
-         <li class="nav-item"  v-for="locale in props.locales" :key="locale" :id="`lstringTab-${uid}`">           
-            <a class="nav-link " aria-current="page"  href="javascript:void(0);" :active="selectedLocale === locale" @click="onTabChange(locale)">      
-            {{lstring(getTerm(locale).title||locale)}}
-            </a>
-        </li>        
-      </ul>
-    
-      <div class="mt-2" :aria-labelledby="`tabContent-${locale}-${uid}`" v-for="locale in locales" :key="locale"  :visible="selectedLocale === locale" :id="`lstringTabContent-${uid}`">       
-            <ck-editor v-if="selectedLocale==locale" v-model="binding[selectedLocale]" :identifier="identifier"
-                       :locale="selectedLocale"  :config="allPluginsConfig" @update:modelValue="onChange" @onFileUpload="onFileUpload"  >
-            </ck-editor>     
-        </div> 
+    <div class="scbd-common km-input-rich-lstring">
+        <div :id="`km-rich-lstring-${uid}`"> 
+            <ul class="nav nav-tabs">      
+               <li class="nav-item"  v-for="locale in props.locales" :key="locale" :id="`lstringTab-${uid}`">           
+                  <a class="nav-link " aria-current="page"  href="javascript:void(0);" :active="selectedLocale === locale" @click="onTabChange(locale)">      
+                  {{lstring(getTerm(locale).title||locale)}}
+                  </a>
+              </li>        
+            </ul>
+          
+            <div class="mt-2" :aria-labelledby="`tabContent-${locale}-${uid}`" v-for="locale in locales" :key="locale"  :visible="selectedLocale === locale" :id="`lstringTabContent-${uid}`">       
+                  <ck-editor v-if="selectedLocale==locale" v-model="binding[selectedLocale]" :identifier="identifier"
+                             :locale="selectedLocale"  :config="allPluginsConfig" @update:modelValue="onChange" @onFileUpload="onFileUpload"  >
+                  </ck-editor>     
+              </div> 
+          </div>
     </div>
-  </template>  
+</template>  
+
 <script setup>
-
-
     import { ref, watch, onMounted, computed} from 'vue';
     import {without} from 'lodash';
     import ckEditor from '../../inputs/ck-editor/ck-editor.vue';
@@ -30,30 +31,28 @@
     const model = defineModel({ type: Object, required: false, default:{}});
   
     const props = defineProps({
-        locales: { type: Array,  required: true,  }, 
-        disabled: { type: Boolean,  required: false,  },
-        identifier: { type: String,   required: true, }
+        locales:    { type: Array,    required: true  }, 
+        disabled:   { type: Boolean,  required: false },
+        identifier: { type: String,   required: true  }
     });
 
     const emit = defineEmits(['update:modelValue', 'onFileUpload', 'userPreferences']);
 
     const activeLocale = ref('');
     const uid = makeSmallUid();  
-    //const tabPaneActiveKey =1;
-
 
     watch(props.locales,  (newVal, oldVal) => {
-        const deleted = without(oldVal, ...newVal)
-          if(deleted?.length){      
-              deleted.forEach(e=>{
-                  binding[e] = undefined;
-              })
-              onChange();
-          }
-          if(!newVal.includes(activeLocale.value)){        
-            onTabChange(newVal[0]);
-          }
-          loadLanguages()
+        const deleted = without(oldVal, ...newVal);
+        if(deleted?.length){      
+            deleted.forEach(e=>{
+                binding[e] = undefined;
+            })
+            onChange();
+        }
+        if(!newVal.includes(activeLocale.value)){        
+        onTabChange(newVal[0]);
+        }
+        loadLanguages();
     })
          
     let userLocales = computed(()=>{
@@ -64,13 +63,7 @@
         return model.value||{};
     })
      
-    const selectedLocale  = computed(()=>{
-        // if(locales.includes(userPreferencesStore.editorActiveLanguageTab )){
-        //     return userPreferencesStore.editorActiveLanguageTab ;
-        // }
-        // else {
-        //     return activeLocale;
-        // }             
+    const selectedLocale  = computed(()=>{           
         return activeLocale.value;
     })
 
@@ -97,8 +90,6 @@
 
     const  onTabChange=(locale)=>{
         activeLocale.value = locale;
-        // userPreferencesStore.setEditorActiveLanguageTab(locale);
-        //TODO: add event handle for parents
         emit('userPreferences', locale);
    } 
 
@@ -108,7 +99,6 @@
             binding = {...model.value||{}};
         }
         loadLanguages();
-    })
- 
-  </script>
+    }) 
+</script>
   
