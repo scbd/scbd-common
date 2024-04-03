@@ -8,8 +8,7 @@
               :message="t('uploadingFile')"></km-spinner>
       </overlay-loading>
    -->
-      <ckeditor
-          tag-name="textarea"
+      <ckeditor 
           v-model="binding"
           :editor="editor"
           :config="editorConfig"
@@ -27,11 +26,7 @@
         <span class="float-end" id="wordCountSec" style="padding-right: 5px">
           <strong>{{ t('wordCount') }}: {{ wordCount }}</strong></span>
       </p>
-      <p style="border: 1px solid #eee; border-top: none" v-if="uploadErrors.length">
-          <!-- <CAlert class="m-2" color="danger" dismissible @close="() => { uploadErrors = [] }">
-              {{ t('uploadError') }} 
-              <ul><li v-for="error in uploadErrors" :key="error">{{ error.file }}</li></ul>
-          </CAlert> -->  
+      <p style="border: 1px solid #eee; border-top: none" v-if="uploadErrors.length">         
           <div class="alert alert-danger" role="alert">
             {{ t('uploadError') }} 
             <ul><li v-for="error in uploadErrors" :key="error">{{ error.file }}</li></ul>
@@ -41,50 +36,46 @@
   </template>
 
   <script setup> 
-    import  "@ckeditor/ckeditor5-build-classic/build/ckeditor.js";
     import  "@ckeditor/ckeditor5-vue/dist/ckeditor.js";
     import CKEditor   from '@ckeditor/ckeditor5-vue';
-    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';   
+    import ClassicEditor from '@scbd/ckeditor5-build-inline-full/build/ckeditor.js';  
+    import '@scbd/ckeditor5-build-inline-full/build/ckeditor.css';  
     import { useI18n} from '../../services/composables/i18n.js'
     import { computed, onMounted, ref , defineComponent} from 'vue';
     import { useLogger } from '../../services/util/index.js';
+    import KmStorageApi from '../../services/api/km-storage/KmStorage.js';
 
     //   import OverlayLoading from 'vue3-loading-overlay';
     //   import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
     //   import KmSpinner from '../KmSpinner.vue';
-
-
-    const ckeditor = defineComponent(CKEditor.component);  
-    const model = defineModel({type:String, required:true,default:''});
-    const emit = defineEmits(['update:modelValue','onEditorReady', 'onEditorFocus', 'onEditorBlur', 'onEditorInput', 'onFileUpload', 'onEditorDestroy']);
-    const props = defineProps(      
-        {tagName: { type: String, required: false,default: 'div'}},     
-        {uploadUrl: { type: String, required: false}},
-        {locale: { type: String, required: false, default: 'en' }},
-        {config: { type: Object, required: false,default: function () {}}},
-        {identifier: { type: String, required: true} }  
-    );
     
-    const {t, locale }   = useI18n();      
-    const wordCount= 0;
-    const editor= ClassicEditor;
-    const isUploadingFile= ref(false);
-    const editorConfig = ref(Object);
+    const model    = defineModel({type:String, required:true, default:''});
+
+    const props = defineProps(      
+        {tagName  : { type: String, required: false,default: 'div'}},     
+        {uploadUrl: { type: String, required: false}},
+        {config   : { type: Object, required: false,default: function () {}}},
+        {identifier: { type: String, required: true} }  
+    );    
+
+    const emit     = defineEmits(['update:modelValue', 'onFileUpload', 'onEditorDestroy']);
+
+    const api          = new KmStorageApi({});
+    const ckeditor     = CKEditor.component;
+    const editor       = ClassicEditor;
     const uploadErrors = [];
 
-    import KmStorageApi from '../../services/api/km-storage/KmStorage.js';
-    const api= new KmStorageApi({});
+    const {t, locale }    = useI18n();
+    const wordCount       = ref(0);
+    const isUploadingFile = ref(false);
 
     const  binding  = computed({       
         get()      {  return model.value;  },        
         set(value) {  emit('update:modelValue', value);  }
     })      
   
-    onMounted(() => {
-        editorConfig.value = {...getEditorConfig(), ...props.config }  
-    })
      
-    const onEditorReady=(ed)  =>{             
+    const onEditorReady=(ed)  =>{    
         class UploadAdapter {
           constructor(loader) {
             this.loader = loader;
@@ -202,132 +193,132 @@
         emit('onFileUpload', params);
     }
 
-    const getEditorConfig=()=>{     
-          return {        
-              language: { ui: locale, content: locale },          
-              toolbar:{ 
-                  items: ['heading', 'fontSize', 'fontColor', '|', 'bold', 'italic','link', '|',
-                        'indent', 'outdent', 'alignment', '|', 'bulletedList','numberedList','blockQuote', '|',
-                        'highlight', 'insertTable', '|','imageInsert','mediaEmbed', '|', 'horizontalLine', '|',
-                        'removeFormat','undo', 'redo', '|', 'pageBreak'     ],
-                  shouldNotGroupWhenFull: true
+    const editorConfig = computed(()=>{     
+          return {
+            language: { ui: locale, content: locale },
+            toolbar: {
+              items: ['heading', 'fontSize', 'fontColor', '|', 'bold', 'italic', 'link', '|',
+                'indent', 'outdent', 'alignment', '|', 'bulletedList', 'numberedList', 'blockQuote', '|',
+                'highlight', 'insertTable', '|', 'imageInsert', 'mediaEmbed', '|', 'horizontalLine', '|',
+                'removeFormat', 'undo', 'redo', '|', 'pageBreak'],
+              shouldNotGroupWhenFull: true
+            },
+            alignment: { options: ['left', 'right', 'center', 'justify'] },
+            fontColor: {
+              colors: [
+                { color: 'hsl(0, 0%, 0%)', label: 'Black' },
+                { color: 'hsl(0, 0%, 30%)', label: 'Dim grey' },
+                { color: 'hsl(0, 0%, 60%)', label: 'Grey' },
+                { color: 'hsl(0, 0%, 90%)', label: 'Light grey' },
+                { color: 'hsl(0, 0%, 100%)', label: 'White', hasBorder: true }
+              ],
+            },
+            list: { properties: { styles: true, startIndex: true, reversed: true } },
+            image: {
+              styles: ['alignCenter', 'alignLeft', 'alignRight'],
+              resizeOptions: [
+                { name: 'imageResize:original', label: 'Original', value: null },
+                { name: 'imageResize:25', label: '25%', value: '25' },
+                { name: 'imageResize:50', label: '50%', value: '50' },
+                { name: 'imageResize:75', label: '75%', value: '75' },
+              ],
+              toolbar: ['imageTextAlternative', 'toggleImageCaption', '|',
+                'imageStyle:inline', 'imageStyle:wrapText', 'imageStyle:breakText',
+                'imageStyle:side', '|', 'resizeImage'],
+              insert: { integrations: ['insertImageViaUrl'] },
+            },
+            heading: {
+              options: [
+                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+              ],
+            },
+            fontSize: {
+              options: [8, 10, 12, 14, 'default', 18, 20, 22],
+              supportAllValues: true,
+            },
+            table: {
+              contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties', 'toggleTableCaption']
+            },
+            link: {
+              addTargetToExternalLinks: false,
+              defaultProtocol: 'https://',
+              decorators: [
+                { mode: 'manual', label: 'Downloadable', attributes: { download: 'download', }, },
+                { mode: 'manual', label: 'Open in a new tab', attributes: { target: '_blank', rel: 'noopener noreferrer', }, },
+              ],
+            },
+            wordCount: {
+              onUpdate: function (stats) {
+                wordCount.value = stats.words;
               },
-              alignment: { options: ['left', 'right', 'center', 'justify']},
-              fontColor: {
-                    colors: [
-                        { color: 'hsl(0, 0%, 0%)', label: 'Black' },
-                        { color: 'hsl(0, 0%, 30%)', label: 'Dim grey' },
-                        { color: 'hsl(0, 0%, 60%)', label: 'Grey' },
-                        { color: 'hsl(0, 0%, 90%)', label: 'Light grey' },
-                        { color: 'hsl(0, 0%, 100%)', label: 'White', hasBorder: true }
-                        ],
-                     },
-              list: { properties: { styles: true,   startIndex: true, reversed: true }},
-              image: {
-                    styles: ['alignCenter', 'alignLeft', 'alignRight'],
-                    resizeOptions: [
-                        { name: 'imageResize:original', label: 'Original', value: null },
-                        { name: 'imageResize:25', label: '25%', value: '25' },
-                        { name: 'imageResize:50', label: '50%', value: '50' },
-                        { name: 'imageResize:75', label: '75%', value: '75' },
-                    ],
-                    toolbar: [ 'imageTextAlternative', 'toggleImageCaption', '|',
-                        'imageStyle:inline', 'imageStyle:wrapText', 'imageStyle:breakText',
-                        'imageStyle:side', '|', 'resizeImage' ],
-                    insert: { integrations: ['insertImageViaUrl']},   
-               },
-              heading: {
-                    options: [
-                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-                    ],
-              },
-              fontSize: {
-                options: [8, 10, 12, 14, 'default', 18, 20, 22],
-                supportAllValues: true,
-              },
-              table: {
-                contentToolbar: ['tableColumn','tableRow','mergeTableCells', 'tableProperties', 'tableCellProperties', 'toggleTableCaption'  ]
-                     },
-              link: {
-                    addTargetToExternalLinks: false,
-                    defaultProtocol: 'https://',
-                    decorators: [
-                        {  mode: 'manual',   label: 'Downloadable',   attributes: { download: 'download',  },},
-                        {  mode: 'manual',   label: 'Open in a new tab',  attributes: { target: '_blank', rel: 'noopener noreferrer', }, },
-                            ],
-                    },
-              wordCount: {
-                onUpdate: function(stats){
-                    // console.log(stats)
-                    wordCount = stats.words;
-                },
-              },
-              mediaEmbed: {
+            },
+            mediaEmbed: {
               previewsInData: false,
               removeProviders: ['youtube'],
               extraProviders: [
-                  {
-                    name: 'youtubePlaylist',
-                    url: [/^youtube\.com\/embed\/videoseries\?list=([\w-]+)/],
-                    html: (match) => {
-                        const id = match[1]
-    
-                        return (
-                        '<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
-                        `<iframe src="https://www.youtube.com/embed/videoseries?list=${id}" ` +
-                        'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
-                        'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
-                        '</iframe>' +
-                        '</div>'
-                        )
-                    },
+                {
+                  name: 'youtubePlaylist',
+                  url: [/^youtube\.com\/embed\/videoseries\?list=([\w-]+)/],
+                  html: (match) => {
+                    const id = match[1]
+
+                    return (
+                      '<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
+                      `<iframe src="https://www.youtube.com/embed/videoseries?list=${id}" ` +
+                      'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
+                      'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
+                      '</iframe>' +
+                      '</div>'
+                    )
                   },
-                  {
-                    name: 'youtube',
-                    url: [
-                        /^(?:m\.)?youtube\.com\/watch\?v=([\w-]+)/,
-                        /^(?:m\.)?youtube\.com\/v\/([\w-]+)/,
-                        /^youtube\.com\/embed\/([\w-]+)/,
-                        /^youtu\.be\/([\w-]+)/,
-                            ],
-                    html: (match) => {
-                        const id = match[1]
-    
-                        return (
-                        '<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
-                        `<iframe src="https://www.youtube.com/embed/${id}" ` +
-                        'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
-                        'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
-                        '</iframe>' +
-                        '</div>'
-                        )
-                    },
+                },
+                {
+                  name: 'youtube',
+                  url: [
+                    /^(?:m\.)?youtube\.com\/watch\?v=([\w-]+)/,
+                    /^(?:m\.)?youtube\.com\/v\/([\w-]+)/,
+                    /^youtube\.com\/embed\/([\w-]+)/,
+                    /^youtu\.be\/([\w-]+)/,
+                  ],
+                  html: (match) => {
+                    const id = match[1]
+
+                    return (
+                      '<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
+                      `<iframe src="https://www.youtube.com/embed/${id}" ` +
+                      'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
+                      'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
+                      '</iframe>' +
+                      '</div>'
+                    )
                   },
-                  {  
-                    name: 'customEmbed',
-                    url: [
-                        /cdn\.knightlab\.com\/libs\/timeline3\/.*/,
-                        /uploads\.knightlab\.com\/storymapjs\/.*/,
-                        /cdn\.knightlab\.com\/libs\/juxtapose\/.*/,
-                        /uploads\.knightlab\.com\/scenevr\/.*/,
-                        /cdn\.knightlab\.com\/libs\/storyline\/.*/,
-                        /theydrawit\.mucollective\.co\/vis\/.*/,
-                        /youtube\.com\/embed\/videoseries.*/,
-                      ],
-                    html: function (id) {
-                        return (
-                        '<figure class="media">' + '	<oembed url="' +  id.input +  '">' +
-                        '<a href="' +   id.input +  '">' +  id.input +  '</a>' + '	</oembed>' +   '</figure>'
-                        )
-                    },
+                },
+                {
+                  name: 'customEmbed',
+                  url: [
+                    /cdn\.knightlab\.com\/libs\/timeline3\/.*/,
+                    /uploads\.knightlab\.com\/storymapjs\/.*/,
+                    /cdn\.knightlab\.com\/libs\/juxtapose\/.*/,
+                    /uploads\.knightlab\.com\/scenevr\/.*/,
+                    /cdn\.knightlab\.com\/libs\/storyline\/.*/,
+                    /theydrawit\.mucollective\.co\/vis\/.*/,
+                    /youtube\.com\/embed\/videoseries.*/,
+                  ],
+                  html: function (id) {
+                    return (
+                      '<figure class="media">' + '	<oembed url="' + id.input + '">' +
+                      '<a href="' + id.input + '">' + id.input + '</a>' + '	</oembed>' + '</figure>'
+                    )
                   },
+                },
               ],
-              },
+            },
+            ...props.config
           }
-    }
+    })
  
   
   </script>
