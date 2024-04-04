@@ -11,11 +11,11 @@
           
             <div class="mt-2" :aria-labelledby="`tabContent-${locale}-${uid}`" v-for="locale in locales" :key="locale"  :visible="selectedLocale === locale" :id="`lstringTabContent-${uid}`">       
                   <ck-editor v-if="selectedLocale==locale" v-model="binding[selectedLocale]" :identifier="identifier"
-                             :locale="selectedLocale"  :config="allPluginsConfig" @update:modelValue="onChange" @onFileUpload="onFileUpload"  >
+                             :locale="selectedLocale"  :config="allPluginsConfig" @update:modelValue="onChange" @on-file-upload="onFileUpload"  >
                   </ck-editor>     
               </div> 
           </div>
-    </div>
+    </div> 
 </template>  
 
 <script setup>
@@ -46,7 +46,7 @@
         const deleted = without(oldVal, ...newVal);
         if(deleted?.length){      
             deleted.forEach(e=>{
-                binding[e] = undefined;
+                binding.value[e] = undefined;
             })
             onChange();
         }
@@ -54,13 +54,9 @@
         onTabChange(newVal[0]);
         }
         loadLanguages();
-    })
-         
-    let userLocales = computed(()=>{
-        return props.locales;
-    });   
+    })     
 
-    let  binding  = computed(()=>{
+    const  binding  = computed(()=>{
         return model.value||{};
     })
      
@@ -69,7 +65,7 @@
     })
 
     const onChange=(value)=>{
-        const clean = removeEmpty({...binding}); 
+        const clean = removeEmpty({...binding.value}); 
         emit('update:modelValue', clean);
     }
 
@@ -97,7 +93,7 @@
     onMounted(() => {
         activeLocale.value =props.locales[0];        
         if(model.value){
-            binding = {...model.value||{}};
+            binding.value = {...model.value||{}};
         }
         loadLanguages();
     }) 

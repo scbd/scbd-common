@@ -362,11 +362,12 @@
 
          <preview-component card-header="km input rich lstring">
             <template #left>
-                <km-input-rich-lstring :locales="locales"></km-input-rich-lstring>
-            </template>
+                <km-input-rich-lstring :locales="locales"  v-model="richLstringModel" ></km-input-rich-lstring>
+                data: {{ richLstringModel }}
+            </template>          
             <template #right>
                 <code>
-                    {{ ` <km-input-rich-lstring :locales="locales"></km-input-rich-lstring>` }}
+                    {{ ` <km-input-rich-lstring :locales="locales" v-model="richLstringModel"></km-input-rich-lstring>` }}
                 </code>
             </template>
         </preview-component> -
@@ -559,7 +560,8 @@
         { name: 'Phoenix', language: 'Elixir' }
     ];
 
-
+    // km-input-rich-lstring
+    const richLstringModel = ref({});
    
 </script>
 
