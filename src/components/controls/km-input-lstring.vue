@@ -24,7 +24,7 @@ const model = defineModel({type:Object, required: true, default:{}})
 const props = defineProps({
   locales:  { type: Array, required: true },
   disabled: { type: Boolean, default: false },
-  rows:     { type: Number, default: 1 }
+  rows:     { type: Number, required: false, default: 1 }
 });
 
 const loadLanguages = () => {
