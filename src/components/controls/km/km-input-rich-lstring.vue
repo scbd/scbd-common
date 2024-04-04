@@ -3,13 +3,14 @@
         <div :id="`km-rich-lstring-${uid}`"> 
             <ul class="nav nav-tabs">      
                <li class="nav-item"  v-for="locale in props.locales" :key="locale" :id="`lstringTab-${uid}`">           
-                  <a class="nav-link " aria-current="page"  href="javascript:void(0);" :active="selectedLocale === locale" @click="onTabChange(locale)">      
-                  {{lstring(getTerm(locale).title||locale)}}
+                  <a class="nav-link " aria-current="page"  href="javascript:void(0);" :class="{'active': selectedLocale === locale}"  @click="onTabChange(locale)">      
+                  {{lstring(getTerm(locale).title||locale)}}   
+                    
                   </a>
               </li>        
-            </ul>
+            </ul>   
           
-            <div class="mt-2" :aria-labelledby="`tabContent-${locale}-${uid}`" v-for="locale in locales" :key="locale"  :visible="selectedLocale === locale" :id="`lstringTabContent-${uid}`">       
+            <div class="mt-2" :aria-labelledby="`tabContent-${locale}-${uid}`" v-for="locale in locales" :key="locale"  :class="{'d-none': selectedLocale != locale}" :id="`lstringTabContent-${uid}`">       
                   <ck-editor v-if="selectedLocale==locale" v-model="binding[selectedLocale]" :identifier="identifier"
                              :locale="selectedLocale"  :config="allPluginsConfig" @update:modelValue="onChange" @on-file-upload="onFileUpload"  >
                   </ck-editor>     
