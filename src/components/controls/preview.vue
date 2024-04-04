@@ -365,7 +365,9 @@
                 <km-input-rich-lstring :locales="locales"></km-input-rich-lstring>
             </template>
             <template #right>
-                <code></code>
+                <code>
+                    {{ ` <km-input-rich-lstring :locales="locales"></km-input-rich-lstring>` }}
+                </code>
             </template>
         </preview-component> -
 
