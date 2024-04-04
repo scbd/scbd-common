@@ -22,9 +22,15 @@
 
 <script type="module">
   import { createApp } from 'vue'
+  import { createI18n } from 'vue-i18n';
   import App from './index.vue'
+
   const app = createApp(App);
+
+  app.use(createI18n({ locale:'en', fallbackLocale: 'en', legacy:false}));
+  
   app.mount('#app');
+
 </script>
 
 <style>
