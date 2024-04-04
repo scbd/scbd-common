@@ -4,7 +4,7 @@
             <slot name="link-button-label">+ Add Link</slot>
         </button>  
        
-        <select-file-button class="m-2" @on-file-selected="receiveFile"  :accept = "props.mineTypes"  v-if ="props.allowFiles"> 
+        <select-file-button class="m-2" @on-file-selected="receiveFile"  :accept="allowFileType"  v-if="props.allowFiles"> 
             <slot name="file-button-label">
                 + Add Files
             </slot>
@@ -30,18 +30,19 @@
     </div>
 </template>
 <script setup>
-    import { ref ,shallowRef} from 'vue'  
+    import { shallowRef, computed } from 'vue'  
     import kmViewLinks from './km-view-links.vue';
     import linkEditor  from './link-editor.vue';
     import fileUploadEditor  from './file-upload-editor.vue';
     import selectFileButton from '../../inputs/select-file-button.vue';
+    import { mimeTypeWhitelist } from "@/services/api/km-storage/KmDocuments";
 
     const links = defineModel({type:Array, required:true, default:[]});
 
     const props = defineProps({
         allowLinks: { type: Boolean, require: false, default: true },
         allowFiles: { type: Boolean, require: false, default: true },
-        mineTypes: { type: Array, require: false, default: ['*/*'] }
+        mineTypes: { type: Array, require: false, default: undefined }
     });
 
 
@@ -49,6 +50,15 @@
     let editedLinkIndex = -1;   
     const fileEditorRef= shallowRef (null); 
     let editedFileIndex = -1;
+
+    let allowFileType = computed(()=>{
+        if(props.mineTypes){
+            return  props.mineTypes;
+        }            
+        else{
+            return  mimeTypeWhitelist ;
+        }        
+   }); 
 
     function addLink() {  
         editLink(-1);
