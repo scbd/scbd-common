@@ -348,6 +348,17 @@
             </template>
         </preview-component> 
 
+         <preview-component card-header="spinner modal">
+            <template #left>
+                <spinner-modal :visible="true" title="Title" message="Please wait"></spinner-modal>
+            </template>
+            <template #right>
+                <code>
+                    {{ `<spinner-modal :visible="true" title="Title" message="Please wait"></spinner-modal>` }}
+                </code>
+            </template>
+        </preview-component> 
+
         <!-- <preview-component card-header="Link editor">
             <template #left></template>
             <template #right>
@@ -378,6 +389,7 @@
     import kmFormWizard from "./km/km-form-wizard.vue";
     import kmFormWizardTabContent from "./km/km-form-wizard-tab-content.vue";
     import spinner from "./spinner.vue";
+    import spinnerModal from './spinner-modal.vue';
 
     const kmValueTermsModel = [
             {
