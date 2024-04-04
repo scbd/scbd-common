@@ -25,8 +25,9 @@
     import { useThesaurus }    from '@/services/composables/thesaurus';  
     import { makeSmallUid }   from '@/services/util/index';
     import {lstring } from '../../../services/filters/lstring';   
-    import { useKmStorage} from '../../../services/composables/storage';
+    import { removeEmpty }  from '../../../services/util/index';
     import { allPluginsConfig } from '../../inputs/ck-editor/all-plugins-config.js';
+  
   
     const model = defineModel({ type: Object, required: false, default:{}});
   
@@ -36,7 +37,7 @@
         identifier: { type: String,   required: true  }
     });
 
-    const emit = defineEmits(['update:modelValue', 'onFileUpload', 'userPreferences']);
+    const emit = defineEmits(['update:modelValue', 'onFileUpload', 'onLanguageFocus']);
 
     const activeLocale = ref('');
     const uid = makeSmallUid();  
@@ -68,7 +69,7 @@
     })
 
     const onChange=(value)=>{
-        const clean = useKmStorage().cleanDocument({...binding});     
+        const clean = removeEmpty({...binding}); 
         emit('update:modelValue', clean);
     }
 
@@ -90,7 +91,7 @@
 
     const  onTabChange=(locale)=>{
         activeLocale.value = locale;
-        emit('userPreferences', locale);
+        emit('onLanguageFocus', locale);
    } 
 
     onMounted(() => {
