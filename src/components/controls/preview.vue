@@ -48,19 +48,31 @@
 
         <preview-component card-header="KmInputLString">
             <template #left>
-                <km-input-lstring
-                    v-model="kmInputLStringModel"
-                    :locales="locales"                                                    
-                    >
+                <km-input-lstring v-model="kmInputLStringModel" :locales="locales" >
                 </km-input-lstring>
                 <br/>
+                {{ kmInputLStringModel }}
             </template>
-            <template #right>
-                &lt;km-input-lstring
-                    v-model=&quot;kmInputLStringModel&quot;
-                    :locales=&quot;locales&quot;
-                    &gt;
-                &lt;/km-input-lstring&gt;
+            <template #right>                 
+                <code>
+                    {{ `<km-input-lstring v-model="kmInputLStringModel" :locales="locales" >
+                    </km-input-lstring>` }}
+                </code>         
+            </template>
+        </preview-component>
+
+        <preview-component card-header="KmInputLString ">
+            <template #left>
+                <km-input-lstring v-model="kmInputLStringModel" :locales="locales" rows="5" >
+                </km-input-lstring>
+                <br/>
+                {{ kmInputLStringModel }}
+            </template>
+            <template #right>                 
+                <code>
+                    {{ `<km-input-lstring v-model="kmInputLStringModel" :locales="locales"  rows="5" >
+                    </km-input-lstring>` }}
+                </code>         
             </template>
         </preview-component>
 
@@ -127,7 +139,7 @@
 
         <preview-component card-header="Km lstring value">
             <template #left>
-                <km-lstring-value value="Test Value" locale="en"></km-lstring-value> 
+                <km-lstring-value value="Test Value" locale="en"></km-lstring-value>                 
             </template>
             <template #right>
                 {{`<km-lstring-value value="Test Value" locale="en"></km-lstring-value>`}}
