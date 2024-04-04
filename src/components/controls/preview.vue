@@ -348,6 +348,18 @@
             </template>
         </preview-component> 
 
+
+        <preview-component card-header="nestedCheckbox">
+            <template #left>
+               <test></test>
+            </template>
+            <template #right>
+                <code>
+             
+                </code>
+            </template>
+        </preview-component> 
+
         <!-- <preview-component card-header="Link editor">
             <template #left></template>
             <template #right>
@@ -378,6 +390,7 @@
     import kmFormWizard from "./km/km-form-wizard.vue";
     import kmFormWizardTabContent from "./km/km-form-wizard-tab-content.vue";
     import spinner from "./spinner.vue";
+    import test from "./km/km-term-check.vue";
 
     const kmValueTermsModel = [
             {
