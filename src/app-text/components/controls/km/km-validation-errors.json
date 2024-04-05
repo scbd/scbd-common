@@ -1,0 +1,11 @@
+{
+  "messages":{
+    "Error.Mandatory": "mandatory",
+    "Error.MandatoryAnyOf": "mandatoryAnyOf",
+    "Error.InvalidValue": "invalidValue",
+    "Error.InvalidProperty": "invalidProperty",
+    "Error.UnspecifiedLocale": "unspecifiedLocale",
+    "Error.UnexpectedTerm": "unexpectedTerm",
+    "Error.InvalidType": "invalidType"
+  }
+}
