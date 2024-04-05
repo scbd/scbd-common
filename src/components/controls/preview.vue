@@ -351,7 +351,8 @@
 
         <preview-component card-header="nestedCheckbox">
             <template #left>
-               <test></test>
+               <test v-model="terms"></test>
+               {{ terms }}
             </template>
             <template #right>
                 <code>
@@ -546,6 +547,9 @@
         { name: 'Laravel', language: 'PHP', $isDisabled: true },
         { name: 'Phoenix', language: 'Elixir' }
     ];
+    
+    // km-term-check
+    const terms=ref([]);
    
 </script>
 

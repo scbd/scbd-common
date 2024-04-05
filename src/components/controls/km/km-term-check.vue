@@ -1,30 +1,23 @@
 <template>
-          <tree :data="data"></tree>   
-  </template>
+          <tree v-model="model" :data="data" :root="data[0]"></tree>           
+</template>
   
   <script setup>
+    import { ref, onMounted} from 'vue';
     import tree from './tree.vue';
     import { terms } from './terms.js';
 
-    // format
-    /*[{
-        "termId":          expect.any(Number),
-        "identifier":      expect.any(String),
-        "name":            expect.any(String),
-        "title":           expect.any(Object),   
-        "shortTitle":      expect.any(Object),
-        "description":     expect.any(String),
-        "longDescription": expect.any(Object),
-        "source":          expect.any(String),
-        "broaderTerms":    expect.any(Array),
-        "narrowerTerms":   expect.any(Array),
-        "relatedTerms":    expect.any(Array),
-        "nonPreferedTerms":expect.any(Array),
-      }]
-    */
-
-    const data = terms;
-        
-
-
+    const model = defineModel({type:Array, required:true});
+    let data = [];
+    
+    onMounted(() => {
+      data = terms.map(obj => {
+          return {
+            ...obj,  
+            selected: false
+          };
+        });  
+      model.value = data;
+    })
+   
   </script>
