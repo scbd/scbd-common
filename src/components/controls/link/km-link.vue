@@ -4,7 +4,7 @@
             <slot name="link-button-label">+ Add Link</slot>
         </button>  
        
-        <select-file-button class="m-2" @on-file-selected="receiveFile"  :accept="allowFileType"  v-if="props.allowFiles"> 
+        <select-file-button class="m-2" @on-file-selected="receiveFile"  :accept="allowFileTypes"  v-if="props.allowFiles"> 
             <slot name="file-button-label">
                 + Add Files
             </slot>
@@ -51,14 +51,9 @@
     const fileEditorRef= shallowRef (null); 
     let editedFileIndex = -1;
 
-    let allowFileType = computed(()=>{
-        if(props.mineTypes){
-            return  props.mineTypes;
-        }            
-        else{
-            return  mimeTypeWhitelist ;
-        }        
-   }); 
+    const allowFileTypes = computed(()=>{       
+        return props.mineTypes || mimeTypeWhitelist  ;  
+   });  
 
     function addLink() {  
         editLink(-1);
