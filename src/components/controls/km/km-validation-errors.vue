@@ -15,7 +15,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <strong>
-          {{ tc("contain", errors.length) }} {{ errors.length }} {{ tc("error", errors.length) }}
+          {{ tc("contains", errors.length) }}
         </strong>
 
         <ul>

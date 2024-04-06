@@ -1,0 +1,7 @@
+{
+  "messages": {
+    "attachmentMessage": "Attach files by dragging & dropping or pasting from clipboard",
+    "wordCount": "Word count",
+    "uploadError": "Error occurred uploading file(s), please try again"
+  }
+}
