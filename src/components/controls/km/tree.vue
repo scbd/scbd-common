@@ -1,28 +1,25 @@
 <template> 
   <ul>
     <li v-if="root" >
-      <checkbox v-model="root.selected" @update:modelValue="onChange($event,root)" :id="root.termId" >        
-        <template #label>
-          {{ root.name}} 
+      <checkbox v-model="root.selected" @update:modelValue="onChange($event,root)" :id="root.termId" :indeterminate="root.indeterminate"  >    
+       <template #label>
+          {{ root.name}}{{ rootIdt }}
         </template>
       </checkbox>  
 
       <template v-for="id in root.narrowerTerms">
-        <!-- <tree v-model="model" :data="props.data" :root="props.data.find(object=> object.identifier == id )"></tree>  -->
-        <tree v-model="model" :data="model" :root="model.find(object=> object.identifier == id )"></tree>     
+          <tree v-model="model" :data="model" :root="model.find(object=> object.identifier == id )"></tree>     
       </template>    
     </li>
-  </ul> 
- 
-  </template>
+  </ul>  
+</template>
   
 <script setup>
-  import { computed } from 'vue';
-  import _ from 'lodash';
+
   import checkbox from '../../inputs/checkbox.vue';
-
-  //@on-change="onChange($event)" 
-
+  import { defineEmits, computed } from 'vue';
+  
+ 
   const model = defineModel({type:Array, required:true});
 
   const props = defineProps({
@@ -31,8 +28,11 @@
   });
 
 
+  const selectAll= "true";
+  const unSelectAll = "false";
+  const halfSelect = "indeterminate";
 
-
+  
   const onChange=(isSelected, currentNode)=>{  
     // change status of current node
     currentNode.selected=isSelected;
@@ -42,62 +42,80 @@
       changeChildrenStatus(currentNode.narrowerTerms[i],isSelected);  
     }
 
-    // change status of parent    
+    // change status of parent  and grandparent  
     for (let i = 0; i < currentNode.broaderTerms.length; i++) {  
-      changeParentStatus(currentNode.broaderTerms[i],isSelected);  
-    }
+      changeParentStatus(currentNode.broaderTerms[i]);  
+    } 
+    
   }
 
   const changeChildrenStatus=(identifier, isSelected)=>{ 
     const currentNode = model.value.find(object=>object.identifier ==identifier)
-    currentNode.selected = isSelected;
-    //alert(currentNode.selected);
+    currentNode.selected = isSelected; 
+
+    // iterate for grandchildren  
     for (let i = 0; i < currentNode.narrowerTerms.length; i++) {      
-      changeChildrenStatus(currentNode.narrowerTerms[i],isSelected);  
+      changeChildrenStatus(currentNode.narrowerTerms[i], isSelected);  
     }     
   }
 
-  const changeParentStatus=(identifier, isSelected)=>{ 
-    //if selected ,half-selected parent or select parent if all the children selected
-    //if not selected, half-selected parent or unselect parent if it is the only child
+  const changeParentStatus=(identifier)=>{ 
+    // check all children status,
+    // selected all = parent checked, unselected all = parent unchecked, selected som = parent indeterminate (half select)
     const currentNode = model.value.find(object=>object.identifier ==identifier)
-    if (isAllChildSelected(currentNode)=="true"){
-      currentNode.selected = true;
+    switch (isAllChildSelected(currentNode)){
+      case selectAll:
+        currentNode.indeterminate = false;  
+        currentNode.selected = true;
+        break;
+      case unSelectAll:
+        currentNode.indeterminate = false;  
+        currentNode.selected = false;
+        break;
+      case halfSelect:    
+        currentNode.selected = false;   
+        currentNode.indeterminate = true;        
+        break;      
+    }    
+
+  
+  
+    if (currentNode.termId==model.value[0].termId) {      
+      //parent of currentNode is checkbox model
+      //TODO: add code to change value      
     }
-    else if  (isAllChildSelected(currentNode)=="false"){
-      currentNode.selected = false;
+    else {
+      // iterate for grandparent  
+      for (let i = 0; i < currentNode.broaderTerms.length; i++) {  
+        changeParentStatus(currentNode.broaderTerms[i]);  
+      }
     }
-    else if (isAllChildSelected(currentNode)=="indeterminate"){
-      var checkbox = document.getElementById(currentNode.termId);
-      currentNode.selected = false;
-      //TODO: why it doesn't work?
-      checkbox.indeterminate = true;     
-    }
-   // currentNode.selected = isAllChildSelected(currentNode);      
-   
-    //TODO: add iterate for grandparent
   }
 
   const isAllChildSelected=(currentNode)=>{    
     const childNumber = currentNode.narrowerTerms.length;
-    let selectedNumber = 0;    
+    let selectedNumber = 0;  
+    let indeterminateNumber = 0;  
 
     for (let i = 0; i < currentNode.narrowerTerms.length; i++) {   
       const id =currentNode.narrowerTerms[i];
       const child = model.value.find(object=>object.identifier ==id)    
       if (child.selected){
         selectedNumber +=1;
-      }      
+      } 
+      if (child.indeterminate){
+        indeterminateNumber +=1;
+      }    
     } 
 
-    if (selectedNumber ==0){
-      return "false";
+    if (selectedNumber ==childNumber){
+      return selectAll;
     }
-    else if (selectedNumber ==childNumber){
-      return "true";
-    }
-    else{   
-      return "indeterminate ";
+    else if(( (selectedNumber >0) && (selectedNumber <childNumber) ) | indeterminateNumber>0) {
+      return halfSelect;
+    }   
+    else {
+      return unSelectAll;
     }   
   }
 

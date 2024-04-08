@@ -1,5 +1,6 @@
-<template>
-          <tree v-model="model" :data="data" :root="data[0]"></tree>           
+<template>   
+    <tree v-model="model" :data="data" :root="data[0]"  ></tree>    
+
 </template>
   
   <script setup>
@@ -14,10 +15,11 @@
       data = terms.map(obj => {
           return {
             ...obj,  
-            selected: false
+            selected: false,
+            indeterminate:false
           };
         });  
       model.value = data;
-    })
+    }) 
    
   </script>
