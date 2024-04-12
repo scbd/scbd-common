@@ -48,14 +48,14 @@
 
         <preview-component card-header="KmInputLString">
             <template #left>
-                <km-input-lstring v-model="kmInputLStringModel" :locales="locales" >
+                <km-input-lstring v-model="kmInputLStringModel" :locales="locales" placeholder="Please enter ...">
                 </km-input-lstring>
                 <br/>
                 {{ kmInputLStringModel }}
             </template>
             <template #right>                 
                 <code>
-                    {{ `<km-input-lstring v-model="kmInputLStringModel" :locales="locales" >
+                    {{ `<km-input-lstring v-model="kmInputLStringModel" :locales="locales" placeholder="Please enter ..." >
                     </km-input-lstring>` }}
                 </code>         
             </template>
@@ -63,14 +63,14 @@
 
         <preview-component card-header="KmInputLString ">
             <template #left>
-                <km-input-lstring v-model="kmInputLStringModel" :locales="locales" rows="5" >
+                <km-input-lstring v-model="kmInputLStringModel" :locales="locales" rows="5" placeholder="Please enter ..." >
                 </km-input-lstring>
                 <br/>
                 {{ kmInputLStringModel }}
             </template>
             <template #right>                 
                 <code>
-                    {{ `<km-input-lstring v-model="kmInputLStringModel" :locales="locales"  rows="5" >
+                    {{ `<km-input-lstring v-model="kmInputLStringModel" :locales="locales"  rows="5" placeholder="Please enter ..." >
                     </km-input-lstring>` }}
                 </code>         
             </template>
