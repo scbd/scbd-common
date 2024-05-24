@@ -12,13 +12,14 @@
 <script setup >
     import { useAttrs, computed } from 'vue'
     import { useI18n } from '../../services/composables/i18n';
+    import messages from "../../app-text/components/controls/spinner.json"
 
     const props = defineProps({ 
         message : { type: String },
         variant : { type: String, default:'spinner-border'}
     })
 
-    const { t } = useI18n();  
+    const { t } = useI18n(messages);  
     const attrs = useAttrs();
 
     const alignCenter = computed(()=>attrs.hasOwnProperty('center'));  

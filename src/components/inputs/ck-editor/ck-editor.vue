@@ -33,7 +33,7 @@
           </div>
         </p>
     </div>
-  </template>
+</template>
 
   <script setup> 
     import  "@ckeditor/ckeditor5-vue/dist/ckeditor.js";
@@ -44,6 +44,7 @@
     import { computed, onMounted, ref , defineComponent} from 'vue';
     import { useLogger } from '../../../services/util/index.js';
     import KmStorageApi from '../../../services/api/km-storage/KmStorage.js';
+    import messages from "../../../app-text/components/inputs/ck-editor/ck-editor.json"
 
     //   import OverlayLoading from 'vue3-loading-overlay';
     //   import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
@@ -66,7 +67,7 @@
     const editor       = ClassicEditor;
     const uploadErrors = [];
 
-    const {t, locale }    = useI18n();
+    const {t, locale }    = useI18n(messages);
     const wordCount       = ref(0);
     const isUploadingFile = ref(false);
 

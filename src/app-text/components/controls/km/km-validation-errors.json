@@ -1,0 +1,13 @@
+{
+  "messages": {
+    "Error.Mandatory": "Field is mandatory",
+    "Error.MandatoryAnyOf": "One of the field is mandatory",
+    "Error.InvalidValue": "The value specified is invalid",
+    "Error.InvalidProperty": "This value cannot be specified",
+    "Error.UnspecifiedLocale": "A language is used but not specified in your document",
+    "Error.UnexpectedTerm": "A specified term cannot be used",
+    "Error.InvalidType": "The fields type is invalid",
+    "contains": "Your document contains {count} error | Your document contains {count} error | Your document contains {count} errors",
+    "valid": "Your document is valid."
+  }
+}

@@ -384,6 +384,38 @@
             </template>
         </preview-component> -
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Km Validation Errors</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 wrapper-class">
+                                <km-validation-errors
+                                :reports="kmValidationErrorProps"
+                                :errors="kmValidationErrorProps.errors"
+                                :isSaving="kmValidationErrorProps.isSaving"
+                                :isAnalyzing="kmValidationErrorProps.isAnalyzing"
+                                :allow-show-errors="kmValidationErrorProps.hideErrors"
+                                @onJumpTo="onJumpTo"></km-validation-errors>
+                                <form name='editForm'>
+                                    <label for="name">Given Name</label><br/>
+                                    <label for="email">Email</label>
+                                </form>
+                            </div>
+                            <div class="col-6">
+                                <div class="callout callout-warning">
+                                <code>
+                                    {{` <km-validation-errors :reports="kmValidationErrorProps"></km-validation-errors>`}}
+                                </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- <preview-component card-header="Link editor">
             <template #left></template>
             <template #right>
@@ -417,6 +449,9 @@
     import spinnerModal from './spinner-modal.vue';
     import kmInputRichLstring from "./km/km-input-rich-lstring.vue";
 
+    import kmValidationErrors from "./km/km-validation-errors.vue"
+    import {scrollToElement} from "@/services/util"
+    import $ from "jquery";
     const kmValueTermsModel = [
             {
                 identifier:"lang-ar"
@@ -494,7 +529,26 @@
             }
         ]
     };
-
+    const kmValidationErrorProps = ref({
+        errors:[
+            {
+                parameters:"Error parameter",
+                properties:[
+                    {
+                        property:"name",
+                    },
+                    {
+                        property:"email",
+                    }
+                ],
+                property:"Error Property",
+                code:"Error.Mandatory"
+            }
+        ],
+        isSaving: false,
+        isAnalyzing:false,
+        hideErrors:false
+    })
     const removeLocale = (index) => {
         locales.value.splice(index, 1);
     }
@@ -527,6 +581,9 @@
     const onChangeCurrentTab = (index) => {
         activeTab.value = index;
     }
+    function onJumpTo(field){
+        scrollToElement(field,".wrapper-class")
+    }
 
    
     onMounted(()=>{
@@ -536,6 +593,15 @@
         provide("validationReview", {
             isValid
         });
+
+        provide("getLabel",(field) => {
+             var qLabel = $(".wrapper-class").find(
+                "form[name='editForm'] label[for='" + field + "']:first"
+                );
+            if (qLabel.length > 0) return qLabel.first().text();
+
+            return field;
+        })
     })
     // for select-file-button
     let files = ref([]);

@@ -17,10 +17,12 @@
 
 
 <script setup >
-    import { useI18n} from '../../services/composables/i18n';
+    import { useI18n } from '../../services/composables/i18n';
     import spinner from './spinner.vue';
+    import messages from "../../app-text/components/controls/spinner-modal.json"
 
-    const {t, locale } = useI18n();  
+
+    const {t, locale } = useI18n(messages);  
 
     const props = defineProps({
         visible : { type:Boolean, default:false},
