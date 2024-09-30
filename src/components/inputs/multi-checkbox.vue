@@ -1,10 +1,13 @@
 <template>
-    <div class="km-multi-checkbox flex flex-col items-start justify-center w-64 border-2 p-8 rounded-lg">     
-        <checkbox :id="option[props.optionValueField] + makeSmallUid()" v-for="option in options" :key="option"  v-model="model"
+    <div class="km-multi-checkbox flex flex-col items-start justify-center border-2 rounded-lg">     
+        <checkbox 
+            v-for="option in options"
+            :id="option[props.optionValueField] + makeSmallUid()"
+            :key="option"  v-model="model"
             :value = "{[props.optionValueField] :option[props.optionValueField]}"  
             :inline="inline"               
-            :label = "lstring(option[props.optionTitleField])"            
-        />  
+            :label = "lstring(option[props.optionTitleField])"           
+        />
     </div>
   </template>
   
@@ -19,13 +22,13 @@
     const props = defineProps({       
         options: { type: Array, required: true,
             validator: (modelValue, props) => {
-            const hasNameKey = modelValue.every((option) =>
-                Object.keys(option).includes(props.optionValueField)
-            );
-            const hasIdKey = modelValue.every((option) =>
-                Object.keys(option).includes(props.optionTitleField)
-            );
-            return hasNameKey && hasIdKey;
+                const hasNameKey = modelValue.every((option) =>
+                    Object.keys(option).includes(props.optionValueField)
+                );
+                const hasIdKey = modelValue.every((option) =>
+                    Object.keys(option).includes(props.optionTitleField)
+                );
+                return hasNameKey && hasIdKey;
             },
         },
         optionValueField: { type:String, default:'identifier'},
