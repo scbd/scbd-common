@@ -374,19 +374,27 @@
 
          <preview-component card-header="km-form-check-item">
             <template #left>
-                Example 1 :<br/>
-              <km-form-check-item v-model="checkItemValue1" value ="true" :inline="false" type="radio" >
+                Example 1, Radio:<br/>
+              <km-form-check-item v-model="checkItemValue1" :value ="true" :inline="false" type="radio" >
                 <template #label> Yes </template>
               </km-form-check-item>
-              <km-form-check-item v-model="checkItemValue1" value="false" :inline="false"  type="radio"  >
+              <km-form-check-item v-model="checkItemValue1" :value="false" :inline="false"  type="radio"  >
                 <template #label>  No</template>
               </km-form-check-item>            
                 value: {{  checkItemValue1 }}   
 
-                <br/><br/>Example 2 :<br/>
-              <km-form-check-item v-model="checkItemValue2" value ="cn"  type="checkbox" >
-                <template #label> English </template>
-              </km-form-check-item>                
+                <br/><br/>Example 2, checkbox :<br/>
+              <km-form-check-item v-model="checkItemValue2" value ="ABSCH"  type="checkbox" >
+                <template #label> ABSCH </template>
+              </km-form-check-item>      
+              
+              <km-form-check-item v-model="checkItemValue2" value ="BCH"  type="checkbox" >
+                <template #label> BCH </template>
+              </km-form-check-item>  
+              
+              <km-form-check-item v-model="checkItemValue2" value ="CHM"  type="checkbox" >
+                <template #label> CHM </template>
+              </km-form-check-item> 
               value: {{ checkItemValue2 }}   
 
             </template>
@@ -441,7 +449,6 @@
     import spinnerModal from './spinner-modal.vue';
     import kmInputRichLstring from "./km/km-input-rich-lstring.vue";
     import kmFormCheckItem from './km-form-check-item.vue'
-
     const kmValueTermsModel = [
             {
                 identifier:"lang-ar"
@@ -603,7 +610,9 @@
     
     // for km-form-check-item
     const checkItemValue1 = ref(true);
-    const checkItemValue2 = ref(true);    
+    // const checkItemValue2 = ref(true);    
+    const checkItemValue2 = ref([]);
+
 </script>
 
 <style  lang="scss" scoped ></style>
