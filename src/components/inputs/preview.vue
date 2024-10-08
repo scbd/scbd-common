@@ -150,6 +150,26 @@
       </template>
   </preview-component> 
 
+  <preview-component card-header="">
+            <template #left>
+              <radioButton v-model="radioButtonValue" label="this from cbd library"></radioButton>
+                <div>Selected value : {{ radioButtonValue }}</div>
+            </template>
+            <template #right>
+               code will show here 
+            </template>
+  </preview-component>
+
+
+  <preview-component card-header="API Options from main project">
+            <template #left>
+             <TestApiPlugin></TestApiPlugin>
+            </template>
+            <template #right>
+               code will show here 
+            </template>
+  </preview-component>
+
   </div>
 </template>
 
@@ -163,6 +183,8 @@
   import radio from "./radio.vue";
   import ckEditor from "./ck-editor/ck-editor.vue";
   import { allPluginsConfig } from './ck-editor/all-plugins-config.js';
+  // import CbdCommon from "@cbd-common";
+  import { radioButton, TestApiPlugin } from 'cbd-common';
 
   //checkbox  
   const isChecked = ref(false);
@@ -186,6 +208,7 @@
    // radio
    const radioValue1 = ref('true');
    const radioValue2 = ref('true');
+   const radioButtonValue = ref(true)
 
 
   // for km-ck-editor

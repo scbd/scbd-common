@@ -23,7 +23,19 @@
 <script type="module">
   import { createApp } from 'vue'
   import App from './index.vue'
+  import ApiOptions from 'cbd-common';
+
   const app = createApp(App);
+
+  app.use(ApiOptions, {
+    sitePrefixUrl: 'https://example.com',
+    timeout: 5000,
+    token: 'your-token',
+    tokenType: 'Bearer'
+  });
+
+
+
   app.mount('#app');
 </script>
 
