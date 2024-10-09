@@ -28,12 +28,12 @@
     "test": "vitest"
   },
   "dependencies": {
-    "vue": "3.4.19"
+    "vue": "3.4.19",
+    "ky": "^1.7.2"
   },
   "peerDependencies": {
     "@scbd/ckeditor5-build-inline-full": "^35.0.0",
     "@ckeditor/ckeditor5-vue": "^5.1.0",
-    "ky": "^1.7.2",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "jquery": "^3.7.0",

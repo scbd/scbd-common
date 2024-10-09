@@ -1,95 +1,66 @@
 import ky from 'ky';
-import { isFunction } from 'lodash'; // Todo remove
 import * as Vue from 'vue';
-// import { inject } from 'vue';
+import { inject } from 'vue';
 
-
-// console.log("inject('sitePrefixUrl'),", inject('sitePrefixUrl'))
-
-//TODO: get prefixUrl, and token from external
-// convert to TS
-
-let sitePrefixUrl = 'https://api.cbd.int';
-
-if(/\.cbd\.int$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbd.int';
-if(/\.cbddev\.xyz$/i.test(window?.location?.hostname || '')) sitePrefixUrl= 'https://api.cbddev.xyz';
-if(/\localhost$/i   .test(window?.location?.hostname || '')) sitePrefixUrl= '/';
 
 const defaultOptions = { 
-   prefixUrl:  'https://api.cbddev.xyz',  // this will be changed to dynamically
-   timeout  : 30 * 1000,
-   token: Vue?.prototype?.$auth?.strategy?.token?.get() // we will pass after login
+   prefixUrl: 'https://api.cbddev.xyz', 
+   timeout  : 30 * 1000
 }
-// if(inject('sitePrefixUrl'))
-// {
-//   defaultOptions.prefixUrl = inject('sitePrefixUrl');
-// }
-// if(inject('timeout'))
-// {
-//   defaultOptions.timeout = inject('timeout');
-// }
-// if(inject('token'))
-// {
-//   defaultOptions.token = inject('token');
-// }
-// if(inject('tokenType'))
-// {
-//   defaultOptions.tokenType = inject('tokenType');
-// }
 
-export default class ApiBase
-{
-  constructor(options) {
-    options = options || {};
+// Use inject to override defaults if available in the current Vue app instance
+const injectedPrefixUrl = inject('sitePrefixUrl');
+if (injectedPrefixUrl) defaultOptions.prefixUrl = injectedPrefixUrl;
 
-    if(isFunction(options)) options = { token : options } // ??? remove/ correct
+const injectedTimeout = inject('timeout');
+if (injectedTimeout) defaultOptions.timeout = injectedTimeout;
 
-    const { token, prefixUrl, timeout, tokenType } = { ...defaultOptions, ...options }
-    // need to correct
+const injectedToken = inject('token');
+if (injectedToken) defaultOptions.token = injectedToken;
+
+const injectedTokenType = inject('tokenType');
+if (injectedTokenType) defaultOptions.tokenType = injectedTokenType;
+
+export default class ApiBase {
+  constructor(options = {}) { // Use empty object if no options are passed
+    const { token, prefixUrl, timeout, tokenType } = { ...defaultOptions, ...options }; // Merge options with defaults
+
     this.config = {
-      baseURL : prefixUrl,
+      baseURL: prefixUrl,
       timeout,
       tokenType,
       token,
-    }
+    };
 
-    const http = async function (...args) {   
-      // ToDo: to handle the existing code we can use .data like :
-      // return data.(await loadAsyncHeaders(this.config))(...args).json();
+    this.http = async (...args) => {
       return (await loadAsyncHeaders(this.config))(...args);
-    }
-    // ky
-    // const response = await ky.get('https://example.com/api/users');
-    // const data = await response.json();
-    // console.log(data);
-    http.get     = async (...args)=> (await loadAsyncHeaders(this.config)).get    (...args).json();
-    http.head    = async (...args)=> (await loadAsyncHeaders(this.config)).head   (...args).json();
-    http.post    = async (...args)=> (await loadAsyncHeaders(this.config)).post   (...args).json();
-    http.put     = async (...args)=> (await loadAsyncHeaders(this.config)).put    (...args).json();
-    http.patch   = async (...args)=> (await loadAsyncHeaders(this.config)).patch  (...args).json();
-    http.delete  = async (...args)=> (await loadAsyncHeaders(this.config)).delete (...args).json();
-    http.options = async (...args)=> (await loadAsyncHeaders(this.config)).options(...args).json();
-    http.request = async (...args)=> (await loadAsyncHeaders(this.config)).request(...args).json();
+    };
 
-    this.http = http;
+    this.http.get = async (...args) => (await loadAsyncHeaders(this.config)).get(...args).json();
+    this.http.head = async (...args) => (await loadAsyncHeaders(this.config)).head(...args).json();
+    this.http.post = async (...args) => (await loadAsyncHeaders(this.config)).post(...args).json();
+    this.http.put = async (...args) => (await loadAsyncHeaders(this.config)).put(...args).json();
+    this.http.patch = async (...args) => (await loadAsyncHeaders(this.config)).patch(...args).json();
+    this.http.delete = async (...args) => (await loadAsyncHeaders(this.config)).delete(...args).json();
+    this.http.options = async (...args) => (await loadAsyncHeaders(this.config)).options(...args).json();
+    this.http.request = async (...args) => (await loadAsyncHeaders(this.config)).request(...args).json();
   }
 }
 
+// Async function to load headers and create `ky` instance
 async function loadAsyncHeaders(baseConfig) {
+  console.log("baseConfig: ", baseConfig);
   
-  const { token, tokenType, ...config } = baseConfig || {}
-
+  const { token, tokenType, ...config } = baseConfig || {};
   const headers = { ...(config.headers || {}) };
 
-  if(token) {
-    // headers: { Authorization: `${config.tokenType} ${config.token}`,  }
-      headers.Authorization = `${tokenType||'Bearer'} ${token}`;
+  if (token) {
+    headers.Authorization = `${tokenType || 'Bearer'} ${token}`;
   }
-
-  // return axios.create({ ...config, headers } );
-   return ky.extend({prefixUrl: config.baseURL,  headers });
-
+  const api = ky.create({prefixUrl: config.baseURL});
+  return api.extend({ prefixUrl: config.baseURL, headers });
 }
+
 
 //////////////////////////
 // Helpers
