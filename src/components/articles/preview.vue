@@ -5,13 +5,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        CBD Article Cover Image
+                        CBD Article
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <cbd-article-cover-image :cover-image="coverImage">
-                                </cbd-article-cover-image>
+                              test KY response :   <test-article></test-article>
                             </div>
                             <div class="col-4">
                                 <strong></strong>
@@ -170,7 +169,7 @@
 </template>
 
 <script setup>
-import cbdArticleCoverImage from "./cbd-article-cover-image.vue";
+import testArticle from './test-article.vue';
 const coverImage = {
     url: "https://attachments.cbd.int/6d60d013f7f2ed996312f5caf90d1d7d/Manila Risk Assessment workshop-1 (1).png",
     credits: "The credit goes to you.",

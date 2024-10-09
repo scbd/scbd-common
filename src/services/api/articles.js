@@ -12,7 +12,7 @@ export default class ArticlesApi extends ApiBase
     const params = stringifyUrlParams( {q, f, s, sk, l , c, fo, ag });
 
     return this.http.get(`api/v2017/articles/grouping/${encodeURIComponent(groupKey)}`,  { params } )
-                    .then(res => res.data)
+                    .then(res => res)
                     .catch(tryCastToApiError);
    }
 
@@ -20,7 +20,7 @@ export default class ArticlesApi extends ApiBase
     const params = stringifyUrlParams( {q, f, s, sk, l , c, fo, ag });
 
     return this.http.get(`api/v2017/articles`,  { params } )
-                    .then(res => res.data)
+                    .then(res => res)
                     .catch(tryCastToApiError);
   }
 
@@ -28,7 +28,7 @@ export default class ArticlesApi extends ApiBase
     if(!isValid(id)) throw Error(`invalid value for id`);
 
     return this.http.get(`api/v2017/articles/${id}`)
-                      .then(res => res.data)
+                      .then(res => res)
                       .catch(tryCastToApiError);  
   }
 
@@ -44,7 +44,7 @@ export default class ArticlesApi extends ApiBase
    } 
 
     return this.http.get(`api/v2017/articles`,  { params })
-                    .then(res => res.data)
+                    .then(res => res)
                     .catch(tryCastToApiError);  
  }
 
