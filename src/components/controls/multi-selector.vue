@@ -94,4 +94,5 @@ let selectItems = computed({
   }
 ); 
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<!-- ToDo: need to fix the path -->
+<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
