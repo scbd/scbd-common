@@ -1,0 +1,1 @@
+{"version":3,"file":"i18n.cjs","sources":["../../../src/services/composables/i18n.js"],"sourcesContent":["export const  useI18n = ()=>{\r\n    return {\r\n        t       : (key)=>key,\r\n        locale  : 'en'\r\n    }\r\n}"],"names":[],"mappings":";;;;AAAa,MAAC,OAAO,GAAG,IAAI;AAC5B,IAAI,OAAO;AACX,QAAQ,CAAC,SAAS,CAAC,GAAG,GAAG,GAAG;AAC5B,QAAQ,MAAM,IAAI,IAAI;AACtB,KAAK;AACL;;;;"}

@@ -1,0 +1,439 @@
+import { openBlock, createElementBlock, createStaticVNode, ref, computed, onMounted, createElementVNode, toDisplayString, createCommentVNode, createTextVNode, Fragment, renderList, pushScopeId, popScopeId } from 'vue';
+
+const _hoisted_1$1 = /*#__PURE__*/createStaticVNode("<footer class=\"footer\" style=\"position:unset;\" data-v-6eb52d7f><div id=\"block-followblock\" class=\"follow-us settings-tray-editable block block-cbd-utility block-follow-block\" data-drupal-settingstray=\"editable\" data-v-6eb52d7f><div class=\"container\" data-v-6eb52d7f><div class=\"row\" data-v-6eb52d7f><div class=\"col-12 col-lg-3 d-flex align-items-center\" data-v-6eb52d7f><div class=\"h2 text-white text-uppercase m-0\" data-v-6eb52d7f>Follow us</div></div><div class=\"col-12 col-lg-9\" data-v-6eb52d7f><div class=\"nav flex-follow-us\" data-v-6eb52d7f><a href=\"http://www.youtube.com/user/chmcbd\" title=\"YouTube\" data-v-6eb52d7f><img src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/someround_youtube_neg.svg\" alt=\"YouTube\" loading=\"lazy\" data-v-6eb52d7f></a><a href=\"http://www.facebook.com/UNBiodiversity\" title=\"Facebook\" data-v-6eb52d7f><img src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/someround_facebook_neg.svg\" alt=\"Facebook\" loading=\"lazy\" data-v-6eb52d7f></a><a href=\"https://twitter.com/unbiodiversity\" title=\"Twitter\" data-v-6eb52d7f><img src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/someround_twitter_neg.svg\" alt=\"Twitter\" loading=\"lazy\" data-v-6eb52d7f></a><a href=\"https://www.linkedin.com/company/unbiodiversity\" title=\"LinkedIn\" data-v-6eb52d7f><img src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/someround_linkedin_neg.svg\" alt=\"LinkedIn\" loading=\"lazy\" data-v-6eb52d7f></a><a href=\"https://instagram.com/unbiodiversity\" title=\"Instagram\" data-v-6eb52d7f><img src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/someround_instagram_neg.svg\" alt=\"Instagram\" loading=\"lazy\" data-v-6eb52d7f></a><a href=\"https://www.cbd.int/rss\" title=\"RSS\" data-v-6eb52d7f><img src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/someround_feed_neg.svg\" alt=\"RSS\" loading=\"lazy\" data-v-6eb52d7f></a></div></div></div></div></div><div class=\"cbd-footer\" data-v-6eb52d7f><div class=\"container\" data-v-6eb52d7f><div class=\"row\" data-v-6eb52d7f><div id=\"block-quicklinksblock\" class=\"footer-block footer-margin col-12 col-lg-5 settings-tray-editable block block-cbd-utility block-quick-links-block\" data-drupal-settingstray=\"editable\" data-v-6eb52d7f><h5 class=\"h4 text-uppercase\" data-v-6eb52d7f>quick links</h5><hr data-v-6eb52d7f><div class=\"footer-links two-column\" data-v-6eb52d7f><a href=\"https://absch.cbd.int/\" title=\"Access and Benefit-Sharing Clearing-House\" data-v-6eb52d7f>Access and Benefit-Sharing Clearing-House</a><a href=\"https://bch.cbd.int/\" title=\"Biosafety Clearing-House\" data-v-6eb52d7f>Biosafety Clearing-House</a><a href=\"https://chm.cbd.int/\" title=\"Clearing-House Mechanism\" data-v-6eb52d7f>Clearing-House Mechanism</a><a href=\"https://www.cbd.int/contributions\" title=\"Contributions\" data-v-6eb52d7f>Contributions</a><a href=\"https://www.cbd.int/countries/\" title=\"Country Profiles\" data-v-6eb52d7f>Country Profiles</a><a href=\"https://www.cbd.int/meetings/\" title=\"Meetings and Events\" data-v-6eb52d7f>Meetings and Events</a><a href=\"https://www.cbd.int/nbsap\" title=\"National Biodiversity Strategies and Action Plans (NBSAPs)\" data-v-6eb52d7f>National Biodiversity Strategies and Action Plans (NBSAPs)</a><a href=\"https://www.cbd.int/nfp\" title=\"National Focal Points\" data-v-6eb52d7f>National Focal Points</a><a href=\"https://www.cbd.int/reports\" title=\"National Reports\" data-v-6eb52d7f>National Reports</a><a href=\"https://www.cbd.int/news/\" title=\"News Headlines\" data-v-6eb52d7f>News Headlines</a><a href=\"https://www.cbd.int/notifications/\" title=\"Notifications\" data-v-6eb52d7f>Notifications</a><a href=\"https://www.cbd.int/parties\" title=\"Parties\" data-v-6eb52d7f>Parties</a><a href=\"https://www.cbd.int/publications\" title=\"Publications\" data-v-6eb52d7f>Publications</a></div></div><div id=\"block-topicsfooterblock\" class=\"footer-block footer-margin col-12 col-lg-3 settings-tray-editable block block-cbd-utility block-topics-footer-block\" data-drupal-settingstray=\"editable\" data-v-6eb52d7f><h5 class=\"h4 text-uppercase\" data-v-6eb52d7f>Topics</h5><hr data-v-6eb52d7f><div class=\"footer-links\" data-v-6eb52d7f><a href=\"https://www.cbd.int/topic/business-women-youth-and-other-stakeholders\" title=\"Business, Women, Youth and other Stakeholders\" data-v-6eb52d7f>Business, Women, Youth and other Stakeholders</a><a href=\"https://www.cbd.int/topic/climate-change\" title=\"Climate Change\" data-v-6eb52d7f>Climate Change</a><a href=\"https://www.cbd.int/topic/poverty-reduction\" title=\"Poverty Reduction\" data-v-6eb52d7f>Poverty Reduction</a><a href=\"https://www.cbd.int/topic/food\" title=\"Food\" data-v-6eb52d7f>Food</a><a href=\"https://www.cbd.int/topic/water\" title=\"Water\" data-v-6eb52d7f>Water</a><a href=\"https://www.cbd.int/topic/indigenous-peoples-and-local-communities\" title=\"Indigenous Peoples and Local Communities\" data-v-6eb52d7f>Indigenous Peoples and Local Communities</a></div></div><div class=\"desktop-only footer-block footer-margin col-6 col-lg-2\" data-v-6eb52d7f><h5 class=\"h4 text-uppercase\" data-v-6eb52d7f>Information</h5><hr data-v-6eb52d7f><div class=\"flex-one-column\" data-v-6eb52d7f><a href=\"https://www.cbd.int/contact\" title=\"Contact us\" data-v-6eb52d7f>Contact us</a><a href=\"https://www.cbd.int/terms\" title=\"Terms of Use\" data-v-6eb52d7f>Terms of Use</a><a href=\"https://www.cbd.int/privacy\" title=\"Privacy Policy\" data-v-6eb52d7f>Privacy Policy</a><a href=\"https://www.cbd.int/credits\" title=\"Credits\" data-v-6eb52d7f>Credits</a><a href=\"https://www.cbd.int/copyright\" title=\"© CBD Secretariat\" data-v-6eb52d7f>© CBD Secretariat</a></div></div><div class=\"desktop-only footer-block footer-margin col-6 col-lg-2\" data-v-6eb52d7f><h5 class=\"h4 text-uppercase\" data-v-6eb52d7f>A part of</h5><hr data-v-6eb52d7f><img class=\"uno-brand\" src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/UN_brand_neg.svg\" alt=\"UN logo\" loading=\"lazy\" data-v-6eb52d7f><img class=\"uno-environment\" src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/UNEP_2019_brand_white.svg\" alt=\"UN Environment Programme logo\" loading=\"lazy\" data-v-6eb52d7f></div><div class=\"mobile-only footer-block footer-margin col-12\" data-v-6eb52d7f><div class=\"row\" data-v-6eb52d7f><div class=\"col-6\" data-v-6eb52d7f><div class=\"footer-headline\" data-v-6eb52d7f>INFORMATION</div></div><div class=\"col-6\" data-v-6eb52d7f><div class=\"footer-headline\" data-v-6eb52d7f>A PART OF</div></div></div><div class=\"row\" data-v-6eb52d7f><div class=\"col-12\" data-v-6eb52d7f><hr data-v-6eb52d7f></div></div><div class=\"row\" data-v-6eb52d7f><div class=\"footer-block col-6\" data-v-6eb52d7f><div class=\"flex-one-column\" data-v-6eb52d7f><a href=\"https://www.cbd.int/contact\" title=\"Contact us\" data-v-6eb52d7f>Contact us</a><a href=\"https://www.cbd.int/terms\" title=\"Terms of Use\" data-v-6eb52d7f>Terms of Use</a><a href=\"https://www.cbd.int/privacy\" title=\"Privacy Policy\" data-v-6eb52d7f>Privacy Policy</a><a href=\"https://www.cbd.int/credits\" title=\"Credits\" data-v-6eb52d7f>Credits</a><a href=\"https://www.cbd.int/copyright\" title=\"© CBD Secretariat\" data-v-6eb52d7f>© CBD Secretariat</a></div></div><div class=\"footer-block col-6\" data-v-6eb52d7f><img class=\"uno-brand\" src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/UN_brand_neg.svg\" alt=\"UN logo\" loading=\"lazy\" data-v-6eb52d7f><img class=\"uno-environment\" src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/UNEP_2019_brand_white.svg\" alt=\"UN Environment Programme logo\" loading=\"lazy\" data-v-6eb52d7f></div></div></div></div></div></div></footer>", 1);
+const _hoisted_2$1 = [
+  _hoisted_1$1
+];
+
+function render(_ctx, _cache) {
+  return (openBlock(), createElementBlock("div", null, [..._hoisted_2$1]))
+}
+
+const script$1 = {};
+
+script$1.render = render;
+script$1.__scopeId = "data-v-6eb52d7f";
+script$1.__file = "src/components/cbd-nav/footer.vue";
+
+const _withScopeId = n => (pushScopeId("data-v-e030dd1e"),n=n(),popScopeId(),n);
+const _hoisted_1 = {
+  id: "header",
+  class: "header",
+  role: "banner",
+  "aria-label": "Site header"
+};
+const _hoisted_2 = {
+  "aria-hidden": "true",
+  version: "1.1",
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  style: {"position":"absolute","width":"0px","height":"0px","overflow":"hidden"}
+};
+const _hoisted_3 = /*#__PURE__*/createStaticVNode("<defs data-v-e030dd1e><symbol id=\"icon-sign-out\" viewBox=\"0 0 25 28\" data-v-e030dd1e><title data-v-e030dd1e>Sign Out</title><path d=\"M10 22.5c0 0.438 0.203 1.5-0.5 1.5h-5c-2.484 0-4.5-2.016-4.5-4.5v-11c0-2.484 2.016-4.5 4.5-4.5h5c0.266 0 0.5 0.234 0.5 0.5 0 0.438 0.203 1.5-0.5 1.5h-5c-1.375 0-2.5 1.125-2.5 2.5v11c0 1.375 1.125 2.5 2.5 2.5h4.5c0.391 0 1-0.078 1 0.5zM24.5 14c0 0.266-0.109 0.516-0.297 0.703l-8.5 8.5c-0.187 0.187-0.438 0.297-0.703 0.297-0.547 0-1-0.453-1-1v-4.5h-7c-0.547 0-1-0.453-1-1v-6c0-0.547 0.453-1 1-1h7v-4.5c0-0.547 0.453-1 1-1 0.266 0 0.516 0.109 0.703 0.297l8.5 8.5c0.187 0.187 0.297 0.438 0.297 0.703z\" data-v-e030dd1e></path></symbol><symbol id=\"icon-profile\" viewBox=\"0 0 20 28\" data-v-e030dd1e><title data-v-e030dd1e>Profile</title><path d=\"M20 21.859c0 2.281-1.5 4.141-3.328 4.141h-13.344c-1.828 0-3.328-1.859-3.328-4.141 0-4.109 1.016-8.859 5.109-8.859 1.266 1.234 2.984 2 4.891 2s3.625-0.766 4.891-2c4.094 0 5.109 4.75 5.109 8.859zM16 8c0 3.313-2.688 6-6 6s-6-2.688-6-6 2.688-6 6-6 6 2.688 6 6z\" data-v-e030dd1e></path></symbol><symbol id=\"icon-password\" viewBox=\"0 0 18 28\" data-v-e030dd1e><title data-v-e030dd1e>Password</title><path d=\"M5 12h8v-3c0-2.203-1.797-4-4-4s-4 1.797-4 4v3zM18 13.5v9c0 0.828-0.672 1.5-1.5 1.5h-15c-0.828 0-1.5-0.672-1.5-1.5v-9c0-0.828 0.672-1.5 1.5-1.5h0.5v-3c0-3.844 3.156-7 7-7s7 3.156 7 7v3h0.5c0.828 0 1.5 0.672 1.5 1.5z\" data-v-e030dd1e></path></symbol><symbol id=\"icon-lock\" viewBox=\"0 0 32 32\" data-v-e030dd1e><title data-v-e030dd1e>Lock</title><path d=\"M15 21.915v0c-0.583-0.206-1-0.762-1-1.415 0-0.828 0.672-1.5 1.5-1.5s1.5 0.672 1.5 1.5c0 0.653-0.417 1.209-1 1.415v2.594c0 0.263-0.224 0.491-0.5 0.491-0.268 0-0.5-0.22-0.5-0.491v-2.594zM8 14v0 0c-1.658 0.005-3 1.34-3 3.009v9.981c0 1.662 1.346 3.009 3.009 3.009h14.982c1.662 0 3.009-1.337 3.009-3.009v-9.981c0-1.659-1.341-3.005-3-3.009v-3.501c0-4.142-3.366-7.499-7.5-7.499-4.142 0-7.5 3.357-7.5 7.499v3.501zM11 14v-3.499c0-2.492 2.015-4.501 4.5-4.501 2.48 0 4.5 2.015 4.5 4.501v3.499h-9z\" data-v-e030dd1e></path></symbol><symbol id=\"icon-search\" viewBox=\"0 0 250 270\" preserveAspectRatio=\"xMidYMid meet\" data-v-e030dd1e><title data-v-e030dd1e>Search</title><path d=\"M16 254 c-20 -20 -20 -22 5 -63 14 -24 19 -44 15 -63 -7 -37 15 -90 45 -112 13 -9 43 -16 67 -16 62 0 102 40 102 104 0 64 -40 109 -100 112 -31 1 -49 9 -67 28 -27 30 -45 33 -67 10z m164 -104 c36 -36 14 -100 -34 -100 -60 1 -81 79 -29 109 26 15 41 13 63 -9z\" data-v-e030dd1e></path></symbol><symbol id=\"icon-menu\" viewBox=\"0 0 24 24\" data-v-e030dd1e><title data-v-e030dd1e>Menu</title><path d=\"M-1.77635684e-15,-8.8817842e-16 L29.461538,-8.8817842e-16 L29.461538,2 L-1.77635684e-15,2 L-1.77635684e-15,-8.8817842e-16 Z M4.91025633,10.6407675 L4.91025633,9.64076753 L29.461538,9.64076753 L29.461538,10.6407675 L4.91025633,10.6407675 Z M-1.77635684e-15,20.2777774 L-1.77635684e-15,18.2777774 L29.461538,18.2777774 L29.461538,20.2777774 L-1.77635684e-15,20.2777774 Z\" data-v-e030dd1e></path></symbol><symbol id=\"icon-close\" viewBox=\"0 0 30 30\" data-v-e030dd1e><title data-v-e030dd1e>Close</title><path d=\"M18.984 6.422l-5.578 5.578 5.578 5.578-1.406 1.406-5.578-5.578-5.578 5.578-1.406-1.406 5.578-5.578-5.578-5.578 1.406-1.406 5.578 5.578 5.578-5.578z\" data-v-e030dd1e></path></symbol><filter id=\"blur\" x=\"0\" y=\"0\" data-v-e030dd1e><feGaussianBlur in=\"SourceGraphic\" stdDeviation=\".5\" data-v-e030dd1e></feGaussianBlur></filter></defs>", 1);
+const _hoisted_4 = [
+  _hoisted_3
+];
+const _hoisted_5 = { class: "navbar navbar-expand-lg navbar-light bg-white" };
+const _hoisted_6 = /*#__PURE__*/createStaticVNode("<a class=\"navbar-brand\" href=\"https://www.cbd.int/\" title=\"Convention on Biological Diversity\" data-v-e030dd1e><img src=\"https://www.cbd.int/themes/custom/bootstrap_sass/images/CBD_logo_green.png\" alt=\"Convention on Biological Diversity\" data-v-e030dd1e></a><button class=\"navbar-toggler hamburger-icon collapsed\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\" data-v-e030dd1e><span class=\"line line-1\" data-v-e030dd1e></span><span class=\"line line-2\" data-v-e030dd1e></span><span class=\"line line-3\" data-v-e030dd1e></span></button>", 2);
+const _hoisted_8 = {
+  class: "collapse navbar-collapse",
+  id: "navbarSupportedContent"
+};
+const _hoisted_9 = { class: "navbar-wrapper" };
+const _hoisted_10 = { class: "nav-top" };
+const _hoisted_11 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("ul", { class: "navbar-nav mr-auto" }, [
+  /*#__PURE__*/createElementVNode("li", { class: "topmenu nav-item dropdown" }, [
+    /*#__PURE__*/createElementVNode("a", {
+      class: "nav-link dropdown-toggle",
+      href: "",
+      role: "button",
+      "data-toggle": "dropdown",
+      "aria-haspopup": "true",
+      "aria-expanded": "false",
+      title: "Information"
+    }, " Information "),
+    /*#__PURE__*/createElementVNode("div", { class: "Information dropdown-menu" }, [
+      /*#__PURE__*/createElementVNode("div", { class: "dropdown-item-container" }, [
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/contact",
+          title: "Contact us",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Contact us")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/terms",
+          title: "Terms of Use",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Terms of Use")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/privacy",
+          title: "Privacy Policy",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Privacy Policy")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/credits",
+          title: "Credits",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Credits")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/copyright",
+          title: "© CBD Secretariat",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "© CBD Secretariat")
+        ])
+      ])
+    ])
+  ]),
+  /*#__PURE__*/createElementVNode("li", { class: "topmenu nav-item dropdown" }, [
+    /*#__PURE__*/createElementVNode("a", {
+      class: "nav-link dropdown-toggle",
+      href: "",
+      role: "button",
+      "data-toggle": "dropdown",
+      "aria-haspopup": "true",
+      "aria-expanded": "false",
+      title: "About the Secretariat"
+    }, " About the Secretariat "),
+    /*#__PURE__*/createElementVNode("div", { class: "About the Secretariat dropdown-menu" }, [
+      /*#__PURE__*/createElementVNode("div", { class: "dropdown-item-container" }, [
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/staff",
+          title: "Staff",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Staff")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/secretariat/executive-secretary/",
+          title: "Executive Secretary",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Executive Secretary")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/museum",
+          title: "Museum of Nature and Culture",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Museum of Nature and Culture")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/secretariat/initiatives.shtml",
+          title: "Initiatives",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Initiatives")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/secretariat/documents.shtml",
+          title: "Secretariat Documents",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Secretariat Documents")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/employment",
+          title: "Employment Opportunities",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Employment Opportunities")
+        ]),
+        /*#__PURE__*/createElementVNode("a", {
+          href: "https://www.cbd.int/secretariat/business",
+          title: "Doing Business with the CBD",
+          class: "dropdown-item"
+        }, [
+          /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Doing Business with the CBD")
+        ])
+      ])
+    ])
+  ])
+], -1 /* HOISTED */));
+const _hoisted_12 = { class: "navbar-nav" };
+const _hoisted_13 = {
+  key: 0,
+  class: "nav-item"
+};
+const _hoisted_14 = ["href"];
+const _hoisted_15 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("span", null, "Login ", -1 /* HOISTED */));
+const _hoisted_16 = { key: 0 };
+const _hoisted_17 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("svg", { class: "icon icon-lock" }, [
+  /*#__PURE__*/createElementVNode("use", { "xlink:href": "#icon-lock" })
+], -1 /* HOISTED */));
+const _hoisted_18 = {
+  key: 1,
+  class: "topmenu nav-item dropdown"
+};
+const _hoisted_19 = {
+  class: "nav-link dropdown-toggle",
+  href: "",
+  role: "button",
+  "data-toggle": "dropdown",
+  "aria-haspopup": "true",
+  "aria-expanded": "false",
+  title: "User"
+};
+const _hoisted_20 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("svg", { class: "icon icon-lock" }, [
+  /*#__PURE__*/createElementVNode("use", { "xlink:href": "#icon-lock" })
+], -1 /* HOISTED */));
+const _hoisted_21 = { class: "user-profile dropdown-menu" };
+const _hoisted_22 = { class: "dropdown-item-container" };
+const _hoisted_23 = ["href"];
+const _hoisted_24 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Profile", -1 /* HOISTED */));
+const _hoisted_25 = [
+  _hoisted_24
+];
+const _hoisted_26 = ["href"];
+const _hoisted_27 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Password", -1 /* HOISTED */));
+const _hoisted_28 = [
+  _hoisted_27
+];
+const _hoisted_29 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("span", { class: "dropdown-item-label" }, "Sign out", -1 /* HOISTED */));
+const _hoisted_30 = [
+  _hoisted_29
+];
+const _hoisted_31 = { class: "navbar-nav" };
+const _hoisted_32 = { class: "topmenu nav-item dropdown" };
+const _hoisted_33 = {
+  class: "nav-link dropdown-toggle",
+  href: "",
+  role: "button",
+  "data-toggle": "dropdown",
+  "aria-haspopup": "true",
+  "aria-expanded": "false",
+  title: "Language"
+};
+const _hoisted_34 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("span", { class: "flag-icon" }, null, -1 /* HOISTED */));
+const _hoisted_35 = { class: "Languages dropdown-menu" };
+const _hoisted_36 = { class: "dropdown-item-container" };
+const _hoisted_37 = ["href", "title"];
+const _hoisted_38 = { class: "dropdown-item-label" };
+const _hoisted_39 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("div", {
+  id: "block-topsearchblock",
+  class: "settings-tray-editable block block-cbd-utility block-top-search-block",
+  "data-drupal-settingstray": "editable"
+}, [
+  /*#__PURE__*/createElementVNode("form", {
+    class: "views-exposed-form",
+    "data-drupal-selector": "views-exposed-form-search-search",
+    action: "https://www.cbd.int/search",
+    method: "get",
+    id: "views-exposed-form-search-search",
+    "accept-charset": "UTF-8"
+  }, [
+    /*#__PURE__*/createElementVNode("div", { class: "form-row" }, [
+      /*#__PURE__*/createElementVNode("div", {
+        "data-drupal-selector": "edit-actions",
+        class: "form-actions",
+        id: "edit-actions--2"
+      }, [
+        /*#__PURE__*/createElementVNode("input", {
+          "data-drupal-selector": "edit-submit-search",
+          type: "submit",
+          id: "edit-submit-search",
+          value: "Submit",
+          class: "button js-form-submit form-submit btn btn-primary form-control"
+        })
+      ]),
+      /*#__PURE__*/createElementVNode("fieldset", { class: "js-form-item js-form-type-textfield form-type-textfield js-form-item-query form-item-query form-group" }, [
+        /*#__PURE__*/createElementVNode("label", { for: "edit-query" }, "Search"),
+        /*#__PURE__*/createElementVNode("input", {
+          "data-drupal-selector": "edit-query",
+          placeholder: "Search",
+          type: "text",
+          id: "edit-query",
+          name: "query",
+          value: "",
+          size: "30",
+          maxlength: "128",
+          class: "form-text form-control"
+        })
+      ])
+    ])
+  ])
+], -1 /* HOISTED */));
+const _hoisted_40 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("div", { class: "nav-main" }, [
+  /*#__PURE__*/createElementVNode("ul", { class: "navbar-nav main-nav" }, [
+    /*#__PURE__*/createElementVNode("li", { class: "nav-item main-menu-item" }, [
+      /*#__PURE__*/createElementVNode("a", {
+        class: "nav-link",
+        href: "https://www.cbd.int/convention/",
+        role: "button",
+        title: "Biodiversity Convention"
+      }, " BIODIVERSITY CONVENTION ")
+    ]),
+    /*#__PURE__*/createElementVNode("li", { class: "nav-item main-menu-item" }, [
+      /*#__PURE__*/createElementVNode("a", {
+        class: "nav-link",
+        href: "http://bch.cbd.int/protocol",
+        role: "button",
+        title: "Cartagena Protocol"
+      }, " CARTAGENA PROTOCOL ")
+    ]),
+    /*#__PURE__*/createElementVNode("li", { class: "nav-item main-menu-item" }, [
+      /*#__PURE__*/createElementVNode("a", {
+        class: "nav-link",
+        href: "https://www.cbd.int/abs",
+        role: "button",
+        title: "Nagoya Protocol"
+      }, " NAGOYA PROTOCOL ")
+    ]),
+    /*#__PURE__*/createElementVNode("li", { class: "nav-item main-menu-item" }, [
+      /*#__PURE__*/createElementVNode("a", {
+        class: "nav-link",
+        href: "https://www.cbd.int/countries",
+        role: "button",
+        title: "Countries"
+      }, " COUNTRIES ")
+    ]),
+    /*#__PURE__*/createElementVNode("li", { class: "nav-item main-menu-item" }, [
+      /*#__PURE__*/createElementVNode("a", {
+        class: "nav-link",
+        href: "https://www.cbd.int/programmes/",
+        role: "button",
+        title: "Programmes"
+      }, " PROGRAMMES ")
+    ])
+  ])
+], -1 /* HOISTED */));
+const $accountsBaseUrl = ''; //ToDo assign the accountsBaseUrl
+
+
+var script = {
+  __name: 'header',
+  setup(__props) {
+
+const isAuthenticated = ref(false);
+const user = ref(undefined);
+const returnUrl = ref(undefined);
+const languages = {
+  ar: 'العربية',
+  es: 'Español',
+  en: 'English',
+  fr: 'Français',
+  ru: 'Русский',
+  zg: '中文'
+};
+
+computed(() => {
+  if (user.value?.userID > 1) {
+    return user.value.userName;
+  }
+});
+
+const logout = async () => {
+  await $auth.logout();
+  window.location.reload();
+};
+
+onMounted(async () => {
+  returnUrl.value = window.location.href;
+  setTimeout(async () => {
+    const fetchedUser = await $auth.fetchUser();
+    user.value = fetchedUser;
+    isAuthenticated.value = fetchedUser.isAuthenticated;
+  }, 1000);
+});
+
+return (_ctx, _cache) => {
+  return (openBlock(), createElementBlock("div", null, [
+    createElementVNode("header", _hoisted_1, [
+      (openBlock(), createElementBlock("svg", _hoisted_2, [..._hoisted_4])),
+      createElementVNode("nav", _hoisted_5, [
+        _hoisted_6,
+        createElementVNode("div", _hoisted_8, [
+          createElementVNode("div", _hoisted_9, [
+            createElementVNode("div", _hoisted_10, [
+              _hoisted_11,
+              createElementVNode("ul", _hoisted_12, [
+                (!isAuthenticated.value)
+                  ? (openBlock(), createElementBlock("li", _hoisted_13, [
+                      createElementVNode("a", {
+                        id: "accountsLink-SNE",
+                        href: $accountsBaseUrl+'/signin?returnUrl='+returnUrl.value,
+                        class: "nav-link login di"
+                      }, [
+                        _hoisted_15,
+                        (isAuthenticated.value)
+                          ? (openBlock(), createElementBlock("span", _hoisted_16, " Welcome " + toDisplayString(user.value.name), 1 /* TEXT */))
+                          : createCommentVNode("v-if", true),
+                        _hoisted_17
+                      ], 8 /* PROPS */, _hoisted_14)
+                    ]))
+                  : createCommentVNode("v-if", true),
+                (isAuthenticated.value)
+                  ? (openBlock(), createElementBlock("li", _hoisted_18, [
+                      createElementVNode("a", _hoisted_19, [
+                        createTextVNode(" Welcome " + toDisplayString(user.value.name) + " ", 1 /* TEXT */),
+                        _hoisted_20
+                      ]),
+                      createElementVNode("div", _hoisted_21, [
+                        createElementVNode("div", _hoisted_22, [
+                          createElementVNode("a", {
+                            href: $accountsBaseUrl+'/profile',
+                            title: "Profile",
+                            class: "dropdown-item"
+                          }, [..._hoisted_25], 8 /* PROPS */, _hoisted_23),
+                          createElementVNode("a", {
+                            href: $accountsBaseUrl+'/password',
+                            title: "Password",
+                            class: "dropdown-item"
+                          }, [..._hoisted_28], 8 /* PROPS */, _hoisted_26),
+                          createElementVNode("a", {
+                            href: "",
+                            onClick: _cache[0] || (_cache[0] = $event => (logout())),
+                            title: "Sign Out",
+                            class: "dropdown-item"
+                          }, [..._hoisted_30])
+                        ])
+                      ])
+                    ]))
+                  : createCommentVNode("v-if", true)
+              ]),
+              createElementVNode("ul", _hoisted_31, [
+                createElementVNode("li", _hoisted_32, [
+                  createElementVNode("a", _hoisted_33, [
+                    createTextVNode(toDisplayString(languages[_ctx.$locale||'en']) + " ", 1 /* TEXT */),
+                    _hoisted_34
+                  ]),
+                  createElementVNode("div", _hoisted_35, [
+                    createElementVNode("div", _hoisted_36, [
+                      (openBlock(), createElementBlock(Fragment, null, renderList(languages, (lang, key) => {
+                        return createElementVNode("a", {
+                          href: 'language-switch/'+key+'?returnUrl='+returnUrl.value,
+                          title: lang,
+                          class: "dropdown-item"
+                        }, [
+                          createElementVNode("span", _hoisted_38, toDisplayString(lang), 1 /* TEXT */)
+                        ], 8 /* PROPS */, _hoisted_37)
+                      }), 64 /* STABLE_FRAGMENT */))
+                    ])
+                  ])
+                ])
+              ]),
+              _hoisted_39
+            ]),
+            _hoisted_40
+          ])
+        ])
+      ])
+    ])
+  ]))
+}
+}
+
+};
+
+script.__scopeId = "data-v-e030dd1e";
+script.__file = "src/components/cbd-nav/header.vue";
+
+export { script$1 as ScbdFooter, script as ScbdHeader };
+//# sourceMappingURL=index.js.map

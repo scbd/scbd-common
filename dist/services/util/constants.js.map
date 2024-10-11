@@ -1,0 +1,1 @@
+{"version":3,"file":"constants.js","sources":["../../../src/services/util/constants.js"],"sourcesContent":["export const THESAURUS = {  \r\n    OTHER_LANGUAGES:'ISO639-2'  \r\n}"],"names":[],"mappings":"AAAY,MAAC,SAAS,GAAG;AACzB,IAAI,eAAe,CAAC,UAAU;AAC9B;;;;"}
