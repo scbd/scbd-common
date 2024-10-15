@@ -1,11 +1,10 @@
-// rollup.config.js (building more than one bundle)
 import path  from 'path'
 import vue   from 'rollup-plugin-vue'
 import glob  from "glob";
 import { getBabelOutputPlugin } from '@rollup/plugin-babel';
 import alias                    from '@rollup/plugin-alias';
-import scss from 'rollup-plugin-scss';
-
+import scss                     from 'rollup-plugin-scss';
+import typescript               from '@rollup/plugin-typescript';
 import { camelCase } from 'lodash'
 import {
   name as packageName,
@@ -22,21 +21,35 @@ const outputFormatExtensions = {
   'esm' : packageType=='module' ? '.js' : '.mjs',
   'cjs' : packageType!='module' ? '.js' : '.cjs',
 }
-const plugins = [ vue(), scss() ];
+const plugins = [
+  vue({
+    preprocessStyles: true,
+    compileTemplate: true,
+    include: /\.vue$/,
+    defaultLang: { script: 'ts' }, // Ensures TypeScript is recognized
+    template: { optimizeSSR: false } // Handle SSR if not necessary
+  }),
+  scss(),
+  typescript({
+    tsconfig: './tsconfig.json',
+    sourceMap: true,
+    declaration: false,  // Don't generate declaration files in Rollup build
+    allowJs: true        // Allow JavaScript files (since we are mixing JS and TS)
+  }),
+];
 
 export default async function(){
   return [
-    ...glob.sync('src/index.js'                ).map(c=>bundle(c, outputDir, o=>"index")),
-    ...glob.sync('src/components/**/*.{js,vue}').map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.(js|vue)$/i, "$1"))),
-    ...glob.sync('src/services/**/*.js'        ).map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.js$/i,       "$1"))),
-    ...glob.sync('src/assets/**/*.css'        ).map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.css$/i,       "$1"))),
+    ...glob.sync('src/index.ts').map(c=>bundle(c, outputDir, o=>"index")),
+    ...glob.sync('src/components/**/*.{ts,vue}').map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.(ts|vue)$/i, "$1"))),
+    ...glob.sync('src/services/**/*.{js,ts}').map(c=>bundle(c, outputDir, (o)=>o.replace(/^src\/(.*)\.(js|ts)$/i, "$1"))),
+    ...glob.sync('src/assets/**/*.css').map(c=>bundle(c, outputDir, o=>o.replace(/^src\/(.*)\.css$/i, "$1"))),
   ];
 }
 
 function bundle(input, outDir, getFilename ) {
-  let ext        = path.extname (input);
-  let filename   = path.basename(input, ext);
-
+  let ext = path.extname(input);
+  let filename = path.basename(input, ext);
   if(getFilename) {
     filename = getFilename(input);
   }
