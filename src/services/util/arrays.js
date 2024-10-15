@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { useI18n} from '@/services/composables/i18n';
-import { lstring } from '@/services/filters/lstring'  
+import { useI18n} from '../../services/composables/i18n';
+import { lstring } from '../../services/filters/lstring'  
 
 
 export function asArray(data) {

@@ -158,7 +158,7 @@
   import dateSelector from "./dateSelector.vue";
   import { ref , computed} from "vue";
   import selectFileButton from './select-file-button.vue';
-  import { mimeTypeWhitelist } from "@/services/api/km-storage/KmDocuments";
+  import { mimeTypeWhitelist } from "../../services/api/km-storage/KmDocuments";
   import previewComponent from "../controls/preview-component.vue";
   import radio from "./radio.vue";
   import ckEditor from "./ck-editor/ck-editor.vue";

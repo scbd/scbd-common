@@ -46,8 +46,8 @@
     import { sortBy } from '../../services/util/arrays'
     import { THESAURUS} from '../../services/util/constants';
     import { useI18n} from '../../services/composables/i18n';
-    import { lstring } from '@/services/filters/lstring'    
-    import { useThesaurus }    from '@/services/composables/thesaurus';  
+    import { lstring } from '../../services/filters/lstring'    
+    import { useThesaurus }    from '../../services/composables/thesaurus';  
     import { languages }            from '../../data/language'       
      
     //TODO:add i18m support 
