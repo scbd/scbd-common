@@ -10,7 +10,7 @@
         </label> 
     </div>
 </template>
-<script setup>
-    const model = defineModel({ type: Boolean,required: true });
-    const props = defineProps({ label: { type: String,  required: true }});
+<script setup lang="ts">
+    const model = defineModel<boolean>({ required: true });
+    const props = defineProps<{ label: string }>();
 </script>
