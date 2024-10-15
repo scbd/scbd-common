@@ -1,11 +1,9 @@
 import ky from 'ky';
-import * as Vue from 'vue';
 import { inject } from 'vue';
-
 
 const defaultOptions = { 
    prefixUrl: 'https://api.cbddev.xyz', 
-   timeout  : 30 * 1000
+   timeout: 30 * 1000
 }
 
 // Use inject to override defaults if available in the current Vue app instance
@@ -16,51 +14,41 @@ const injectedTimeout = inject('timeout');
 if (injectedTimeout) defaultOptions.timeout = injectedTimeout;
 
 const injectedToken = inject('token');
-if (injectedToken) defaultOptions.token = injectedToken;
-
 const injectedTokenType = inject('tokenType');
-if (injectedTokenType) defaultOptions.tokenType = injectedTokenType;
 
 export default class ApiBase {
-  constructor(options = {}) { // Use empty object if no options are passed
-    const { token, prefixUrl, timeout, tokenType } = { ...defaultOptions, ...options }; // Merge options with defaults
+  constructor(options = {}) {
+    // Create an extended ky instance with the injected options
+    const http = ky.extend({
+      prefixUrl: defaultOptions.prefixUrl,
+      timeout: defaultOptions.timeout,
+      hooks: {
+        beforeRequest: [
+          request => {
+            request.headers.set('X-Requested-With', 'ky');
+            if (injectedToken) {
+              request.headers.set('Authorization', `${injectedTokenType} ${injectedToken}`);
+            }
+          }
+        ],
+        afterResponse: [
+          async (request, options, response) => {
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(`API Error: ${errorData.message || 'An error occurred'}`);
+            }
+            // ToDo: Ky requires you to call the response.json() method to parse the response data to a JavaScript object
+            const jsonResponse = await response.json(); // ToDo: Ky's afterResponse hook does not modify the return value of the ky call itself. 
+            return jsonResponse; // Return the parsed JSON
+          }
+        ]
+      },
+      ...options, // Allow passing additional options
+    });
 
-    this.config = {
-      baseURL: prefixUrl,
-      timeout,
-      tokenType,
-      token,
-    };
-
-    this.http = async (...args) => {
-      return (await loadAsyncHeaders(this.config))(...args);
-    };
-
-    this.http.get = async (...args) => (await loadAsyncHeaders(this.config)).get(...args).json();
-    this.http.head = async (...args) => (await loadAsyncHeaders(this.config)).head(...args).json();
-    this.http.post = async (...args) => (await loadAsyncHeaders(this.config)).post(...args).json();
-    this.http.put = async (...args) => (await loadAsyncHeaders(this.config)).put(...args).json();
-    this.http.patch = async (...args) => (await loadAsyncHeaders(this.config)).patch(...args).json();
-    this.http.delete = async (...args) => (await loadAsyncHeaders(this.config)).delete(...args).json();
-    this.http.options = async (...args) => (await loadAsyncHeaders(this.config)).options(...args).json();
-    this.http.request = async (...args) => (await loadAsyncHeaders(this.config)).request(...args).json();
+    this.http = http;
   }
 }
-
-// Async function to load headers and create `ky` instance
-async function loadAsyncHeaders(baseConfig) {
-  console.log("baseConfig: ", baseConfig);
-  
-  const { token, tokenType, ...config } = baseConfig || {};
-  const headers = { ...(config.headers || {}) };
-
-  if (token) {
-    headers.Authorization = `${tokenType || 'Bearer'} ${token}`;
-  }
-  const api = ky.create({prefixUrl: config.baseURL});
-  return api.extend({ prefixUrl: config.baseURL, headers });
-}
-
 
 //////////////////////////
 // Helpers

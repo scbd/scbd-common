@@ -33,7 +33,7 @@
 
 <script>
 
-import axios from 'axios';
+import ky from 'ky';
 import ArticlesApi from '../../services/api/articles';
 import {lstring } from '../../services/filters/lstring'
 import cbdAddNewArticle from './cbd-add-new-article.vue';
@@ -121,8 +121,8 @@ export default {
                         url : encodeURI(url),
                     }
 
-                    const response = await axios.get('/api/v2020/oembed', {params:params});                    
-                    var embedHtml = '<div class="ck-media__wrapper" style="width:100%">' + response.data.html +'</div>'
+                    const response = await ky.get('/api/v2020/oembed', {params:params});                    
+                    var embedHtml = '<div class="ck-media__wrapper" style="width:100%">' + response.json().html +'</div>'
                     element.insertAdjacentHTML("afterend", embedHtml);
                     
                 });

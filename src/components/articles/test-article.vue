@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-import ky from 'ky';
 import { onMounted, ref } from 'vue';
 import ArticlesApi from '../../services/api/articles';
 const articlesApi = new ArticlesApi();
