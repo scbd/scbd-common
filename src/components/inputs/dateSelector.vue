@@ -9,17 +9,18 @@
         :type="type" /> 
 </template>
 
-<script setup>
+<script setup lang="ts"> 
+
     //TODO: check if browser support datepicker
     //https://stackoverflow.com/questions/10193294/how-can-i-tell-if-a-browser-supports-input-type-date
-    const model = defineModel();    
+    const model = defineModel<string>({ required: true });   
     const props = defineProps({
-        type:{
-            type:String,
-            default:"date",
-            validator(value) { 
-                return ['date', 'month'].includes(value)
+        type: {
+            type: String, 
+            default: "date", 
+            validator(value: string) { 
+                return ['date', 'month'].includes(value); // Validating the value
             }
-        }   
-    });
-</script>
+        }
+    }); 
+</script> 

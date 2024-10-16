@@ -1,6 +1,6 @@
 <template>
     <div class="scbd-common checkbox form-check " :class="{'form-check-inline' : $attrs.inline}">   
-        <input type="checkbox"  :id="$attrs.id"  v-model="model" :value="$attrs.value"
+      <input type="checkbox" :id="$attrs.id" v-model="model" :value="$attrs.value"
             :required="$attrs.required"
             :disabled="$attrs.disabled"
             :class="$attrs.class"
@@ -12,5 +12,5 @@
 </template>
 <script setup lang="ts">
     const model = defineModel<boolean>({ required: true });
-    const props = defineProps<{ label: string }>();
+    const props = defineProps<{ label?: string }>();
 </script>
