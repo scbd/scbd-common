@@ -17,8 +17,8 @@
     }
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vue-tsc --noEmit && vite",
+    "build": "vue-tsc --noEmit && vite build",
     "cleanup": "rm -rf ./dist && rm -rf ./node_modules && npm install",
     "cleanup:hard": "rm -rf ./dist && rm -rf ./node_modules && rm -rf ./package-lock.json",
     "preview": "vite preview"
