@@ -34,7 +34,7 @@
             </template>
     </preview-component>
 
-    <div class="row"> 
+    <!-- <div class="row"> 
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -69,7 +69,7 @@
                     </div>             
                 </div>
             </div>    
-        </div>  
+        </div>   -->
 
         <preview-component card-header="radio">
             <template #left>
@@ -136,7 +136,7 @@
             </template>
     </preview-component> 
 
-
+<!-- 
     <preview-component card-header="km-ck-editor">
       <template #left>
           <ck-editor v-model="ckText" :config="allPluginsConfig"  >
@@ -148,100 +148,49 @@
               {{ `   <ck-editor v-model="ckText" :config="allPluginsConfig" ></ck-editor>` }}
           </code>
       </template>
-  </preview-component> 
+  </preview-component>  -->
 
   </div>
-
-  <preview-component card-header="multi checkbox">
-            <template #left>
-                Example 1:
-                <multi-checkbox v-model="selectedOptions1" :options=options :inline="true" /> 
-                selected : {{  selectedOptions1}}   
-                <br/><br/>
-                Example 2:
-                <multi-checkbox v-model="selectedOptions2" :options=options :inline="false" /> 
-                selected : {{  selectedOptions2}}        
-  
-            </template>          
-            <template #right>
-                <code>
-                    {{ ` <multi-checkbox v-model="selectedOptions1" :options=options :inline="true" /> 
-                         <multi-checkbox v-model="selectedOptions2" :options=options :inline="false" /> ` }}
-                </code>
-            </template>
-  </preview-component> 
-
 </template>
 
-<script setup> 
+<script setup lang="ts">
   import checkbox from "./checkbox.vue";
   import dateSelector from "./dateSelector.vue";
-  import { ref , computed} from "vue";
-  import selectFileButton from './select-file-button.vue';
-  import { mimeTypeWhitelist } from "@/services/api/km-storage/KmDocuments";
+  import { ref } from "vue";
+  // import selectFileButton from './select-file-button.vue';
+  // import { mimeTypeWhitelist } from "../../services/api/km-storage/KmDocuments";
   import previewComponent from "../controls/preview-component.vue";
   import radio from "./radio.vue";
-  import ckEditor from "./ck-editor/ck-editor.vue";
-  import { allPluginsConfig } from './ck-editor/all-plugins-config.js';
-  import multiCheckbox from './multi-checkbox.vue'
+  // import ckEditor from "./ck-editor/ck-editor.vue";
+  // import { allPluginsConfig } from './ck-editor/all-plugins-config';
 
   //checkbox  
-  const isChecked = ref(false);
+ const isChecked = ref<boolean>(false);
 
-  //dateSelector
-  const dateValue = ref("2024-02-06");
+// DateSelector
+const dateValue = ref<string>('2024-02-06');
+
   //for select-file-button example
-  let files = ref([]);
-  const receiveFile = (receiveFiles) => {
-      if (receiveFiles instanceof Array) {
-          files.value = receiveFiles;   
-      }
-      else{
-      if (receiveFiles instanceof Object){
+  // let files: any = ref([]);
+  // const receiveFile = (receiveFiles: any) => {
+  //     if (receiveFiles instanceof Array) {
+  //         files.value = receiveFiles;   
+  //     }
+  //     else{
+  //     if (receiveFiles instanceof Object){
         
-          files.value=[receiveFiles];   
-      }   }      
-  };
+  //         files.value=[receiveFiles];   
+  //     }   }      
+  // };
 
-  //for multi-checkbox
-  const options = [
-    {identifier:"cn", title:"Chinese"},
-    {identifier:"en", title:"english"}
-  ]
-  const selectedOptions1 = ref([ {identifier:"en"} ]);
-  const selectedOptions2 = ref([ {identifier:"cn"} ]);
-  
-   // radio
-   const radioValue1 = ref('true');
-   const radioValue2 = ref('true');
+// Radio
+const radioValue1 = ref<string>('true');
+const radioValue2 = ref<string>('true');
 
 
   // for km-ck-editor
-  const ckText= ref("");
-
+  // const ckText= ref("");
 
 </script>
 <style lang="scss" scoped></style>
-<!-- <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                
-            </div>
-            <div class="card-body"> 
-                <div class="row">
-                   <div class="col-6">
-                        
-                    </div>
-                    <div class="col-6">
-                        <div class="callout callout-warning">
-                            <code>                                    
-                                ///HTML Escape////
-                            </code>   
-                        </div>                                                            
-                    </div>
-                </div>
-            </div>               
-        </div>
-    </div>        
-</div> -->
+ 

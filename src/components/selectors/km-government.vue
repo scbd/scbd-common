@@ -18,7 +18,7 @@
     import { computed, defineModel } from 'vue'
     import multiSelector from "../controls/multi-selector.vue"
     import { useI18n } from '../../services/composables/i18n';
-    import { useCountries }    from '@/services/composables/countries';   
+    import { useCountries }    from '../../services/composables/countries';   
     
     const model = defineModel({ type: Array,required: true, 
                                 default: {identifier:undefined}

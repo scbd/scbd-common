@@ -23,8 +23,8 @@
     import { ref, watch, onMounted, computed} from 'vue';
     import {without} from 'lodash';
     import ckEditor from '../../inputs/ck-editor/ck-editor.vue';
-    import { useThesaurus }    from '@/services/composables/thesaurus';  
-    import { makeSmallUid }   from '@/services/util/index';
+    import { useThesaurus }    from '../../services/composables/thesaurus';  
+    import { makeSmallUid }   from '../../services/util/index';
     import {lstring } from '../../../services/filters/lstring';   
     import { removeEmpty }  from '../../../services/util/index';
     import { allPluginsConfig } from '../../inputs/ck-editor/all-plugins-config.js';
