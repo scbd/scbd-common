@@ -43,11 +43,11 @@
     import  KmFormGroup  from '../../components/controls/km-form-group.vue'
     import  multiSelect  from '../../components/controls/multi-selector.vue'
     import { ref , computed, defineEmits, defineModel} from 'vue'
-    import { sortBy } from '../../services/util'
+    import { sortBy } from '../../services/util/arrays'
     import { THESAURUS} from '../../services/util/constants';
-    import { useI18n} from '../../services/composables/i18n';
-    import { lstring } from '@/services/filters/lstring'    
-    import { useThesaurus }    from '@/services/composables/thesaurus';  
+    import { useI18n} from '../../services/composables/i18n';    
+    import { lstring } from '../../services/filters/lstring';  
+    import { useThesaurus }    from '../../services/composables/thesaurus';  
     import { languages }            from '../../data/language'       
      
     //TODO:add i18m support 
